@@ -1,5 +1,6 @@
 import './globals.css';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export const metadata = {
   title: 'Raster Media - Pixel Perfect Creative Solutions',
@@ -22,13 +23,21 @@ function Header() {
   return (
     <header style={styles.header}>
       <div style={styles.headerContainer}>
-        <div style={styles.logo}>
-          <div style={styles.logoIcon}></div>
-          <span style={styles.logoText}>RASTER MEDIA</span>
-        </div>
+        <Link href="/" style={styles.logoLink}>
+          <div style={styles.logo}>
+            <Image
+              src="/images/logo.png"
+              alt="Raster Media Logo"
+              width={180}
+              height={60}
+              style={styles.logoImage}
+              priority
+            />
+          </div>
+        </Link>
         <nav style={styles.nav}>
           <Link href="/" style={styles.navLink}>Home</Link>
-          <Link href="/about" style={styles.navLink}>About</Link>
+          <Link href="/about_us" style={styles.navLink}>About</Link>
           <Link href="/services" style={styles.navLink}>Services</Link>
           <Link href="/portfolio" style={styles.navLink}>Portfolio</Link>
           <Link href="/contact" style={styles.navLink}>Contact</Link>
@@ -45,7 +54,15 @@ function Footer() {
       <div style={styles.footerContainer}>
         <div style={styles.footerContent}>
           <div style={styles.footerColumn}>
-            <div style={styles.footerLogo}></div>
+            <Link href="/" style={styles.footerLogoLink}>
+              <Image
+                src="/images/logo.png"
+                alt="Raster Media Logo"
+                width={300}
+                height={120}
+                style={styles.footerLogoImage}
+              />
+            </Link>
             <p style={styles.footerDesc}>
               Responsible creativity for every pixel. Building brands that resonate.
             </p>
@@ -54,7 +71,7 @@ function Footer() {
           <div style={styles.footerColumn}>
             <h4 style={styles.footerHeading}>Quick Links</h4>
             <ul style={styles.footerList}>
-              <li><Link href="/about" style={styles.footerLink}>About</Link></li>
+              <li><Link href="/about_us" style={styles.footerLink}>About</Link></li>
               <li><Link href="/services" style={styles.footerLink}>Services</Link></li>
               <li><Link href="/portfolio" style={styles.footerLink}>Portfolio</Link></li>
               <li><Link href="/careers" style={styles.footerLink}>Careers</Link></li>
@@ -118,28 +135,24 @@ const styles = {
   headerContainer: {
     maxWidth: '1280px',
     margin: '0 auto',
-    padding: '20px 48px',
+    padding: '10px 48px',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
   },
+  logoLink: {
+    textDecoration: 'none',
+    display: 'block',
+  },
   logo: {
     display: 'flex',
     alignItems: 'center',
-    gap: '12px',
   },
-  logoIcon: {
-    width: '32px',
-    height: '32px',
-    background: 'linear-gradient(135deg, #5DCDDB 0%, #7DD8E5 100%)',
-    borderRadius: '4px',
-  },
-  logoText: {
-    fontFamily: 'Cousine, monospace',
-    fontSize: '18px',
-    fontWeight: '700',
-    letterSpacing: '1px',
-    color: '#FFFFFF',
+  logoImage: {
+    width: 'auto',
+    height: 'auto',
+    maxHeight: '60px',
+    objectFit: 'contain',
   },
   nav: {
     display: 'flex',
@@ -184,11 +197,15 @@ const styles = {
     flexDirection: 'column',
     gap: '24px',
   },
-  footerLogo: {
-    width: '48px',
-    height: '48px',
-    background: 'linear-gradient(135deg, #5DCDDB 0%, #7DD8E5 100%)',
-    borderRadius: '4px',
+  footerLogoLink: {
+    textDecoration: 'none',
+    display: 'block',
+  },
+  footerLogoImage: {
+    width: 'auto',
+    height: 'auto',
+    maxHeight: '33px',
+    objectFit: 'contain',
   },
   footerDesc: {
     color: '#6B6B6B',
