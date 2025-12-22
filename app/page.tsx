@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 export default function HomePage() {
   return (
@@ -32,8 +32,34 @@ function HeroSection() {
       </div>
       <div style={styles.heroOverlay}></div>
       <div style={styles.heroGrid}></div>
-      <PixelPattern style={{ ...styles.pixelPattern, top: '104.53px', left: '1052.13px', transform: 'rotate(4.96deg)' }} size="large" />
-      <PixelPattern style={{ ...styles.pixelPattern, bottom: '112.07px', left: '126.11px', transform: 'rotate(-2.92deg)' }} size="medium" />
+      
+      {/* Square pixel patterns - top right */}
+      <PixelPattern 
+        style={{ 
+          position: 'absolute',
+          top: '104px', 
+          right: '180px',
+          opacity: 0.6,
+          transform: 'rotate(4.96deg)',
+          animation: 'float 6s ease-in-out infinite',
+          zIndex: 3
+        }} 
+        size="large" 
+      />
+      
+      {/* Square pixel patterns - bottom left */}
+      <PixelPattern 
+        style={{ 
+          position: 'absolute',
+          bottom: '112px', 
+          left: '126px',
+          opacity: 0.5,
+          transform: 'rotate(-2.92deg)',
+          animation: 'float 8s ease-in-out infinite',
+          zIndex: 3
+        }} 
+        size="medium" 
+      />
       
       <div style={styles.heroContent}>
         <h1 style={styles.heroHeading}>
@@ -51,7 +77,7 @@ function HeroSection() {
           {[0, 1, 2, 3, 4].map((i) => (
             <div key={i} style={{
               ...styles.dot,
-              opacity: i === 2 ? 0.3 : i === 3 ? 0.33 : i === 4 ? 0.41 : 0.56 + (i * 0.21)
+              opacity: i === 0 ? 0.77 : i === 1 ? 0.56 : i === 2 ? 0.3 : i === 3 ? 0.33 : 0.41
             }}></div>
           ))}
         </div>
@@ -72,7 +98,7 @@ function ServicesSection() {
       icon: '✏️',
       title: 'Graphic Design',
       description: 'Pixel-perfect designs that blend creativity with strategy.',
-      hasPattern: false,
+      hasPattern: true, // No pixel pattern on Graphic Design card
     },
     {
       icon: '📷',
@@ -102,10 +128,10 @@ function ServicesSection() {
 
   return (
     <section style={styles.section}>
-      <div className="container">
+      <div style={styles.container}>
         <div style={styles.sectionHeader}>
           <h2 style={styles.sectionTitle}>
-            Our <span className="gradient-text">Services</span>
+            Our <span style={styles.gradientText}>Services</span>
           </h2>
           <p style={styles.sectionSubtitle}>
             Comprehensive creative solutions tailored to elevate your brand and drive impactful results.
@@ -122,13 +148,36 @@ function ServicesSection() {
 }
 
 function ServiceCard({ icon, title, description, hasPattern }) {
+  const [isHovered, setIsHovered] = useState(false);
+
   return (
-    <div style={styles.serviceCard}>
+    <div 
+      style={{
+        ...styles.serviceCard,
+        transform: isHovered ? 'translateY(-8px)' : 'translateY(0)',
+        borderColor: isHovered ? '#5DCDDB' : 'rgba(93, 205, 219, 0.1)',
+      }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
       <div style={styles.serviceIcon}>{icon}</div>
       <h3 style={styles.serviceTitle}>{title}</h3>
       <p style={styles.serviceDescription}>{description}</p>
-      {hasPattern && <PixelPattern style={styles.servicePattern} size="small" />}
-      <div style={styles.serviceAccent}></div>
+      {hasPattern && (
+        <PixelPattern 
+          style={{ 
+            position: 'absolute',
+            top: '24px', 
+            right: '24px',
+            opacity: 0.3
+          }} 
+          size="small" 
+        />
+      )}
+      <div style={{
+        ...styles.serviceAccent,
+        width: isHovered ? '100%' : '0',
+      }}></div>
     </div>
   );
 }
@@ -143,11 +192,11 @@ function StatsSection() {
 
   return (
     <section style={styles.statsSection}>
-      <div className="container">
+      <div style={styles.container}>
         <div style={styles.statsGrid}>
           {stats.map((stat, index) => (
             <div key={index} style={styles.statItem}>
-              <div style={styles.statValue} className="gradient-text">{stat.value}</div>
+              <div style={{...styles.statValue, ...styles.gradientText}}>{stat.value}</div>
               <div style={styles.statLabel}>{stat.label}</div>
             </div>
           ))}
@@ -178,10 +227,10 @@ function FeaturedWorkSection() {
 
   return (
     <section style={styles.section}>
-      <div className="container">
+      <div style={styles.container}>
         <div style={styles.sectionHeader}>
           <h2 style={styles.sectionTitle}>
-            Featured <span className="gradient-text">Work</span>
+            Featured <span style={styles.gradientText}>Work</span>
           </h2>
           <p style={styles.sectionSubtitle}>
             A selection of our most impactful projects across various creative disciplines.
@@ -231,7 +280,7 @@ function BrandsSection() {
   
   return (
     <section style={styles.brandsSection}>
-      <div className="container">
+      <div style={styles.container}>
         <h3 style={styles.brandsTitle}>Trusted By Leading Brands</h3>
         <div style={styles.brandsWrapper}>
           <div style={styles.brandsTrack}>
@@ -266,10 +315,10 @@ function TestimonialsSection() {
 
   return (
     <section style={styles.testimonialsSection}>
-      <div className="container">
+      <div style={styles.container}>
         <div style={styles.sectionHeader}>
           <h2 style={styles.sectionTitle}>
-            Client <span className="gradient-text">Testimonials</span>
+            Client <span style={styles.gradientText}>Testimonials</span>
           </h2>
           <p style={styles.sectionSubtitle}>
             Hear what our clients have to say about working with us.
@@ -304,16 +353,34 @@ function TestimonialCard({ quote, name, role }) {
 function CTASection() {
   return (
     <section style={styles.ctaSection}>
-      <PixelPattern style={{ ...styles.ctaPattern, top: '32.8px', right: '32.8px' }} size="large" />
-      <PixelPattern style={{ ...styles.ctaPattern, bottom: '32.8px', left: '32.8px' }} size="medium" />
+      <PixelPattern 
+        style={{ 
+          position: 'absolute',
+          top: '32px', 
+          right: '32px',
+          opacity: 0.3,
+          zIndex: 0
+        }} 
+        size="large" 
+      />
+      <PixelPattern 
+        style={{ 
+          position: 'absolute',
+          bottom: '32px', 
+          left: '32px',
+          opacity: 0.3,
+          zIndex: 0
+        }} 
+        size="medium" 
+      />
       <div style={styles.ctaContent}>
         <h2 style={styles.ctaHeading}>
-          Ready to Create Something <span className="gradient-text">Extraordinary?</span>
+          Ready to Create Something <span style={styles.gradientText}>Extraordinary?</span>
         </h2>
         <p style={styles.ctaDescription}>
           Let's collaborate and bring your vision to life with pixel-perfect precision.
         </p>
-        <button style={styles.ctaPrimaryButton} className="animate-shimmer">
+        <button style={styles.ctaPrimaryButton}>
           Start Your Project
         </button>
       </div>
@@ -321,14 +388,35 @@ function CTASection() {
   );
 }
 
+// Fixed PixelPattern component - creates SQUARE GRIDS instead of lines
 function PixelPattern({ style, size = 'small' }) {
-  const count = size === 'large' ? 25 : size === 'medium' ? 16 : 6;
-  const gridSize = size === 'large' ? 5 : size === 'medium' ? 4 : 3;
-  
+  const gridConfig = {
+    small: { rows: 3, cols: 3, pixelSize: 8, gap: 4 },
+    medium: { rows: 4, cols: 4, pixelSize: 10, gap: 5 },
+    large: { rows: 5, cols: 5, pixelSize: 12, gap: 6 },
+  };
+
+  const config = gridConfig[size];
+  const totalPixels = config.rows * config.cols;
+
   return (
-    <div style={{ ...styles.pixelPatternBase, ...style }}>
-      {Array.from({ length: count }).map((_, i) => (
-        <div key={i} style={styles.pixel}></div>
+    <div
+      style={{
+        display: 'grid',
+        gridTemplateColumns: `repeat(${config.cols}, ${config.pixelSize}px)`,
+        gap: `${config.gap}px`,
+        ...style,
+      }}
+    >
+      {Array.from({ length: totalPixels }).map((_, i) => (
+        <div 
+          key={i} 
+          style={{
+            width: `${config.pixelSize}px`,
+            height: `${config.pixelSize}px`,
+            background: 'linear-gradient(135deg, #5DCDDB 0%, #7DD8E5 100%)',
+          }}
+        ></div>
       ))}
     </div>
   );
@@ -338,15 +426,26 @@ const styles = {
   page: {
     paddingTop: '72px',
   },
+  container: {
+    maxWidth: '1280px',
+    margin: '0 auto',
+    padding: '0 48px',
+  },
+  gradientText: {
+    background: 'linear-gradient(135deg, #5DCDDB 0%, #7DD8E5 100%)',
+    WebkitBackgroundClip: 'text',
+    WebkitTextFillColor: 'transparent',
+    backgroundClip: 'text',
+  },
   hero: {
-    position: 'relative' as const,
+    position: 'relative',
     width: '100%',
     height: '100vh',
     minHeight: '681.6px',
     overflow: 'hidden',
   },
   heroVideo: {
-    position: 'absolute' as const,
+    position: 'absolute',
     top: 0,
     left: 0,
     width: '100%',
@@ -354,7 +453,7 @@ const styles = {
     zIndex: 0,
   },
   iframe: {
-    position: 'absolute' as const,
+    position: 'absolute',
     top: '50%',
     left: '50%',
     width: '177.77vh',
@@ -362,10 +461,10 @@ const styles = {
     height: '56.25vw',
     minHeight: '100%',
     transform: 'translate(-50%, -50%)',
-    pointerEvents: 'none' as const,
+    pointerEvents: 'none',
   },
   heroOverlay: {
-    position: 'absolute' as const,
+    position: 'absolute',
     top: 0,
     left: 0,
     width: '100%',
@@ -374,37 +473,32 @@ const styles = {
     zIndex: 1,
   },
   heroGrid: {
-    position: 'absolute' as const,
+    position: 'absolute',
     top: 0,
     left: 0,
     width: '100%',
     height: '100%',
-    background: 'linear-gradient(0deg, rgba(0, 0, 0, 0) 24%, rgba(93, 205, 219, 0.05) 25%, rgba(93, 205, 219, 0.05) 26%, rgba(0, 0, 0, 0) 27%, rgba(0, 0, 0, 0) 74%, rgba(93, 205, 219, 0.05) 75%, rgba(93, 205, 219, 0.05) 76%, rgba(0, 0, 0, 0) 77%), linear-gradient(90deg, rgba(0, 0, 0, 0) 24%, rgba(93, 205, 219, 0.05) 25%, rgba(93, 205, 219, 0.05) 26%, rgba(0, 0, 0, 0) 27%, rgba(0, 0, 0, 0) 74%, rgba(93, 205, 219, 0.05) 75%, rgba(93, 205, 219, 0.05) 76%, rgba(0, 0, 0, 0) 77%)',
+    backgroundImage: 'linear-gradient(0deg, rgba(0, 0, 0, 0) 24%, rgba(93, 205, 219, 0.05) 25%, rgba(93, 205, 219, 0.05) 26%, rgba(0, 0, 0, 0) 27%, rgba(0, 0, 0, 0) 74%, rgba(93, 205, 219, 0.05) 75%, rgba(93, 205, 219, 0.05) 76%, rgba(0, 0, 0, 0) 77%), linear-gradient(90deg, rgba(0, 0, 0, 0) 24%, rgba(93, 205, 219, 0.05) 25%, rgba(93, 205, 219, 0.05) 26%, rgba(0, 0, 0, 0) 27%, rgba(0, 0, 0, 0) 74%, rgba(93, 205, 219, 0.05) 75%, rgba(93, 205, 219, 0.05) 76%, rgba(0, 0, 0, 0) 77%)',
+    backgroundSize: '50px 50px',
     opacity: 0.1,
     zIndex: 2,
   },
-  pixelPattern: {
-    position: 'absolute' as const,
-    opacity: 0.2,
-    zIndex: 3,
-    animation: 'float 6s ease-in-out infinite',
-  },
   heroContent: {
-    position: 'relative' as const,
+    position: 'relative',
     zIndex: 4,
     maxWidth: '1024px',
     margin: '0 auto',
-    padding: '40.12px 0',
-    textAlign: 'center' as const,
+    padding: '40px 48px',
+    textAlign: 'center',
     height: '100%',
     display: 'flex',
-    flexDirection: 'column' as const,
+    flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
   },
   heroHeading: {
     fontFamily: 'Cousine, monospace',
-    fontWeight: '700' as const,
+    fontWeight: 700,
     fontSize: '77.712px',
     lineHeight: '85px',
     letterSpacing: '-1.9428px',
@@ -440,7 +534,7 @@ const styles = {
     border: 'none',
     fontFamily: 'Cousine, monospace',
     fontSize: '16px',
-    fontWeight: '700' as const,
+    fontWeight: 700,
     letterSpacing: '0.8px',
     color: '#000000',
     cursor: 'pointer',
@@ -452,7 +546,7 @@ const styles = {
     border: '1.6px solid #5DCDDB',
     fontFamily: 'Cousine, monospace',
     fontSize: '16px',
-    fontWeight: '700' as const,
+    fontWeight: 700,
     letterSpacing: '0.8px',
     color: '#FFFFFF',
     cursor: 'pointer',
@@ -473,15 +567,16 @@ const styles = {
     padding: '128px 0 0',
   },
   sectionHeader: {
-    textAlign: 'center' as const,
+    textAlign: 'center',
     marginBottom: '64px',
   },
   sectionTitle: {
     fontSize: '51.808px',
-    fontWeight: '700' as const,
+    fontWeight: 700,
     lineHeight: '60px',
     letterSpacing: '-0.51808px',
     marginBottom: '16px',
+    color: '#FFFFFF',
   },
   sectionSubtitle: {
     fontSize: '18px',
@@ -496,12 +591,12 @@ const styles = {
     gap: '24px',
   },
   serviceCard: {
-    position: 'relative' as const,
+    position: 'relative',
     padding: '32px',
     background: 'rgba(37, 37, 37, 0.6)',
     border: '0.8px solid rgba(93, 205, 219, 0.1)',
     minHeight: '293.5px',
-    transition: 'transform 0.3s, border-color 0.3s',
+    transition: 'all 0.3s',
     cursor: 'pointer',
   },
   serviceIcon: {
@@ -516,7 +611,7 @@ const styles = {
   },
   serviceTitle: {
     fontSize: '36px',
-    fontWeight: '600' as const,
+    fontWeight: 600,
     lineHeight: '43px',
     color: '#FFFFFF',
     marginBottom: '16px',
@@ -526,17 +621,10 @@ const styles = {
     lineHeight: '23px',
     color: '#A0A0A0',
   },
-  servicePattern: {
-    position: 'absolute' as const,
-    top: '24.8px',
-    right: '24.8px',
-    opacity: 0.5,
-  },
   serviceAccent: {
-    position: 'absolute' as const,
-    bottom: '0',
-    left: '0',
-    width: '0',
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
     height: '4px',
     background: 'linear-gradient(180deg, #5DCDDB 0%, #7DD8E5 100%)',
     transition: 'width 0.3s',
@@ -551,19 +639,19 @@ const styles = {
     gap: '48px',
   },
   statItem: {
-    textAlign: 'center' as const,
+    textAlign: 'center',
   },
   statValue: {
-    fontSize: '16px',
-    fontWeight: '400' as const,
-    lineHeight: '24px',
+    fontSize: '64px',
+    fontWeight: 700,
+    lineHeight: '72px',
     marginBottom: '8px',
   },
   statLabel: {
     fontSize: '14px',
     lineHeight: '20px',
     letterSpacing: '0.7px',
-    textTransform: 'uppercase' as const,
+    textTransform: 'uppercase',
     color: '#6B6B6B',
   },
   portfolioGrid: {
@@ -573,11 +661,12 @@ const styles = {
     marginBottom: '48px',
   },
   portfolioCard: {
-    position: 'relative' as const,
-    height: '280px',
+    position: 'relative',
+    height: '400px',
     background: '#252525',
     overflow: 'hidden',
     cursor: 'pointer',
+    border: '0.8px solid rgba(93, 205, 219, 0.1)',
   },
   portfolioImage: {
     width: '100%',
@@ -585,7 +674,7 @@ const styles = {
     background: 'linear-gradient(45deg, #2A2A2A 0%, #3A3A3A 100%)',
   },
   portfolioGradient: {
-    position: 'absolute' as const,
+    position: 'absolute',
     top: 0,
     left: 0,
     width: '100%',
@@ -594,7 +683,7 @@ const styles = {
     opacity: 0.6,
   },
   portfolioHover: {
-    position: 'absolute' as const,
+    position: 'absolute',
     top: 0,
     left: 0,
     width: '100%',
@@ -603,6 +692,7 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'center',
     transition: 'opacity 0.3s',
+    background: 'rgba(93, 205, 219, 0.1)',
   },
   portfolioIcon: {
     width: '64px',
@@ -614,7 +704,7 @@ const styles = {
     fontSize: '28px',
   },
   portfolioContent: {
-    position: 'absolute' as const,
+    position: 'absolute',
     bottom: 0,
     left: 0,
     padding: '24px',
@@ -624,13 +714,13 @@ const styles = {
     fontSize: '12px',
     lineHeight: '16px',
     letterSpacing: '0.6px',
-    textTransform: 'uppercase' as const,
+    textTransform: 'uppercase',
     color: '#5DCDDB',
     marginBottom: '8px',
   },
   portfolioTitle: {
     fontSize: '36px',
-    fontWeight: '600' as const,
+    fontWeight: 600,
     lineHeight: '43px',
     color: '#FFFFFF',
     marginBottom: '8px',
@@ -659,15 +749,15 @@ const styles = {
   },
   brandsTitle: {
     fontSize: '36px',
-    fontWeight: '600' as const,
+    fontWeight: 600,
     lineHeight: '43px',
-    textAlign: 'center' as const,
+    textAlign: 'center',
     color: '#FFFFFF',
     marginBottom: '48px',
   },
   brandsWrapper: {
     overflow: 'hidden',
-    position: 'relative' as const,
+    position: 'relative',
   },
   brandsTrack: {
     display: 'flex',
@@ -680,7 +770,7 @@ const styles = {
     lineHeight: '48px',
     letterSpacing: '1.6px',
     color: 'rgba(255, 255, 255, 0.3)',
-    whiteSpace: 'nowrap' as const,
+    whiteSpace: 'nowrap',
   },
   testimonialsSection: {
     padding: '128px 0',
@@ -696,7 +786,7 @@ const styles = {
     background: 'rgba(37, 37, 37, 0.6)',
     border: '0.8px solid rgba(93, 205, 219, 0.1)',
     display: 'flex',
-    flexDirection: 'column' as const,
+    flexDirection: 'column',
     gap: '24px',
   },
   quoteIcon: {
@@ -705,7 +795,7 @@ const styles = {
   },
   testimonialQuote: {
     fontSize: '18px',
-    fontStyle: 'italic' as const,
+    fontStyle: 'italic',
     lineHeight: '29px',
     color: '#A0A0A0',
     flex: 1,
@@ -723,7 +813,7 @@ const styles = {
   },
   authorName: {
     fontSize: '25.904px',
-    fontWeight: '600' as const,
+    fontWeight: 600,
     lineHeight: '34px',
     color: '#FFFFFF',
   },
@@ -733,26 +823,24 @@ const styles = {
     color: '#6B6B6B',
   },
   ctaSection: {
-    position: 'relative' as const,
-    margin: '0 48px',
+    position: 'relative',
+    margin: '0 48px 128px',
     padding: '64.8px 208px',
     background: 'rgba(37, 37, 37, 0.6)',
     border: '0.8px solid rgba(93, 205, 219, 0.1)',
-    textAlign: 'center' as const,
-  },
-  ctaPattern: {
-    position: 'absolute' as const,
+    textAlign: 'center',
   },
   ctaContent: {
-    position: 'relative' as const,
+    position: 'relative',
     zIndex: 1,
   },
   ctaHeading: {
     fontSize: '51.808px',
-    fontWeight: '700' as const,
+    fontWeight: 700,
     lineHeight: '60px',
     letterSpacing: '-0.51808px',
     marginBottom: '24px',
+    color: '#FFFFFF',
   },
   ctaDescription: {
     fontSize: '20px',
@@ -769,15 +857,6 @@ const styles = {
     color: '#FFFFFF',
     cursor: 'pointer',
     transition: 'transform 0.3s',
-  },
-  pixelPatternBase: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fill, 8px)',
-    gap: '4px',
-  },
-  pixel: {
-    width: '8px',
-    height: '8px',
-    background: 'linear-gradient(135deg, #5DCDDB 0%, #7DD8E5 100%)',
+    fontWeight: 600,
   },
 };
