@@ -105,7 +105,7 @@
 /* Hero Section */
 .heroSection {
   width: 100%;
-  max-width: 896px;
+  max-width: 1800px;
   padding: 128px 48px;
   text-align: center;
 }
@@ -147,14 +147,14 @@
   font-size: 20px;
   line-height: 28px;
   color: #A0A0A0;
-  max-width: 670px;
+  max-width: 1800px;
   margin: 0 auto;
 }
 
 /* Gallery Section */
 .gallerySection {
   width: 100%;
-  max-width: 1184px;
+  max-width: 1800px;
   padding: 0 48px 80px;
 }
 
@@ -193,7 +193,7 @@
 /* Rates Section */
 .ratesSection {
   width: 100%;
-  max-width: 1152px;
+  max-width: 1800px;
   padding: 80px 64px;
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -381,7 +381,7 @@
 /* Booking Section */
 .bookingSection {
   width: 100%;
-  max-width: 896px;
+  max-width: 1800px;
   padding: 80px 192px;
 }
 
@@ -678,7 +678,7 @@
 /* Location Section */
 .locationSection {
   width: 100%;
-  max-width: 896px;
+  max-width: 1800px;
   padding: 0 192px 80px;
 }
 
@@ -750,7 +750,7 @@
 }
 
 .footerContent {
-  max-width: 1184px;
+  max-width: 1800px;
   margin: 0 auto 48px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -859,7 +859,7 @@
 }
 
 .footerBottom {
-  max-width: 1184px;
+  max-width: 1800px;
   margin: 0 auto;
   padding-top: 32px;
   border-top: 0.8px solid rgba(255, 255, 255, 0.05);

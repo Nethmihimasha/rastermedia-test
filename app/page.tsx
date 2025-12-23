@@ -364,6 +364,7 @@ function BrandsSection() {
 }
 
 function TestimonialsSection() {
+  // Carousel showing 3 testimonials at a time, with cloned edges for seamless looping
   const testimonials = [
     {
       quote: "Raster Media transformed our brand identity completely. Their attention to detail and creative vision exceeded all expectations.",
@@ -380,7 +381,73 @@ function TestimonialsSection() {
       name: 'Emma Rodriguez',
       role: 'Founder, Studio Collective',
     },
+    {
+      quote: "Professional, creative and results-driven—Raster Media delivered more than we imagined.",
+      name: 'David Lee',
+      role: 'Head of Marketing, Nova Retail',
+    },
+    {
+      quote: "Exceptional team and flawless execution. Our campaign saw record engagement after launch.",
+      name: 'Priya Patel',
+      role: 'CMO, FreshLeaf',
+    },
   ];
+
+  const VISIBLE = 3;
+  const slideWidth = 100 / VISIBLE; // percent
+
+  // build cloned list for seamless infinite scrolling
+  const items = [
+    ...testimonials.slice(-VISIBLE),
+    ...testimonials,
+    ...testimonials.slice(0, VISIBLE),
+  ];
+
+  const baseIndex = VISIBLE; // starting offset into items
+  const [index, setIndex] = useState(baseIndex);
+  const [isPaused, setIsPaused] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(true);
+  const length = testimonials.length;
+  const trackRef = useRef(null);
+
+  // autoplay
+  useEffect(() => {
+    if (isPaused) return;
+    const timer = setInterval(() => {
+      setIndex((i) => i + 1);
+      setIsAnimating(true);
+    }, 4500);
+    return () => clearInterval(timer);
+  }, [isPaused]);
+
+  function prev() {
+    setIndex((i) => i - 1);
+    setIsAnimating(true);
+  }
+
+  function next() {
+    setIndex((i) => i + 1);
+    setIsAnimating(true);
+  }
+
+  function handleTransitionEnd() {
+    // if we've moved into the appended clones region, snap back to real items without animation
+    if (index >= baseIndex + length) {
+      setIsAnimating(false);
+      setIndex(baseIndex);
+      // re-enable animation on next tick
+      setTimeout(() => setIsAnimating(true), 40);
+    }
+
+    // if we've moved into the prepended clones region, snap to the end
+    if (index <= baseIndex - 1) {
+      setIsAnimating(false);
+      setIndex(baseIndex + length - 1);
+      setTimeout(() => setIsAnimating(true), 40);
+    }
+  }
+
+  const centerIndex = index + Math.floor(VISIBLE / 2);
 
   return (
     <section style={styles.testimonialsSection}>
@@ -393,10 +460,55 @@ function TestimonialsSection() {
             Hear what our clients have to say about working with us.
           </p>
         </div>
-        <div style={styles.testimonialsGrid}>
-          {testimonials.map((testimonial, index) => (
-            <TestimonialCard key={index} {...testimonial} />
-          ))}
+
+        <div
+          style={styles.testimonialsSlider}
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+        >
+          <button
+            aria-label="Previous testimonial"
+            style={{ ...styles.testimonialArrow, ...styles.testimonialArrowLeft }}
+            onClick={prev}
+          >
+            ‹
+          </button>
+
+<div style={styles.testimonialsViewport}>
+          <div
+            ref={trackRef}
+            onTransitionEnd={handleTransitionEnd}
+            style={{
+              ...styles.testimonialsTrack,
+              transform: `translateX(-${index * slideWidth}%)`,
+              transition: isAnimating ? 'transform 600ms cubic-bezier(0.2,0.8,0.2,1)' : 'none',
+            }}
+          >
+            {items.map((testimonial, i) => {
+              const isCenter = i === centerIndex;
+              return (
+                <div
+                  key={`${testimonial.name}-${i}`}
+                  style={{
+                    ...styles.testimonialSlide,
+                    ...(isCenter ? styles.testimonialActive : styles.testimonialInactive),
+                  }}
+                  aria-hidden={!isCenter && (i < index || i > index + VISIBLE - 1)}
+                >
+                  <TestimonialCard {...testimonial} />
+                </div>
+              );
+            })}
+          </div>
+          </div>
+
+          <button
+            aria-label="Next testimonial"
+            style={{ ...styles.testimonialArrow, ...styles.testimonialArrowRight }}
+            onClick={next}
+          >
+            ›
+          </button>
         </div>
       </div>
     </section>
@@ -495,7 +607,7 @@ const styles = {
     paddingTop: '72px',
   },
   container: {
-    maxWidth: '1280px',
+    maxWidth: '1800px',
     margin: '0 auto',
     padding: '0 48px',
   },
@@ -554,7 +666,7 @@ const styles = {
   heroContent: {
     position: 'relative',
     zIndex: 4,
-    maxWidth: '1024px',
+    maxWidth: '1800px',
     margin: '0 auto',
     padding: '40px 48px',
     textAlign: 'center',
@@ -588,7 +700,7 @@ const styles = {
     lineHeight: '28px',
     letterSpacing: '1px',
     color: 'rgba(255, 255, 255, 0.8)',
-    maxWidth: '768px',
+    maxWidth: '1800px',
     marginBottom: '40px',
   },
   heroButtons: {
@@ -629,10 +741,10 @@ const styles = {
     width: '12px',
     height: '12px',
     background: '#5DCDDB',
-    borderRadius: '50%',
+    borderRadius: '0',
   },
   section: {
-    padding: '128px 0 0',
+    padding: '128px 0',
   },
   sectionHeader: {
     textAlign: 'center',
@@ -650,7 +762,7 @@ const styles = {
     fontSize: '18px',
     lineHeight: '31px',
     color: '#A0A0A0',
-    maxWidth: '672px',
+    maxWidth: '1800px',
     margin: '0 auto',
   },
   servicesGrid: {
@@ -698,7 +810,7 @@ const styles = {
     transition: 'width 0.3s',
   },
   statsSection: {
-    padding: '160px 0',
+    padding: '128px 0',
     background: 'linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #1A1A1A 50%, rgba(0, 0, 0, 0) 100%)',
   },
   statsGrid: {
@@ -813,7 +925,7 @@ const styles = {
     transition: 'all 0.3s',
   },
   brandsSection: {
-    padding: '96px 0',
+    padding: '128px 0',
   },
   brandsTitle: {
     fontSize: '36px',
@@ -844,29 +956,92 @@ const styles = {
     padding: '128px 0',
     background: 'linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #1A1A1A 50%, rgba(0, 0, 0, 0) 100%)',
   },
-  testimonialsGrid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(3, 1fr)',
-    gap: '32px',
+  /* Slider styles for testimonials */
+  testimonialsSlider: {
+    position: 'relative',
+    overflow: 'visible',
+    width: '100%',
+    maxWidth: '1100px',
+    marginTop: '24px',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    padding: '0',
+  },
+  testimonialsTrack: {
+    display: 'flex',
+    gap: '0',
+    alignItems: 'stretch',
+    transition: 'transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1)',
+    willChange: 'transform',
+  },
+  testimonialsViewport: {
+    overflow: 'hidden',
+    width: '100%',
+  },
+  testimonialSlide: {
+    flex: '0 0 33.3333%',
+    boxSizing: 'border-box',
+    padding: '0 12px',
+    transition: 'transform 0.4s ease, box-shadow 0.4s ease, opacity 0.4s ease',
+    display: 'flex',
+    alignItems: 'stretch',
+  },
+  testimonialActive: {
+    transform: 'scale(1.04)',
+    boxShadow: '0 12px 30px rgba(0,0,0,0.6)',
+    opacity: 1,
+  },
+  testimonialInactive: {
+    transform: 'scale(0.98)',
+    boxShadow: 'none',
+    opacity: 0.82,
+  },
+  testimonialArrow: {
+    position: 'absolute',
+    top: '50%',
+    transform: 'translateY(-50%)',
+    zIndex: 8,
+    background: '#5DCDDB',
+    color: '#000000',
+    border: 'none',
+    width: '48px',
+    height: '48px',
+    borderRadius: '50%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    cursor: 'pointer',
+    fontSize: '22px',
+    boxShadow: '0 8px 20px rgba(93,205,219,0.16)',
+    transition: 'transform 0.18s ease, box-shadow 0.18s ease',
+  },
+  testimonialArrowLeft: {
+    left: '-56px',
+  },
+  testimonialArrowRight: {
+    right: '-56px',
   },
   testimonialCard: {
-    padding: '32px',
+    padding: '24px',
     background: 'rgba(37, 37, 37, 0.6)',
     border: '0.8px solid rgba(93, 205, 219, 0.1)',
     display: 'flex',
     flexDirection: 'column',
-    gap: '24px',
+    justifyContent: 'space-between',
+    gap: '16px',
+    minHeight: '240px',
   },
   quoteIcon: {
-    fontSize: '32px',
+    fontSize: '28px',
     color: '#5DCDDB',
   },
   testimonialQuote: {
-    fontSize: '18px',
+    fontSize: '17px',
     fontStyle: 'italic',
-    lineHeight: '29px',
+    lineHeight: '26px',
     color: '#A0A0A0',
-    flex: 1,
+    minHeight: '100px',
+    marginBottom: '8px',
   },
   testimonialAuthor: {
     display: 'flex',
@@ -893,7 +1068,7 @@ const styles = {
   ctaSection: {
     position: 'relative',
     margin: '0 48px 128px',
-    padding: '64.8px 208px',
+    padding: '128px 208px',
     background: 'rgba(37, 37, 37, 0.6)',
     border: '0.8px solid rgba(93, 205, 219, 0.1)',
     textAlign: 'center',

@@ -14,7 +14,7 @@
 }
 
 .headerContent {
-  max-width: 896px;
+  max-width: 1800px;
   text-align: center;
 }
 
@@ -89,7 +89,7 @@
 }
 
 .gridContainer {
-  max-width: 1184px;
+  max-width: 1800px;
   margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(3, 1fr);

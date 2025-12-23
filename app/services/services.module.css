@@ -13,7 +13,7 @@
 /* Services Page */
 .servicesPage {
   width: 100%;
-  max-width: 1280px;
+  max-width: 1800px;
   margin: 0 auto;
   padding: 0 48px;
 }
@@ -22,7 +22,7 @@
 .heroSection {
   text-align: center;
   padding: 128px 0 80px;
-  max-width: 896px;
+  max-width: 1800px;
   margin: 0 auto;
 }
 
@@ -209,8 +209,7 @@
 }
 
 .footerContent {
-  max-width: 1280px;
-  margin: 0 auto;
+  max-width: 1800px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 48px;
@@ -315,7 +314,7 @@
 
 /* Footer Bottom */
 .footerBottom {
-  max-width: 1280px;
+  max-width: 1800px;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
@@ -352,7 +351,7 @@
 @media (max-width: 1280px) {
   .servicesSection {
     grid-template-columns: repeat(2, 1fr);
-    max-width: 1184px;
+    max-width: 1800px;
   }
 
   .serviceCard {

@@ -20,7 +20,7 @@
 /* Hero Section */
 .heroSection {
   width: 100%;
-  max-width: 896px;
+  max-width: 1800px;
   padding: 128px 48px;
   text-align: center;
 }
@@ -63,7 +63,7 @@
   font-size: 20px;
   line-height: 28px;
   color: #A0A0A0;
-  max-width: 889px;
+  max-width: 1800px;
   margin: 0 auto;
 }
 
@@ -75,8 +75,7 @@
 }
 
 .container {
-  max-width: 1184px;
-  margin: 0 auto;
+  max-width: 1800px;
   display: flex;
   flex-direction: column;
   gap: 64px;
@@ -128,7 +127,7 @@
 /* Open Positions Section */
 .positionsSection {
   width: 100%;
-  max-width: 1280px;
+  max-width: 1800px;
   padding: 96px 48px;
 }
 
@@ -158,7 +157,7 @@
 
 /* Job Listings */
 .jobListings {
-  max-width: 896px;
+  max-width: 1800px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -242,7 +241,7 @@
 /* Model Section */
 .modelSection {
   width: 100%;
-  max-width: 1280px;
+  max-width: 1800px;
   padding: 96px 192px;
 }
 
@@ -427,11 +426,11 @@
   color: #A0A0A0;
   text-align: center;
   margin: 0 auto 32px;
-  max-width: 647px;
+  max-width: 1800px;
 }
 
 .customRoleForm {
-  max-width: 670px;
+  max-width: 1800px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -524,7 +523,7 @@
 }
 
 .footerContent {
-  max-width: 1184px;
+  max-width: 1800px;
   margin: 0 auto 48px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -644,7 +643,7 @@
 }
 
 .footerBottom {
-  max-width: 1184px;
+  max-width: 1800px;
   margin: 0 auto;
   padding-top: 32px;
   border-top: 0.8px solid rgba(255, 255, 255, 0.05);

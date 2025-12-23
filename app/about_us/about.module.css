@@ -10,7 +10,7 @@
 }
 
 .heroContent {
-  max-width: 896px;
+  max-width: 1800px;
   margin: 0 auto;
 }
 
@@ -27,7 +27,7 @@
   font-size: 20px;
   line-height: 28px;
   color: #A0A0A0;
-  max-width: 812px;
+  max-width: 1800px;
   margin: 0 auto;
 }
 
@@ -155,7 +155,7 @@
   font-size: 18px;
   line-height: 31px;
   color: #A0A0A0;
-  max-width: 713px;
+  max-width: 1800px;
   margin: 0 auto;
 }
 
@@ -270,7 +270,7 @@
 .techNote {
   text-align: center;
   padding: 12px 24px;
-  max-width: 453px;
+  max-width: 1800px;
   margin: 0 auto;
   background: rgba(37, 37, 37, 0.6);
   border: 0.8px solid rgba(93, 205, 219, 0.1);

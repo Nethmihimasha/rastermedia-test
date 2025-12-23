@@ -13,7 +13,7 @@
 /* Contact Page */
 .contactPage {
   width: 100%;
-  max-width: 1520.8px;
+  max-width: 1800px;
   margin: 0 auto;
   padding: 0 48px;
 }
@@ -22,7 +22,7 @@
 .heroSection {
   text-align: center;
   padding: 128px 0 80px;
-  max-width: 896px;
+  max-width: 1800px;
   margin: 0 auto;
 }
 
@@ -397,7 +397,7 @@
 
 .studioContent {
   text-align: center;
-  max-width: 400px;
+  max-width: 1800px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -450,7 +450,7 @@
 }
 
 .footerContent {
-  max-width: 1520.8px;
+  max-width: 1800px;
   margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -550,7 +550,7 @@
 
 /* Footer Bottom */
 .footerBottom {
-  max-width: 1520.8px;
+  max-width: 1800px;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
