@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 export default function HomePage() {
   return (
@@ -33,7 +33,6 @@ function HeroSection() {
       <div style={styles.heroOverlay}></div>
       <div style={styles.heroGrid}></div>
       
-      {/* Square pixel patterns - top right */}
       <PixelPattern 
         style={{ 
           position: 'absolute',
@@ -47,7 +46,6 @@ function HeroSection() {
         size="large" 
       />
       
-      {/* Square pixel patterns - bottom left */}
       <PixelPattern 
         style={{ 
           position: 'absolute',
@@ -98,7 +96,7 @@ function ServicesSection() {
       icon: '✏️',
       title: 'Graphic Design',
       description: 'Pixel-perfect designs that blend creativity with strategy.',
-      hasPattern: true, // No pixel pattern on Graphic Design card
+      hasPattern: true,
     },
     {
       icon: '📷',
@@ -182,27 +180,98 @@ function ServiceCard({ icon, title, description, hasPattern }) {
   );
 }
 
+// Count-up animation hook
+function useCountUp(end, duration = 2000, startCounting = false) {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    if (!startCounting) return;
+    
+    const startTime = Date.now();
+    const endValue = typeof end === 'string' ? parseInt(end.replace(/\D/g, '')) : parseInt(end);
+    
+    const timer = setInterval(() => {
+      const now = Date.now();
+      const progress = Math.min((now - startTime) / duration, 1);
+      
+      // Easing function for smooth animation
+      const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+      const currentCount = Math.floor(easeOutQuart * endValue);
+      
+      setCount(currentCount);
+      
+      if (progress === 1) {
+        clearInterval(timer);
+        setCount(endValue);
+      }
+    }, 16); // ~60fps
+    
+    return () => clearInterval(timer);
+  }, [end, duration, startCounting]);
+  
+  return count;
+}
+
 function StatsSection() {
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef(null);
+
   const stats = [
-    { value: '12+', label: 'Years Experience' },
-    { value: '500+', label: 'Happy Clients' },
-    { value: '1200+', label: 'Campaigns' },
-    { value: '50M+', label: 'Audience Reach' },
+    { value: '12', suffix: '+', label: 'YEARS EXPERIENCE' },
+    { value: '500', suffix: '+', label: 'HAPPY CLIENTS' },
+    { value: '1200', suffix: '+', label: 'CAMPAIGNS' },
+    { value: '50', suffix: 'M+', label: 'AUDIENCE REACH' },
   ];
 
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
+  }, []);
+
   return (
-    <section style={styles.statsSection}>
+    <section ref={sectionRef} style={styles.statsSection}>
       <div style={styles.container}>
         <div style={styles.statsGrid}>
           {stats.map((stat, index) => (
-            <div key={index} style={styles.statItem}>
-              <div style={{...styles.statValue, ...styles.gradientText}}>{stat.value}</div>
-              <div style={styles.statLabel}>{stat.label}</div>
-            </div>
+            <StatItem 
+              key={index} 
+              {...stat} 
+              startCounting={isVisible}
+              delay={index * 100}
+            />
           ))}
         </div>
       </div>
     </section>
+  );
+}
+
+function StatItem({ value, suffix, label, startCounting, delay }) {
+  const count = useCountUp(value, 2000, startCounting);
+
+  return (
+    <div style={styles.statItem}>
+      <div style={{...styles.statValue, ...styles.gradientText}}>
+        {count}{suffix}
+      </div>
+      <div style={styles.statLabel}>{label}</div>
+    </div>
   );
 }
 
@@ -388,7 +457,6 @@ function CTASection() {
   );
 }
 
-// Fixed PixelPattern component - creates SQUARE GRIDS instead of lines
 function PixelPattern({ style, size = 'small' }) {
   const gridConfig = {
     small: { rows: 3, cols: 3, pixelSize: 8, gap: 4 },
@@ -630,13 +698,13 @@ const styles = {
     transition: 'width 0.3s',
   },
   statsSection: {
-    padding: '96px 0',
+    padding: '160px 0',
     background: 'linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #1A1A1A 50%, rgba(0, 0, 0, 0) 100%)',
   },
   statsGrid: {
     display: 'grid',
     gridTemplateColumns: 'repeat(4, 1fr)',
-    gap: '48px',
+    gap: '80px',
   },
   statItem: {
     textAlign: 'center',
@@ -645,7 +713,7 @@ const styles = {
     fontSize: '64px',
     fontWeight: 700,
     lineHeight: '72px',
-    marginBottom: '8px',
+    marginBottom: '16px',
   },
   statLabel: {
     fontSize: '14px',
