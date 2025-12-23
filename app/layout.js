@@ -1,16 +1,20 @@
 import './globals.css';
 import Link from 'next/link';
 import Image from 'next/image';
+import NavLinkActive from './components/NavLinkActive.client';
 
 export const metadata = {
   title: 'Raster Media - Pixel Perfect Creative Solutions',
   description: 'Modern, pixel-sharp campaigns for brands that want to stand out',
 };
 
+import CleanBodyAttributes from './components/CleanBodyAttributes.client';
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>
+      <body suppressHydrationWarning>
+        <CleanBodyAttributes />
         <Header />
         <main>{children}</main>
         <Footer />
@@ -35,13 +39,14 @@ function Header() {
             />
           </div>
         </Link>
-        <nav style={styles.nav}>
-          <Link href="/" style={styles.navLink}>Home</Link>
-          <Link href="/about_us" style={styles.navLink}>About</Link>
-          <Link href="/services" style={styles.navLink}>Services</Link>
-          <Link href="/portfolio" style={styles.navLink}>Portfolio</Link>
-          <Link href="/contact" style={styles.navLink}>Contact</Link>
+        <nav style={styles.nav} className="nav">
+          <Link href="/" style={styles.navLink} className="nav-link">Home</Link>
+          <Link href="/about_us" style={styles.navLink} className="nav-link">About</Link>
+          <Link href="/services" style={styles.navLink} className="nav-link">Services</Link>
+          <Link href="/portfolio" style={styles.navLink} className="nav-link">Portfolio</Link>
+          <Link href="/contact" style={styles.navLink} className="nav-link">Contact</Link>
         </nav>
+        <NavLinkActive />
         <button style={styles.ctaButton}>Get Started</button>
       </div>
     </header>

@@ -59,17 +59,17 @@ function HeroSection() {
         size="medium" 
       />
       
-      <div style={styles.heroContent}>
-        <h1 style={styles.heroHeading}>
+      <div style={styles.heroContent} className="hero-content">
+        <h1 style={styles.heroHeading} className="hero-heading">
           <div style={styles.heroLine1}>CREATIVITY.</div>
           <div style={styles.heroLine2}>PIXEL PERFECT.</div>
         </h1>
         <p style={styles.heroDescription}>
           We build modern, pixel-sharp campaigns for brands that want to stand out.
         </p>
-        <div style={styles.heroButtons}>
-          <button style={styles.primaryButton}>START A PROJECT</button>
-          <button style={styles.secondaryButton}>VIEW PORTFOLIO</button>
+        <div style={styles.heroButtons} className="hero-buttons">
+          <button style={styles.primaryButton} className="btn btn--primary">START A PROJECT</button>
+          <button style={styles.secondaryButton} className="btn btn--outline">VIEW PORTFOLIO</button>
         </div>
         <div style={styles.heroDots}>
           {[0, 1, 2, 3, 4].map((i) => (
@@ -314,7 +314,7 @@ function FeaturedWorkSection() {
           ))}
         </div>
         <div style={styles.portfolioButtonWrapper}>
-          <button style={styles.portfolioButton}>View Full Portfolio</button>
+          <button style={styles.portfolioButton} className="btn btn--outline">View Full Portfolio</button>
         </div>
       </div>
     </section>
@@ -403,22 +403,47 @@ function TestimonialsSection() {
     },
   ];
 
-  const VISIBLE = 3;
-  const slideWidth = 100 / VISIBLE; // percent
+  function getVisible() {
+    if (typeof window === 'undefined') return 3;
+    const w = window.innerWidth;
+    if (w < 600) return 1;
+    if (w < 1000) return 2;
+    return 3;
+  }
+
+  const [visible, setVisible] = useState(getVisible);
+  const slideWidth = 100 / visible; // percent
 
   // build cloned list for seamless infinite scrolling
   const items = [
-    ...testimonials.slice(-VISIBLE),
+    ...testimonials.slice(-visible),
     ...testimonials,
-    ...testimonials.slice(0, VISIBLE),
+    ...testimonials.slice(0, visible),
   ];
 
-  const baseIndex = VISIBLE; // starting offset into items
+  const baseIndex = visible; // starting offset into items
   const [index, setIndex] = useState(baseIndex);
   const [isPaused, setIsPaused] = useState(false);
   const [isAnimating, setIsAnimating] = useState(true);
   const length = testimonials.length;
   const trackRef = useRef(null);
+
+  // keep visible in sync with viewport
+  useEffect(() => {
+    const onResize = () => {
+      const nv = getVisible();
+      setVisible(nv);
+    };
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
+
+  // snap to new base index on visible change
+  useEffect(() => {
+    setIsAnimating(false);
+    setIndex(visible);
+    setTimeout(() => setIsAnimating(true), 40);
+  }, [visible]);
 
   // autoplay
   useEffect(() => {
@@ -457,7 +482,7 @@ function TestimonialsSection() {
     }
   }
 
-  const centerIndex = index + Math.floor(VISIBLE / 2);
+  const centerIndex = index + Math.floor(visible / 2);
 
   return (
     <section style={styles.testimonialsSection}>
@@ -501,9 +526,10 @@ function TestimonialsSection() {
                   key={`${testimonial.name}-${i}`}
                   style={{
                     ...styles.testimonialSlide,
+                    flex: `0 0 ${slideWidth}%`,
                     ...(isCenter ? styles.testimonialActive : styles.testimonialInactive),
                   }}
-                  aria-hidden={!isCenter && (i < index || i > index + VISIBLE - 1)}
+                  aria-hidden={!isCenter && (i < index || i > index + visible - 1)}
                 >
                   <TestimonialCard {...testimonial} />
                 </div>
@@ -575,7 +601,7 @@ function CTASection() {
         <p style={styles.ctaDescription}>
           Let's collaborate and bring your vision to life with pixel-perfect precision.
         </p>
-        <button style={styles.ctaPrimaryButton}>
+        <button style={styles.ctaPrimaryButton} className="btn btn--cta animate-shimmer">
           Start Your Project
         </button>
       </div>
@@ -638,6 +664,7 @@ const styles = {
     minHeight: '681.6px',
     overflow: 'hidden',
   },
+
   heroVideo: {
     position: 'absolute',
     top: 0,
