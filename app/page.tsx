@@ -23,7 +23,7 @@ function HeroSection() {
         <iframe
           width="100%"
           height="100%"
-          src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&mute=1&loop=1&playlist=dQw4w9WgXcQ&controls=0&showinfo=0&rel=0&modestbranding=1"
+          src="https://www.youtube.com/embed/OmHLohPk6b0?autoplay=1&mute=1&loop=1&playlist=OmHLohPk6b0&controls=0&rel=0&modestbranding=1"
           title="Hero Video"
           frameBorder="0"
           allow="autoplay; encrypted-media"
@@ -281,16 +281,19 @@ function FeaturedWorkSection() {
       category: 'Branding & Photography',
       title: 'Luxury Fashion Campaign',
       client: 'Elegance Co.',
+      image: '/images/featured-fashion.jpg',
     },
     {
       category: 'Photography & Video',
       title: 'Modern Architecture Series',
       client: 'Urban Spaces',
+      image: '/images/featured-architecture.jpg',
     },
     {
       category: 'Photography',
       title: 'Editorial Fashion Story',
       client: 'Vogue Magazine',
+      image: '/images/featured-editorial.jpg',
     },
   ];
 
@@ -318,7 +321,7 @@ function FeaturedWorkSection() {
   );
 }
 
-function PortfolioCard({ category, title, client }) {
+function PortfolioCard({ category, title, client, image }) {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
@@ -327,7 +330,9 @@ function PortfolioCard({ category, title, client }) {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div style={styles.portfolioImage}></div>
+      <div style={styles.portfolioImage}>
+        {image ? <img src={image} alt={title} style={styles.portfolioImg} /> : null}
+      </div>
       <div style={styles.portfolioGradient}></div>
       <div style={{
         ...styles.portfolioHover,
@@ -370,26 +375,31 @@ function TestimonialsSection() {
       quote: "Raster Media transformed our brand identity completely. Their attention to detail and creative vision exceeded all expectations.",
       name: 'Sarah Johnson',
       role: 'CEO, TechFlow Inc',
+      avatar: '/images/avatars/sarah.jpg',
     },
     {
       quote: "Working with this team has been an absolute pleasure. They brought our vision to life with stunning precision.",
       name: 'Michael Chen',
       role: 'Marketing Director, Luxe Brands',
+      avatar: '/images/avatars/michael.jpg',
     },
     {
       quote: "Their pixel-perfect approach and premium quality output has made them our go-to creative partner.",
       name: 'Emma Rodriguez',
       role: 'Founder, Studio Collective',
+      avatar: '/images/avatars/emma.jpg',
     },
     {
       quote: "Professional, creative and results-driven—Raster Media delivered more than we imagined.",
       name: 'David Lee',
       role: 'Head of Marketing, Nova Retail',
+      avatar: '/images/avatars/david.jpg',
     },
     {
       quote: "Exceptional team and flawless execution. Our campaign saw record engagement after launch.",
       name: 'Priya Patel',
       role: 'CMO, FreshLeaf',
+      avatar: '/images/avatars/priya.jpg',
     },
   ];
 
@@ -515,13 +525,17 @@ function TestimonialsSection() {
   );
 }
 
-function TestimonialCard({ quote, name, role }) {
+function TestimonialCard({ quote, name, role, avatar }) {
   return (
     <div style={styles.testimonialCard}>
       <div style={styles.quoteIcon}>❝</div>
       <p style={styles.testimonialQuote}>{quote}</p>
       <div style={styles.testimonialAuthor}>
-        <div style={styles.authorAvatar}></div>
+        <div style={styles.authorAvatar}>
+          {avatar ? (
+            <img src={avatar} alt={name} style={styles.authorAvatarImg} />
+          ) : null}
+        </div>
         <div>
           <div style={styles.authorName}>{name}</div>
           <div style={styles.authorRole}>{role}</div>
@@ -852,6 +866,13 @@ const styles = {
     width: '100%',
     height: '100%',
     background: 'linear-gradient(45deg, #2A2A2A 0%, #3A3A3A 100%)',
+    overflow: 'hidden',
+  },
+  portfolioImg: {
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover',
+    display: 'block',
   },
   portfolioGradient: {
     position: 'absolute',
@@ -1053,6 +1074,14 @@ const styles = {
     height: '56px',
     background: 'linear-gradient(180deg, #5DCDDB 0%, #7DD8E5 100%)',
     borderRadius: '50%',
+    overflow: 'hidden',
+    flexShrink: 0,
+  },
+  authorAvatarImg: {
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover',
+    display: 'block',
   },
   authorName: {
     fontSize: '25.904px',
