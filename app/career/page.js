@@ -291,7 +291,7 @@ export default function CareersPage() {
             <div className={styles.pixelPattern}></div>
             <h3 className={styles.customRoleHeading}>Don't See Your Role?</h3>
             <p className={styles.customRoleParagraph}>
-              We're always interested in meeting talented individuals. Send us your resume and we'll keep you in mind for future opportunities.
+              We are always interested in meeting talented individuals. Send us your resume and we'll keep you in mind for future opportunities.
             </p>
             <form className={styles.customRoleForm}>
               <div className={styles.formRow}>
