@@ -1,6 +1,7 @@
 'use client';
 
 import styles from './about.module.css';
+import { useEffect, useRef } from 'react';
 
 export default function AboutPage() {
   return (
@@ -153,15 +154,16 @@ function BehindTheScenesSection() {
 }
 
 function TechnologyStackSection() {
-  const technologies = [
-    'Adobe Photoshop',
-    'Adobe Illustrator',
+  const creativeTech = [
     'Adobe InDesign',
     'Figma',
     'Adobe Premiere Pro',
     'After Effects',
     'Adobe Lightroom',
-    'Cinema 4D',
+    'Cinema 4D'
+  ];
+
+  const devTech = [
     'React.js',
     'Next.js',
     'TypeScript',
@@ -172,20 +174,99 @@ function TechnologyStackSection() {
     'Shopify'
   ];
 
+  const leftRef = useRef(null);
+  const rightRef = useRef(null);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const speedPxPerSec = 40; // slower speed for smoother motion (lower = slower)
+
+    const setupTrack = (track) => {
+      if (!track) return;
+      // We duplicate items in the markup, so total scrollWidth == 2 * single set width
+      const totalWidth = track.scrollWidth;
+      if (!totalWidth) return;
+      const singleWidth = totalWidth / 2;
+      // set CSS variables used by CSS animation
+      track.style.setProperty('--marquee-distance', `${singleWidth}px`);
+      // compute duration from distance and speed, clamp to a reasonable minimum
+      const duration = Math.max(8, singleWidth / speedPxPerSec);
+      track.style.setProperty('--marquee-duration', `${duration}s`);
+    };
+
+    const ro = new ResizeObserver(() => {
+      setupTrack(leftRef.current);
+      setupTrack(rightRef.current);
+    });
+
+    if (leftRef.current) ro.observe(leftRef.current);
+    if (rightRef.current) ro.observe(rightRef.current);
+
+    // initial setup
+    setupTrack(leftRef.current);
+    setupTrack(rightRef.current);
+
+    const onResize = () => {
+      setupTrack(leftRef.current);
+      setupTrack(rightRef.current);
+    };
+
+    window.addEventListener('resize', onResize);
+    window.addEventListener('load', onResize);
+
+    return () => {
+      ro.disconnect();
+      window.removeEventListener('resize', onResize);
+      window.removeEventListener('load', onResize);
+    };
+  }, []);
+
   return (
     <section className={styles.techSection}>
-      <div className={styles.techRibbon}>
-        <div className={styles.techTrack}>
-          {[...technologies, ...technologies].map((tech, index) => (
-            <div key={index} className={styles.techItem}>
-              <div className={styles.techDot}></div>
-              <span>{tech}</span>
+      <div className={styles.container}>
+        <h2 className={styles.techTitle}>Our Technology Stack</h2>
+        <p className={styles.techSubtitle}>Industry-leading tools and technologies to bring your vision to life.</p>
+
+        <div className={styles.techGroups}>
+          <div className={styles.techGroup}>
+            <div className={styles.groupHeader}>
+              <div className={styles.groupIcon}>🎨</div>
+              <div className={styles.groupTitle}>Creative &amp; Design</div>
             </div>
-          ))}
+            <div className={styles.techRibbon}>
+              <div ref={leftRef} className={`${styles.techTrack} ${styles.techTrackLeft}`} aria-hidden>
+                {[...creativeTech, ...creativeTech].map((tech, i) => (
+                  <div key={i} className={styles.techItem}>
+                    <div className={styles.techDot}></div>
+                    <span>{tech}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className={styles.techGroup}>
+            <div className={styles.groupHeader}>
+              <div className={styles.groupIcon}>&lt;/&gt;</div>
+              <div className={styles.groupTitle}>Development &amp; Web</div>
+            </div>
+            <div className={styles.techRibbon}>
+              <div ref={rightRef} className={`${styles.techTrack} ${styles.techTrackRight}`} aria-hidden>
+                {[...devTech, ...devTech].map((tech, i) => (
+                  <div key={i} className={styles.techItem}>
+                    <div className={styles.techDot}></div>
+                    <span>{tech}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-      <div className={styles.techNote}>
-        Expanding into custom software development & web solutions
+
+        <div className={styles.techNote}>
+          Expanding into custom software development &amp; web solutions
+        </div>
       </div>
     </section>
   );

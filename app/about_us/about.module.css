@@ -231,32 +231,130 @@
   overflow: hidden;
 }
 
-.techRibbon {
-  position: relative;
-  overflow: hidden;
-  padding: 24px 0;
+.container {
+  max-width: 1800px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.techTitle {
+  text-align: center;
+  font-size: 51.808px;
+  font-weight: 700;
+  color: #FFFFFF;
+  margin-bottom: 8px;
+}
+
+.techSubtitle {
+  text-align: center;
+  font-size: 18px;
+  color: #A0A0A0;
   margin-bottom: 32px;
 }
 
+.techGroups {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.techGroup {
+  width: 100%;
+}
+
+.groupHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: center;
+  color: #A0A0A0;
+  font-weight: 600;
+  margin-bottom: 18px;
+}
+
+.groupIcon {
+  width: 38px;
+  height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(93, 205, 219, 0.08);
+  border-radius: 6px;
+  color: #5DCDDB;
+  font-size: 16px;
+}
+
+.groupTitle {
+  font-size: 18px;
+  color: #FFFFFF;
+}
+
+.techRibbon {
+  position: relative;
+  overflow: hidden;
+  padding: 12px 0;
+}
+
+/* subtle left/right fade overlays to mask edges and match the design */
+.techRibbon::before,
+.techRibbon::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 140px;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.techRibbon::before {
+  left: 0;
+  background: linear-gradient(to right, rgba(26,26,26,1) 0%, rgba(26,26,26,0) 100%);
+}
+
+.techRibbon::after {
+  right: 0;
+  background: linear-gradient(to left, rgba(26,26,26,1) 0%, rgba(26,26,26,0) 100%);
+}
+
+/* make sure track sits under overlays */
+.techTrack {
+  position: relative;
+  z-index: 1;
+}
 .techTrack {
   display: flex;
-  gap: 12px;
-  animation: slideLeft 40s linear infinite;
-  width: fit-content;
+  gap: 24px; /* increased spacing between items */
+  width: max-content;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* single keyframe used for seamless looping; duplicate items in JS provide the repeated content */
+.techTrackLeft {
+  animation: marquee var(--marquee-duration, 28s) linear infinite;
+}
+
+.techTrackRight {
+  animation: marquee var(--marquee-duration, 32s) linear infinite;
+  animation-direction: reverse; /* reverse direction to scroll the other way */
 }
 
 .techItem {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 0 24px;
-  height: 49.6px;
+  gap: 18px; /* space between dot and text */
+  padding: 0 32px; /* wider padding between items */
+  height: 52px;
   background: rgba(37, 37, 37, 0.6);
-  border: 0.8px solid rgba(93, 205, 219, 0.1);
+  border: 0.8px solid rgba(93, 205, 219, 0.06);
   white-space: nowrap;
   font-size: 16px;
   line-height: 24px;
   color: #A0A0A0;
+  border-radius: 4px;
 }
 
 .techDot {
@@ -270,13 +368,19 @@
 .techNote {
   text-align: center;
   padding: 12px 24px;
-  max-width: 1800px;
+  max-width: 700px;
   margin: 0 auto;
   background: rgba(37, 37, 37, 0.6);
   border: 0.8px solid rgba(93, 205, 219, 0.1);
   font-size: 14px;
   line-height: 20px;
   color: #A0A0A0;
+  margin-top: 24px;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(calc(-1 * var(--marquee-distance))); }
 }
 
 /* Responsive */
@@ -299,6 +403,12 @@
   .valuesGrid,
   .btsGrid {
     grid-template-columns: 1fr;
+  }
+
+  /* reduce overlay width on smaller screens so content isn't overly masked */
+  .techRibbon::before,
+  .techRibbon::after {
+    width: 64px;
   }
 }
 
