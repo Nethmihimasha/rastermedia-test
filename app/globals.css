@@ -119,6 +119,42 @@ body {
   color: #FFFFFF;
 }
 
+/* Footer link hover animation */
+.footer-link {
+  color: #6B6B6B;
+  text-decoration: none;
+  position: relative;
+  padding-bottom: 6px;
+  transition: color 320ms cubic-bezier(.16,.84,.3,1), transform 320ms cubic-bezier(.16,.84,.3,1);
+  display: inline-block;
+  will-change: transform, color;
+}
+
+.footer-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 0%;
+  background: linear-gradient(90deg, #5DCDDB 0%, #7DD8E5 100%);
+  transition: width 360ms cubic-bezier(.16,.84,.3,1);
+  transform-origin: left center;
+}
+
+.footer-link:hover {
+  color: #FFFFFF;
+  transform: translateX(4px) translateY(-1px);
+}
+
+.footer-link:hover::after {
+  width: 100%;
+}
+
+.footer-link:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 6px rgba(93,205,219,0.06);
+} 
 /* Responsive tweaks */
 @media (max-width: 1200px) {
   header .nav {
