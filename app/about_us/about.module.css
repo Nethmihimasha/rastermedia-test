@@ -1,4 +1,8 @@
 /* Page */
+.body{
+  font-family: 'Inter', sans-serif;
+}
+
 .page {
   padding-top: 72px;
 }

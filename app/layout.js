@@ -44,7 +44,7 @@ function Header() {
   <Link href="/about_us" style={styles.navLink} className="nav-link">About</Link>
   <Link href="/services" style={styles.navLink} className="nav-link">Services</Link>
   <Link href="/portfolio" style={styles.navLink} className="nav-link">Portfolio</Link>
-  <Link href="/reviews" style={styles.navLink} className="nav-link">Review Us</Link>
+  <Link href="/review" style={styles.navLink} className="nav-link">Review Us</Link>
   <Link href="/contact" style={styles.navLink} className="nav-link">Contact</Link>
 </nav>
         <NavLinkActive />
