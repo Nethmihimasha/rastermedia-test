@@ -981,7 +981,7 @@ const styles = {
     lineHeight: '43px',
     textAlign: 'center',
     color: '#FFFFFF',
-    marginBottom: '48px',
+    marginBottom: '100px',
   },
   brandsWrapper: {
     overflow: 'hidden',
@@ -1001,7 +1001,7 @@ const styles = {
     whiteSpace: 'nowrap',
   },
   testimonialsSection: {
-    padding: '128px 0',
+    padding: '100px 0',
     background: 'linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #1A1A1A 50%, rgba(0, 0, 0, 0) 100%)',
   },
   /* Slider styles for testimonials */
