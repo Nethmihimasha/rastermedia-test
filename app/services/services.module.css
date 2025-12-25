@@ -31,7 +31,7 @@
 }
 
 .mainTitle {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Cousine', monospace;
   font-weight: 700;
   font-size: 77.712px;
   line-height: 85px;
@@ -46,7 +46,7 @@
 }
 
 .gradientText span {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Cousine', monospace;
   font-weight: 700;
   font-size: 77.712px;
   line-height: 85px;
@@ -59,7 +59,7 @@
 }
 
 .heroParagraph {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Cousine', monospace;
   font-weight: 400;
   font-size: 20px;
   line-height: 28px;
@@ -95,7 +95,7 @@
   position: absolute;
   top: 32.8px;
   right: 32.8px;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Cousine', monospace;
   font-weight: 400;
   font-size: 60px;
   line-height: 60px;
@@ -124,16 +124,16 @@
 }
 
 .serviceNumber {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Cousine', monospace;
   font-weight: 400;
-  font-size: 14px;
+  font-size: 16px; 
   line-height: 20px;
   color: #5DCDDB;
   margin-bottom: 12px;
 }
 
 .serviceTitle {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Cousine', monospace;
   font-weight: 600;
   font-size: 36px;
   line-height: 43px;
@@ -142,7 +142,7 @@
 }
 
 .serviceDescription {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Cousine', monospace;
   font-weight: 400;
   font-size: 18px;
   line-height: 29px;
@@ -162,7 +162,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Cousine', monospace;
   font-weight: 400;
   font-size: 14px;
   line-height: 20px;
@@ -183,7 +183,7 @@
   align-items: center;
   gap: 8px;
   margin-top: 24px;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Cousine', monospace;
   font-weight: 400;
   font-size: 14px;
   line-height: 20px;
@@ -234,7 +234,7 @@
 }
 
 .footerDescription {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Cousine', monospace;
   font-weight: 400;
   font-size: 14px;
   line-height: 20px;
@@ -256,7 +256,7 @@
 }
 
 .footerTitle {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Cousine', monospace;
   font-weight: 600;
   font-size: 25.904px;
   line-height: 34px;
@@ -274,7 +274,7 @@
 }
 
 .footerList li a {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Cousine', monospace;
   font-weight: 400;
   font-size: 14px;
   line-height: 20px;
@@ -300,7 +300,7 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Cousine', monospace;
   font-weight: 400;
   font-size: 14px;
   line-height: 20px;
@@ -324,7 +324,7 @@
 }
 
 .copyright {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Cousine', monospace;
   font-weight: 400;
   font-size: 14px;
   line-height: 20px;

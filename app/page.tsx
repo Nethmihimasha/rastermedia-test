@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import type { CSSProperties } from 'react';
 
 export default function HomePage() {
   return (
@@ -145,7 +146,7 @@ function ServicesSection() {
   );
 }
 
-function ServiceCard({ icon, title, description, hasPattern }) {
+function ServiceCard({ icon, title, description, hasPattern }: { icon: React.ReactNode; title: string; description: string; hasPattern?: boolean }) {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
@@ -181,14 +182,14 @@ function ServiceCard({ icon, title, description, hasPattern }) {
 }
 
 // Count-up animation hook
-function useCountUp(end, duration = 2000, startCounting = false) {
+function useCountUp(end: string | number, duration: number = 2000, startCounting: boolean = false): number {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
     if (!startCounting) return;
     
     const startTime = Date.now();
-    const endValue = typeof end === 'string' ? parseInt(end.replace(/\D/g, '')) : parseInt(end);
+    const endValue = typeof end === 'string' ? parseInt(end.replace(/\D/g, '')) : Number(end);
     
     const timer = setInterval(() => {
       const now = Date.now();
@@ -262,7 +263,7 @@ function StatsSection() {
   );
 }
 
-function StatItem({ value, suffix, label, startCounting, delay }) {
+function StatItem({ value, suffix, label, startCounting, delay }: { value: string | number; suffix?: string; label: string; startCounting?: boolean; delay?: number }) {
   const count = useCountUp(value, 2000, startCounting);
 
   return (
@@ -321,7 +322,7 @@ function FeaturedWorkSection() {
   );
 }
 
-function PortfolioCard({ category, title, client, image }) {
+function PortfolioCard({ category, title, client, image }: { category: string; title: string; client: string; image: string }) {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
@@ -551,7 +552,7 @@ function TestimonialsSection() {
   );
 }
 
-function TestimonialCard({ quote, name, role, avatar }) {
+function TestimonialCard({ quote, name, role, avatar }: { quote: string; name: string; role: string; avatar?: string }) {
   return (
     <div style={styles.testimonialCard}>
       <div style={styles.quoteIcon}>❝</div>
@@ -609,7 +610,7 @@ function CTASection() {
   );
 }
 
-function PixelPattern({ style, size = 'small' }) {
+function PixelPattern({ style, size = 'small' }: { style?: React.CSSProperties; size?: 'small' | 'medium' | 'large' }) {
   const gridConfig = {
     small: { rows: 3, cols: 3, pixelSize: 8, gap: 4 },
     medium: { rows: 4, cols: 4, pixelSize: 10, gap: 5 },
@@ -642,7 +643,7 @@ function PixelPattern({ style, size = 'small' }) {
   );
 }
 
-const styles = {
+const styles: Record<string, CSSProperties> = {
   page: {
     paddingTop: '72px',
   },

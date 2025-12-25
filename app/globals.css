@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Cousine:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cousine:wght@400;700&display=swap');
 
 * {
   margin: 0;
@@ -7,11 +7,11 @@
 }
 
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Cousine', monospace;
   background-color: #0F0F0F;
   color: #FFFFFF;
   overflow-x: hidden;
-}
+} 
 
 /* Utility Classes */
 .container {
@@ -96,7 +96,8 @@ body {
   position: relative;
   padding: 6px 0;
   transition: color 180ms ease;
-}
+  font-weight: 700;
+} 
 
 .nav-link::after {
   content: '';
@@ -149,6 +150,25 @@ body {
 
 .footer-link:hover::after {
   width: 100%;
+}
+
+/* Disable hover/animation for contact column links */
+.footer-contact-link {
+  transition: none !important;
+  transform: none !important;
+}
+
+.footer-contact-link::after {
+  width: 0 !important;
+  transition: none !important;
+}
+
+.footer-contact-link:hover,
+.footer-contact-link:focus,
+.footer-contact-link:focus-visible {
+  color: inherit !important;
+  transform: none !important;
+  box-shadow: none !important;
 }
 
 .footer-link:focus-visible {
