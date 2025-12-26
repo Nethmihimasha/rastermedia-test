@@ -1,7 +1,29 @@
+"use client";
+
+import { useState } from 'react';
 import styles from './career.module.css';
 
 
 export default function CareersPage() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedJob, setSelectedJob] = useState('');
+
+  function openModal(title) {
+    setSelectedJob(title);
+    setIsModalOpen(true);
+  }
+
+  function closeModal() {
+    setIsModalOpen(false);
+    setSelectedJob('');
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    // TODO: wire up real submission
+    closeModal();
+  }
+
   return (
     <div className={styles.app}>
       <div className={styles.careersPage}>
@@ -17,6 +39,32 @@ export default function CareersPage() {
            Be part of a talented team creating exceptional work for world-class brands
           </p>
         </section>
+
+        {isModalOpen && (
+          <div className={styles.modalOverlay} onClick={closeModal}>
+            <div className={styles.modalContainer} onClick={(e) => e.stopPropagation()}>
+              <div className={styles.modalInner}>
+                <div className={styles.modalHeader}>
+                  <h3 className={styles.modalTitle}>{selectedJob}</h3>
+                  <button className={styles.modalClose} onClick={closeModal} aria-label="Close">×</button>
+                </div>
+                <p className={styles.modalSubtitle}>Apply for this position</p>
+                <form className={styles.modalForm} onSubmit={handleSubmit}>
+                  <div className={styles.modalRow}>
+                    <input name="name" placeholder="Full Name" className={styles.modalInput} required />
+                    <input name="email" type="email" placeholder="Email Address" className={styles.modalInput} required />
+                  </div>
+                  <div className={styles.modalFile}>
+                    <input type="file" name="resume" accept=".pdf,.doc,.docx" />
+                    <p className={styles.modalUploadText}>PDF or DOCX (Max 10MB)</p>
+                  </div>
+                  <textarea name="cover" placeholder="Cover letter (optional)" className={styles.modalTextarea}></textarea>
+                  <button type="submit" className={styles.modalSubmit}>Submit Application</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Why Work With Us Section */}
         <section className={styles.whyWorkSection}>
@@ -65,7 +113,10 @@ export default function CareersPage() {
                   <h3 className={styles.jobTitle}>Senior Graphic Designer</h3>
                   <span className={styles.jobCategory}>Creative</span>
                 </div>
-                <button className={styles.applyButton}>
+                <button
+                  className={styles.applyButton}
+                  onClick={() => openModal('Senior Graphic Designer')}
+                >
                   <span>Apply Now</span>
                 </button>
               </div>
@@ -98,7 +149,10 @@ export default function CareersPage() {
                   <h3 className={styles.jobTitle}>Photographer</h3>
                   <span className={styles.jobCategory}>Production</span>
                 </div>
-                <button className={styles.applyButton}>
+                <button
+                  className={styles.applyButton}
+                  onClick={() => openModal('Photographer')}
+                >
                   <span>Apply Now</span>
                 </button>
               </div>
@@ -131,7 +185,10 @@ export default function CareersPage() {
                   <h3 className={styles.jobTitle}>Video Producer</h3>
                   <span className={styles.jobCategory}>Production</span>
                 </div>
-                <button className={styles.applyButton}>
+                <button
+                  className={styles.applyButton}
+                  onClick={() => openModal('Video Producer')}
+                >
                   <span>Apply Now</span>
                 </button>
               </div>
@@ -164,7 +221,10 @@ export default function CareersPage() {
                   <h3 className={styles.jobTitle}>Social Media Strategist</h3>
                   <span className={styles.jobCategory}>Strategy</span>
                 </div>
-                <button className={styles.applyButton}>
+                <button
+                  className={styles.applyButton}
+                  onClick={() => openModal('Social Media Strategist')}
+                >
                   <span>Apply Now</span>
                 </button>
               </div>
@@ -197,7 +257,10 @@ export default function CareersPage() {
                   <h3 className={styles.jobTitle}>Creative Director</h3>
                   <span className={styles.jobCategory}>Creative</span>
                 </div>
-                <button className={styles.applyButton}>
+                <button
+                  className={styles.applyButton}
+                  onClick={() => openModal('Creative Director')}
+                >
                   <span>Apply Now</span>
                 </button>
               </div>
@@ -230,7 +293,10 @@ export default function CareersPage() {
                   <h3 className={styles.jobTitle}>Account Manager</h3>
                   <span className={styles.jobCategory}>Client Services</span>
                 </div>
-                <button className={styles.applyButton}>
+                <button
+                  className={styles.applyButton}
+                  onClick={() => openModal('Account Manager')}
+                >
                   <span>Apply Now</span>
                 </button>
               </div>

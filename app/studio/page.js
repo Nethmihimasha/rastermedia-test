@@ -1,308 +1,479 @@
+'use client';
+
+import { useState } from 'react';
 import styles from './studio.module.css';
 
 export default function StudioBookingPage() {
   return (
-    <div className={styles.app}>
-      {/* Header */}
-      <header className={styles.header}>
-        <button className={styles.logoButton}>
-          <div className={styles.logo}></div>
-        </button>
-        
-        <nav className={styles.nav}>
-          <button className={styles.navButton}>Home</button>
-          <button className={styles.navButton}>About</button>
-          <button className={styles.navButton}>Services</button>
-          <button className={styles.navButton}>Portfolio</button>
-          <button className={`${styles.navButton} ${styles.active}`}>
-            Studio
-            <div className={styles.activeIndicator}></div>
-          </button>
-          <button className={styles.navButton}>Careers</button>
-          <button className={styles.navButton}>Contact</button>
-        </nav>
+    <div className={styles.page}>
+      <HeroSection />
+      <BackdropPackagesSection />
+      <PodcastPackagesSection />
+      <BookingFormSection />
+      <LocationSection />
+    </div>
+  );
+}
 
-        <button className={styles.ctaButton}>Get in Touch</button>
-      </header>
+function HeroSection() {
+  return (
+    <section className={styles.heroSection}>
+      <div className={styles.heroContent}>
+        <h1 className={styles.heroTitle}>
+          Book Our Professional
+          <br />
+          <span className={styles.gradientText}>Creative Studio</span>
+        </h1>
+        <p className={styles.heroSubtitle}>
+          Fully-equipped studio space with professional lighting, backdrops, and equipment. Perfect for photography, videography, and creative productions.
+        </p>
+      </div>
+    </section>
+  );
+}
 
-      <div className={styles.studioPage}>
-        {/* Hero Section */}
-        <section className={styles.heroSection}>
-          <div className={styles.heading1}>
-            <span className={styles.bookOur}>Book Our Professional</span>
-            <div className={styles.textWrapper}>
-              <span className={styles.creativeStudio}>Creative Studio</span>
-            </div>
-          </div>
-          <p className={styles.heroParagraph}>
-            Fully-equipped studio space with professional lighting, backdrops, and equipment. Perfect for photography, videography, and creative productions.
+function BackdropPackagesSection() {
+  const packages = [
+    {
+      title: '1 Hour Package',
+      price: '3,000',
+      image: '/images/studio-1hr.jpg',
+      equipment: [
+        'Godox 600 BM II',
+        'Nanlite FC-300B',
+        'Nanlite FC-120B',
+        'C-stand with boom arm',
+        '120 Parabolic Softbox',
+        '90 Softbox',
+        'Godox SB-FW 35x160cm Softbox',
+        'Makeup & Dressing Room',
+        'Fully Air-Conditioned',
+        'Pantry Area',
+        'Parking',
+      ],
+      extraHour: '2,500',
+    },
+    {
+      title: '2 Hours Package',
+      price: '5,500',
+      image: '/images/studio-2hr.jpg',
+      equipment: [
+        'Godox 600 BM II',
+        'Nanlite FC-300B',
+        'Nanlite FC-120B',
+        'C-stand with boom arm',
+        '120 Parabolic Softbox',
+        '90 Softbox',
+        'Godox SB-FW 35x160cm Softbox',
+        'Makeup & Dressing Room',
+        'Fully Air-Conditioned',
+        'Pantry Area',
+        'Parking',
+      ],
+      extraHour: '2,500',
+    },
+    {
+      title: '5 Hours Package',
+      price: '12,500',
+      image: '/images/studio-5hr.jpg',
+      popular: true,
+      equipment: [
+        'Godox 600 BM II',
+        'Nanlite FC-300B',
+        'Nanlite FC-120B',
+        'ZSYB LC60C RGB Video Light',
+        'C-stand with boom arm',
+        '120 Parabolic Softbox',
+        '90 Softbox',
+        'Godox SB-FW 35x160cm Softbox',
+        'Bowens Mount Spotlight Light Projector',
+        'Makeup & Dressing Room',
+        'Fully Air-Conditioned',
+        'Pantry Area',
+        'Parking',
+      ],
+      extraHour: '2,500',
+    },
+    {
+      title: '8 Hours Package',
+      price: '20,000',
+      image: '/images/studio-8hr.jpg',
+      equipment: [
+        'Godox 600 BM II',
+        'Nanlite FC-300B',
+        'Nanlite FC-120B',
+        'ZSYB LC60C RGB Video Light',
+        'C-stand with boom arm',
+        '120 Parabolic Softbox',
+        '90 Softbox',
+        'Godox SB-FW 35x160cm Softbox',
+        'Bowens Mount Spotlight Light Projector',
+        'Makeup & Dressing Room',
+        'Fully Air-Conditioned',
+        'Pantry Area',
+        'Parking',
+      ],
+      extraHour: '2,500',
+    },
+  ];
+
+  return (
+    <section className={styles.packagesSection}>
+      <div className={styles.container}>
+        <div className={styles.sectionHeader}>
+          <h2 className={styles.sectionTitle}>
+            Seamless Paper <span className={styles.gradientText}>Backdrop Packages</span>
+          </h2>
+          <p className={styles.sectionSubtitle}>
+            Professional studio setups with complete lighting equipment for photography and videography
           </p>
-        </section>
+        </div>
+        <div className={styles.packagesGrid}>
+          {packages.map((pkg, index) => (
+            <PackageCard key={index} {...pkg} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
 
-        {/* Studio Gallery */}
-        <section className={styles.gallerySection}>
-          <div className={styles.galleryGrid}>
-            <div className={styles.galleryItem}>
-              <div className={styles.galleryImage}></div>
-              <div className={styles.galleryOverlay}></div>
+function PodcastPackagesSection() {
+  const packages = [
+    {
+      title: '1 Hour Package',
+      price: '4,000',
+      image: '/images/podcast-1hr.jpg',
+      equipment: [
+        '1 Seated Sofa ×2',
+        'Nanlite FC-300B',
+        'Nanlite FC-120B',
+        'Godox 600 BM II',
+        'KF RGB Video Light',
+        'Floor Lamp',
+        'C-stand with boom arm',
+        '120 Parabolic Softbox',
+        '90 Softbox',
+        'Makeup & Dressing Room',
+        'Fully Air-Conditioned',
+        'Pantry Area',
+        'Parking',
+      ],
+      extraHour: '3,500',
+    },
+    {
+      title: '2 Hours Package',
+      price: '7,500',
+      image: '/images/podcast-2hr.jpg',
+      equipment: [
+        '1 Seated Sofa ×2',
+        'Nanlite FC-300B',
+        'Nanlite FC-120B',
+        'Godox 600 BM II',
+        'KF RGB Video Light',
+        'Floor Lamp',
+        'C-stand with boom arm',
+        '120 Parabolic Softbox',
+        '90 Softbox',
+        'Godox SB-FW 35x160cm Softbox',
+        'Makeup & Dressing Room',
+        'Fully Air-Conditioned',
+        'Pantry Area',
+        'Parking',
+      ],
+      extraHour: '3,500',
+    },
+    {
+      title: '5 Hours Package',
+      price: '14,500',
+      image: '/images/podcast-5hr.jpg',
+      popular: true,
+      equipment: [
+        '1 Seated Sofa ×2',
+        'Nanlite FC-300B',
+        'Nanlite FC-120B',
+        'Godox 600 BM II',
+        'KF RGB Video Light',
+        'Floor Lamp',
+        'ZSYB LC60C RGB Video Light',
+        'C-stand with boom arm',
+        '120 Parabolic Softbox',
+        '90 Softbox',
+        'Godox SB-FW 35x160cm Softbox',
+        'Bowens Mount Spotlight Light Projector',
+        'Makeup & Dressing Room',
+        'Fully Air-Conditioned',
+        'Pantry Area',
+        'Parking',
+      ],
+      extraHour: '3,500',
+    },
+    {
+      title: '8 Hours Package',
+      price: '22,500',
+      image: '/images/podcast-8hr.jpg',
+      equipment: [
+        '1 Seated Sofa ×2',
+        'Nanlite FC-300B',
+        'Nanlite FC-120B',
+        'Godox 600 BM II',
+        'KF RGB Video Light',
+        'Floor Lamp',
+        'ZSYB LC60C RGB Video Light',
+        'C-stand with boom arm',
+        '120 Parabolic Softbox',
+        '90 Softbox',
+        'Godox SB-FW 35x160cm Softbox',
+        'Bowens Mount Spotlight Light Projector',
+        'Makeup & Dressing Room',
+        'Fully Air-Conditioned',
+        'Pantry Area',
+        'Parking',
+      ],
+      extraHour: '3,500',
+    },
+  ];
+
+  return (
+    <section className={styles.packagesSection}>
+      <div className={styles.container}>
+        <div className={styles.sectionHeader}>
+          <h2 className={styles.sectionTitle}>
+            Podcast / Interior <span className={styles.gradientText}>Setup Packages</span>
+          </h2>
+          <p className={styles.sectionSubtitle}>
+            Complete interior setups perfect for podcasts, interviews, and content creation
+          </p>
+        </div>
+        <div className={styles.packagesGrid}>
+          {packages.map((pkg, index) => (
+            <PackageCard key={index} {...pkg} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function PackageCard({ title, price, image, equipment, extraHour, popular }) {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const displayItems = isExpanded ? equipment : equipment.slice(0, 5);
+
+  return (
+    <div className={styles.packageCard}>
+      {popular && <div className={styles.popularBadge}>Most Popular</div>}
+      
+      <div className={styles.packageImage}>
+        {image && <img src={image} alt={title} />}
+      </div>
+
+      <div className={styles.packageContent}>
+        <h3 className={styles.packageTitle}>{title}</h3>
+        
+        <div className={styles.packagePrice}>
+          <span className={styles.currency}>LKR</span>
+          <span className={styles.amount}>{price}</span>
+        </div>
+
+        <div className={styles.equipmentList}>
+          <h4 className={styles.equipmentTitle}>Includes:</h4>
+          <ul className={styles.equipmentItems}>
+            {displayItems.map((item, index) => (
+              <li key={index} className={styles.equipmentItem}>
+                <span className={styles.checkIcon}>✓</span>
+                {item}
+              </li>
+            ))}
+          </ul>
+          
+          {equipment.length > 5 && (
+            <button
+              className={styles.readMoreButton}
+              onClick={() => setIsExpanded(!isExpanded)}
+            >
+              {isExpanded ? 'Show Less' : `Show ${equipment.length - 5} More`}
+              <span className={styles.arrow}>{isExpanded ? '↑' : '↓'}</span>
+            </button>
+          )}
+        </div>
+
+        <div className={styles.extraHour}>
+          Extra Hour: <span className={styles.extraPrice}>LKR {extraHour}</span>
+        </div>
+
+        <button className={styles.selectButton}>Select Package</button>
+      </div>
+    </div>
+  );
+}
+
+function BookingFormSection() {
+  const [formData, setFormData] = useState({
+    date: '',
+    timeSlot: 'morning',
+    name: '',
+    email: '',
+    phone: '',
+    company: '',
+    packageType: '',
+    requirements: '',
+  });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log('Form submitted:', formData);
+    alert('Booking request submitted! We will contact you within 24 hours.');
+  };
+
+  return (
+    <section className={styles.bookingSection}>
+      <div className={styles.container}>
+        <div className={styles.bookingCard}>
+          <div className={styles.bookingHeader}>
+            <div className={styles.iconWrapper}>
+              <span className={styles.calendarIcon}>📅</span>
             </div>
-            <div className={styles.galleryItem}>
-              <div className={styles.galleryImage}></div>
-              <div className={styles.galleryOverlay}></div>
-            </div>
-            <div className={styles.galleryItem}>
-              <div className={styles.galleryImage}></div>
-              <div className={styles.galleryOverlay}></div>
-            </div>
-            <div className={styles.galleryItem}>
-              <div className={styles.galleryImage}></div>
-              <div className={styles.galleryOverlay}></div>
+            <div>
+              <h2 className={styles.bookingTitle}>Book Your Session</h2>
+              <p className={styles.bookingSubtitle}>Fill in the details and we'll confirm your booking</p>
             </div>
           </div>
-        </section>
 
-        {/* Rates and Amenities Section */}
-        <section className={styles.ratesSection}>
-          {/* Hourly Rates */}
-          <div className={styles.ratesCard}>
-            <h2 className={styles.ratesHeading}>Hourly Rates</h2>
-            
-            <div className={styles.priceContainer}>
-              <div className={styles.price}>
-                <span className={styles.priceAmount}>$75</span>
-                <span className={styles.priceUnit}>/hour</span>
-              </div>
-              
-              <ul className={styles.ratesList}>
-                <li className={styles.ratesItem}>
-                  <div className={styles.bullet}></div>
-                  <span>4-hour minimum booking</span>
-                </li>
-                <li className={styles.ratesItem}>
-                  <div className={styles.bullet}></div>
-                  <span>Equipment included</span>
-                </li>
-                <li className={styles.ratesItem}>
-                  <div className={styles.bullet}></div>
-                  <span>Professional lighting setup</span>
-                </li>
-                <li className={styles.ratesItem}>
-                  <div className={styles.bullet}></div>
-                  <span>Flexible scheduling</span>
-                </li>
-              </ul>
-            </div>
-
-            <div className={styles.specialOffer}>
-              <p>
-                <span className={styles.offerLabel}>Special Offer:</span>
-                {' '}Book 8+ hours and get 15% discount
-              </p>
-            </div>
-
-            <div className={styles.pixelPatternSmall}></div>
-          </div>
-
-          {/* Studio Amenities */}
-          <div className={styles.amenitiesContainer}>
-            <h2 className={styles.amenitiesHeading}>Studio Amenities</h2>
-
-            <div className={styles.amenityCard}>
-              <div className={styles.amenityIcon}>
-                <svg viewBox="0 0 24 24" className={styles.icon}>
-                  <path d="M8 4a3 3 0 100 6 3 3 0 000-6zM4 11a3 3 0 00-3 3v1h14v-1a3 3 0 00-3-3H4z" />
-                </svg>
-              </div>
-              <div className={styles.amenityContent}>
-                <h4 className={styles.amenityTitle}>Professional Cameras</h4>
-                <p className={styles.amenityText}>Sony A7 III & Canon EOS R5</p>
-              </div>
-            </div>
-
-            <div className={styles.amenityCard}>
-              <div className={styles.amenityIcon}>
-                <svg viewBox="0 0 24 24" className={styles.icon}>
-                  <path d="M6 2v8M12 18v1M12 23v1" />
-                </svg>
-              </div>
-              <div className={styles.amenityContent}>
-                <h4 className={styles.amenityTitle}>Studio Lighting</h4>
-                <p className={styles.amenityText}>Godox & Profoto lighting kits</p>
-              </div>
-            </div>
-
-            <div className={styles.amenityCard}>
-              <div className={styles.amenityIcon}>
-                <svg viewBox="0 0 24 24" className={styles.icon}>
-                  <path d="M16 7l6 5M2 6h12" />
-                </svg>
-              </div>
-              <div className={styles.amenityContent}>
-                <h4 className={styles.amenityTitle}>Video Equipment</h4>
-                <p className={styles.amenityText}>4K recording & gimbals</p>
-              </div>
-            </div>
-
-            <div className={styles.amenityCard}>
-              <div className={styles.amenityIcon}>
-                <svg viewBox="0 0 24 24" className={styles.icon}>
-                  <path d="M2 15l6-8M8 7l4-2M19 15l-3-6" />
-                </svg>
-              </div>
-              <div className={styles.amenityContent}>
-                <h4 className={styles.amenityTitle}>Props & Backdrops</h4>
-                <p className={styles.amenityText}>Variety of backgrounds</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Booking Form Section */}
-        <section className={styles.bookingSection}>
-          <div className={styles.bookingContainer}>
-            <div className={styles.pixelPatternLarge}></div>
-            <div className={styles.pixelPatternSmallBottom}></div>
-
-            <div className={styles.bookingHeader}>
-              <svg className={styles.calendarIcon} viewBox="0 0 24 24">
-                <path d="M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V6a2 2 0 012-2z" />
-              </svg>
-              <h2 className={styles.bookingHeading}>Book Your Session</h2>
-            </div>
-
-            <form className={styles.bookingForm}>
-              {/* Date Picker */}
+          <form onSubmit={handleSubmit} className={styles.bookingForm}>
+            <div className={styles.formRow}>
               <div className={styles.formGroup}>
-                <label className={styles.label}>Select Date</label>
-                <div className={styles.datePicker}>
-                  <svg className={styles.inputIcon} viewBox="0 0 20 20">
-                    <path d="M5 2v2M15 2v2M3 4h14v14H3z" />
-                  </svg>
-                </div>
+                <label className={styles.label}>Select Date *</label>
+                <input
+                  type="date"
+                  className={styles.input}
+                  value={formData.date}
+                  onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+                  required
+                />
               </div>
 
-              {/* Time Slot Selection */}
               <div className={styles.formGroup}>
-                <label className={styles.label}>Select Time Slot</label>
-                <div className={styles.timeSlots}>
-                  <button type="button" className={`${styles.timeSlot} ${styles.active}`}>
-                    <div className={styles.slotHeader}>
-                      <div className={styles.slotInfo}>
-                        <svg className={styles.slotIcon} viewBox="0 0 20 20">
-                          <circle cx="10" cy="10" r="8" />
-                        </svg>
-                        <span className={styles.slotLabel}>Morning Slot</span>
-                      </div>
-                      <svg className={styles.checkIcon} viewBox="0 0 20 20">
-                        <path d="M4 10l4 4 8-8" />
-                      </svg>
-                    </div>
-                    <p className={styles.slotTime}>9:00 AM - 1:00 PM</p>
-                    <span className={styles.slotStatus}>● Available</span>
-                  </button>
-
-                  <button type="button" className={styles.timeSlot}>
-                    <div className={styles.slotHeader}>
-                      <div className={styles.slotInfo}>
-                        <svg className={styles.slotIcon} viewBox="0 0 20 20">
-                          <circle cx="10" cy="10" r="8" />
-                        </svg>
-                        <span className={styles.slotLabel}>Evening Slot</span>
-                      </div>
-                    </div>
-                    <p className={styles.slotTime}>2:00 PM - 6:00 PM</p>
-                    <span className={styles.slotStatus}>● Available</span>
-                  </button>
-                </div>
-              </div>
-
-              {/* Contact Information */}
-              <div className={styles.formRow}>
-                <div className={styles.formGroup}>
-                  <label className={styles.label}>Full Name *</label>
-                  <input
-                    type="text"
-                    placeholder="John Doe"
-                    className={styles.textInput}
-                  />
-                </div>
-                <div className={styles.formGroup}>
-                  <label className={styles.label}>Email *</label>
-                  <input
-                    type="email"
-                    placeholder="john@example.com"
-                    className={styles.emailInput}
-                  />
-                </div>
-              </div>
-
-              <div className={styles.formRow}>
-                <div className={styles.formGroup}>
-                  <label className={styles.label}>Phone Number *</label>
-                  <input
-                    type="tel"
-                    placeholder="+1 (555) 000-0000"
-                    className={styles.phoneInput}
-                  />
-                </div>
-                <div className={styles.formGroup}>
-                  <label className={styles.label}>Company Name</label>
-                  <input
-                    type="text"
-                    placeholder="Your Company"
-                    className={styles.textInput}
-                  />
-                </div>
-              </div>
-
-              {/* Project Type */}
-              <div className={styles.formGroup}>
-                <label className={styles.label}>Project Type *</label>
-                <select className={styles.dropdown}>
-                  <option>Select project type</option>
-                  <option>Product Photography</option>
-                  <option>Portrait / Headshots</option>
-                  <option>Fashion Shoot</option>
-                  <option>Video Production</option>
-                  <option>Commercial Shoot</option>
-                  <option>Other</option>
+                <label className={styles.label}>Select Time Slot *</label>
+                <select
+                  className={styles.select}
+                  value={formData.timeSlot}
+                  onChange={(e) => setFormData({ ...formData, timeSlot: e.target.value })}
+                  required
+                >
+                  <option value="morning">Morning (9:00 AM - 1:00 PM)</option>
+                  <option value="afternoon">Afternoon (2:00 PM - 6:00 PM)</option>
+                  <option value="evening">Evening (6:00 PM - 10:00 PM)</option>
                 </select>
               </div>
+            </div>
 
-              {/* Special Requirements */}
+            <div className={styles.formRow}>
               <div className={styles.formGroup}>
-                <label className={styles.label}>Special Requirements</label>
-                <textarea
-                  className={styles.textarea}
-                  placeholder="Tell us about your project needs, equipment requirements, etc."
-                  rows="5"
-                ></textarea>
+                <label className={styles.label}>Full Name *</label>
+                <input
+                  type="text"
+                  className={styles.input}
+                  placeholder="John Doe"
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  required
+                />
               </div>
 
-              {/* Submit Button */}
-              <button type="submit" className={styles.submitButton}>
-                <span>Request Booking</span>
-                <svg className={styles.arrowIcon} viewBox="0 0 20 20">
-                  <path d="M4 10h12M12 6l4 4-4 4" />
-                </svg>
-              </button>
+              <div className={styles.formGroup}>
+                <label className={styles.label}>Email *</label>
+                <input
+                  type="email"
+                  className={styles.input}
+                  placeholder="john@example.com"
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  required
+                />
+              </div>
+            </div>
 
-              <p className={styles.formNote}>
-                {`We'll review your request and confirm availability within 24 hours`}
-              </p>
-            </form>
-          </div>
-        </section>
+            <div className={styles.formRow}>
+              <div className={styles.formGroup}>
+                <label className={styles.label}>Phone Number *</label>
+                <input
+                  type="tel"
+                  className={styles.input}
+                  placeholder="+94 77 123 4567"
+                  value={formData.phone}
+                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                  required
+                />
+              </div>
 
-        {/* Location Section */}
-        <section className={styles.locationSection}>
+              <div className={styles.formGroup}>
+                <label className={styles.label}>Company Name</label>
+                <input
+                  type="text"
+                  className={styles.input}
+                  placeholder="Your Company"
+                  value={formData.company}
+                  onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+                />
+              </div>
+            </div>
+
+            <div className={styles.formGroup}>
+              <label className={styles.label}>Package Type *</label>
+              <select
+                className={styles.select}
+                value={formData.packageType}
+                onChange={(e) => setFormData({ ...formData, packageType: e.target.value })}
+                required
+              >
+                <option value="">Select package type</option>
+                <option value="backdrop-1hr">Seamless Backdrop - 1 Hour</option>
+                <option value="backdrop-2hr">Seamless Backdrop - 2 Hours</option>
+                <option value="backdrop-5hr">Seamless Backdrop - 5 Hours</option>
+                <option value="backdrop-8hr">Seamless Backdrop - 8 Hours</option>
+                <option value="podcast-1hr">Podcast/Interior - 1 Hour</option>
+                <option value="podcast-2hr">Podcast/Interior - 2 Hours</option>
+                <option value="podcast-5hr">Podcast/Interior - 5 Hours</option>
+                <option value="podcast-8hr">Podcast/Interior - 8 Hours</option>
+              </select>
+            </div>
+
+            <div className={styles.formGroup}>
+              <label className={styles.label}>Special Requirements</label>
+              <textarea
+                className={styles.textarea}
+                placeholder="Tell us about your project needs, equipment requirements, etc."
+                rows="5"
+                value={formData.requirements}
+                onChange={(e) => setFormData({ ...formData, requirements: e.target.value })}
+              ></textarea>
+            </div>
+
+            <button type="submit" className={styles.submitButton}>
+              <span>Request Booking</span>
+              <span className={styles.buttonArrow}>→</span>
+            </button>
+
+            <p className={styles.formNote}>
+              We'll review your request and confirm availability within 24 hours
+            </p>
+          </form>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function LocationSection() {
+  return (
+    <section className={styles.locationSection}>
+      <div className={styles.container}>
+        <div className={styles.locationCard}>
           <div className={styles.locationIcon}>
-            <svg viewBox="0 0 24 24">
-              <path d="M12 2a8 8 0 00-8 8c0 5.5 8 14 8 14s8-8.5 8-14a8 8 0 00-8-8z" />
-            </svg>
+            <span>📍</span>
           </div>
           <div className={styles.locationContent}>
-            <h3 className={styles.locationHeading}>Studio Location</h3>
+            <h3 className={styles.locationTitle}>Studio Location</h3>
             <p className={styles.locationAddress}>
               123 Creative Avenue, Downtown Arts District
               <br />
@@ -312,88 +483,8 @@ export default function StudioBookingPage() {
               Free parking available • Easy metro access • Elevator access
             </p>
           </div>
-        </section>
+        </div>
       </div>
-
-      {/* Footer */}
-      <footer className={styles.footer}>
-        <div className={styles.footerContent}>
-          <div className={styles.footerBrand}>
-            <div className={styles.footerLogo}></div>
-            <p className={styles.footerTagline}>
-              Responsible creativity for every pixel. Building brands that matter.
-            </p>
-            <div className={styles.footerPixelPattern}></div>
-          </div>
-
-          <div className={styles.footerLinks}>
-            <h4 className={styles.footerHeading}>Quick Links</h4>
-            <ul className={styles.footerList}>
-              <li><a href="#">About</a></li>
-              <li><a href="#">Services</a></li>
-              <li><a href="#">Portfolio</a></li>
-              <li><a href="#">Careers</a></li>
-              <li><a href="#">Studio Booking</a></li>
-            </ul>
-          </div>
-
-          <div className={styles.footerLinks}>
-            <h4 className={styles.footerHeading}>Portfolio</h4>
-            <ul className={styles.footerList}>
-              <li><a href="#">Branding Projects</a></li>
-              <li><a href="#">Photography</a></li>
-              <li><a href="#">Video Production</a></li>
-              <li><a href="#">Digital Campaigns</a></li>
-              <li><a href="#">Case Studies</a></li>
-            </ul>
-          </div>
-
-          <div className={styles.footerLinks}>
-            <h4 className={styles.footerHeading}>Contact</h4>
-            <ul className={styles.footerContactList}>
-              <li>
-                <svg className={styles.contactIcon} viewBox="0 0 18 18">
-                  <path d="M3 6l6 4 6-4M3 6v9h12V6" stroke="currentColor" fill="none" />
-                </svg>
-                hello@rastermedia.com
-              </li>
-              <li>
-                <svg className={styles.contactIcon} viewBox="0 0 18 18">
-                  <path d="M3 3h12v12H3z" stroke="currentColor" fill="none" />
-                </svg>
-                +1 (555) 123-4567
-              </li>
-              <li>
-                <svg className={styles.contactIcon} viewBox="0 0 18 18">
-                  <path d="M9 3a3 3 0 100 6 3 3 0 000-6zM5 13a3 3 0 00-3 3v1h14v-1a3 3 0 00-3-3H5z" />
-                </svg>
-                123 Creative Street, NY 10001
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <div className={styles.footerBottom}>
-          <p className={styles.copyright}>© 2024 Raster Media. All rights reserved.</p>
-          <div className={styles.socialLinks}>
-            <a href="#" className={styles.socialLink}>
-              <svg viewBox="0 0 20 20">
-                <circle cx="10" cy="10" r="8" stroke="currentColor" fill="none" />
-              </svg>
-            </a>
-            <a href="#" className={styles.socialLink}>
-              <svg viewBox="0 0 20 20">
-                <path d="M8 7h4v6H8z" fill="currentColor" />
-              </svg>
-            </a>
-            <a href="#" className={styles.socialLink}>
-              <svg viewBox="0 0 20 20">
-                <path d="M6 5h8v8H6z" stroke="currentColor" fill="none" />
-              </svg>
-            </a>
-          </div>
-        </div>
-      </footer>
-    </div>
+    </section>
   );
 }
