@@ -16,7 +16,7 @@ export default function RootLayout({ children }) {
       <body suppressHydrationWarning>
         <CleanBodyAttributes />
         <Header />
-        <main>{children}</main>
+        <main style={styles.main}>{children}</main>
         <Footer />
       </body>
     </html>
@@ -122,7 +122,7 @@ function Footer() {
         </div>
 
         <div style={styles.footerBottom}>
-          <p style={styles.copyright}>© 2024 Raster Media. All rights reserved.</p>
+          <p style={styles.copyright}>© 2025 Raster Media. All rights reserved.</p>
           <div style={styles.socialLinks}>
             <a href="#" style={styles.socialLink}>🔗</a>
             <a href="#" style={styles.socialLink}>📘</a>
@@ -150,6 +150,9 @@ const styles = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
+  },
+  main: {
+    paddingBottom: '64px',
   },
   logoLink: {
     textDecoration: 'none',
@@ -199,7 +202,7 @@ const styles = {
   },
   footerContent: {
     display: 'grid',
-    gridTemplateColumns: 'repeat(4, 1fr)',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
     gap: '48px',
     marginBottom: '48px',
   },
@@ -215,7 +218,7 @@ const styles = {
   footerLogoImage: {
     width: 'auto',
     height: 'auto',
-    maxHeight: '33px',
+    maxHeight: '60px',
     objectFit: 'contain',
   },
   footerDesc: {
@@ -262,7 +265,7 @@ const styles = {
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingTop: '24px',
-    paddingBottom: '24px',
+    paddingBottom: '20px',
     borderTop: '0.8px solid rgba(255, 255, 255, 0.05)',
   },
   copyright: {

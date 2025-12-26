@@ -38,7 +38,10 @@ function StorySection() {
     <section className={styles.storySection}>
       <div className="container">
         <div className={styles.storyGrid}>
-          <div className={styles.storyImage}></div>
+          <div className={styles.storyImage}>
+            {/* Add an image at public/images/about-story.jpg or change the src to your image path */}
+            <img src="/images/about-story.jpg" alt="Our Story" className={styles.storyImg} />
+          </div>
           <div className={styles.storyContent}>
             <h2 className={styles.storyTitle}>Our Story</h2>
             <p className={styles.storyText}>
@@ -66,7 +69,12 @@ function MissionVisionSection() {
         <div className={styles.mvGrid}>
           <div className={styles.mvCard}>
             <div className={styles.mvIcon}>
-              <div className={styles.iconCircle}></div>
+              {/* mission icon (SVG, uses global blue via currentColor) */}
+              <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" role="img">
+                <circle cx="32" cy="32" r="12" stroke="currentColor" strokeWidth="4" fill="none" />
+                <circle cx="32" cy="32" r="22" stroke="currentColor" strokeWidth="4" fill="none" opacity="0.95" />
+                <circle cx="32" cy="32" r="30" stroke="currentColor" strokeWidth="4" fill="none" opacity="0.8" />
+              </svg>
             </div>
             <h3 className={styles.mvTitle}>Our Mission</h3>
             <p className={styles.mvText}>
@@ -75,9 +83,13 @@ function MissionVisionSection() {
           </div>
           <div className={styles.mvCard}>
             <div className={styles.mvIcon}>
-              <div className={styles.iconTarget}></div>
+              {/* vision icon (SVG, uses global blue via currentColor) */}
+              <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" role="img">
+                <path d="M2 32C12 12 52 12 62 32c-10 20-50 20-60 0z" stroke="currentColor" strokeWidth="4" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+                <circle cx="32" cy="32" r="8" fill="currentColor" />
+              </svg>
             </div>
-            <h3 className={styles.mvTitle}>Our Vision</h3>
+            <h3 className={styles.mvTitle}>Our Vision</h3> 
             <p className={styles.mvText}>
               To be the world's most trusted creative partner, renowned for innovation, excellence, and our unwavering commitment to excellence.
             </p>
@@ -88,25 +100,59 @@ function MissionVisionSection() {
   );
 }
 
+// small helper to render inline SVG icons for WhyChooseUs
+function ValueIcon({ name }) {
+  switch (name) {
+    case 'lightbulb':
+      return (
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" role="img">
+          <path d="M9 18h6M10 2a6 6 0 00-4 10v2a2 2 0 002 2h8a2 2 0 002-2v-2a6 6 0 00-6-10z" stroke="currentColor" strokeWidth="1.8" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      );
+    case 'handshake':
+      return (
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" role="img">
+          <path d="M2 12l4 4 6-6 8 8" stroke="currentColor" strokeWidth="1.8" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M14 10l-2-2" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      );
+    case 'bolt':
+      return (
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" role="img">
+          <path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z" stroke="currentColor" strokeWidth="1.8" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      );
+    case 'target':
+      return (
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" role="img">
+          <circle cx="12" cy="12" r="6" stroke="currentColor" strokeWidth="1.8" fill="none" />
+          <circle cx="12" cy="12" r="2" fill="currentColor" />
+        </svg>
+      );
+    default:
+      return null;
+  }
+}
+
 function WhyChooseUsSection() {
   const values = [
     {
-      icon: '💡',
+      icon: 'lightbulb',
       title: 'Innovation First',
       description: 'We push creative boundaries and embrace cutting-edge technologies to deliver fresh solutions.'
     },
     {
-      icon: '🤝',
+      icon: 'handshake',
       title: 'Trust & Transparency',
       description: 'Building long-term partnerships through honest communication and reliable delivery.'
     },
     {
-      icon: '⚡',
+      icon: 'bolt',
       title: 'Excellence Driven',
       description: 'Every pixel matters. We\'re committed to delivering nothing short of exceptional quality.'
     },
     {
-      icon: '🎯',
+      icon: 'target',
       title: 'Collaborative Spirit',
       description: 'Your vision combined with our expertise creates truly remarkable results.'
     }
@@ -126,7 +172,7 @@ function WhyChooseUsSection() {
         <div className={styles.valuesGrid}>
           {values.map((value, index) => (
             <div key={index} className={styles.valueCard}>
-              <div className={styles.valueIcon}>{value.icon}</div>
+              <div className={styles.valueIcon}><ValueIcon name={value.icon} /></div>
               <h3 className={styles.valueTitle}>{value.title}</h3>
               <p className={styles.valueText}>{value.description}</p>
             </div>
