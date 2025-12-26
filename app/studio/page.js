@@ -1,490 +1,640 @@
 'use client';
 
 import { useState } from 'react';
-import styles from './studio.module.css';
+import { motion, AnimatePresence } from 'motion/react';
+import { 
+  Camera, 
+  Mic2, 
+  Clock, 
+  Check, 
+  ArrowRight, 
+  MapPin, 
+  Wifi, 
+  Car, 
+  Coffee,
+  X,
+  Calendar,
+  User,
+  Mail,
+  Phone,
+  MessageSquare
+} from 'lucide-react';
+import styles from './StudioBookingPage.module.css';
 
 export default function StudioBookingPage() {
+  const [packageType, setPackageType] = useState('backdrop');
+  const [selectedDuration, setSelectedDuration] = useState('2hr');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const packages = {
+    backdrop: {
+      '1hr': {
+        price: 5000,
+        extraHourPrice: 3000,
+        equipment: [
+          '2x Jinbei 400W Lights',
+          '2x Light Stands',
+          '2x Softboxes',
+          '1x Reflector',
+          'Seamless Paper Backdrop',
+          'Multiple Backdrop Colors',
+          'C-Stands & Clamps',
+          'Sandbags'
+        ],
+        image: 'https://images.unsplash.com/photo-1615458509633-f15b61bdacb8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwaG90b2dyYXBoeSUyMHN0dWRpbyUyMGxpZ2h0aW5nfGVufDF8fHx8MTc2Njc0ODY1Mnww&ixlib=rb-4.1.0&q=80&w=1080'
+      },
+      '2hr': {
+        price: 7000,
+        extraHourPrice: 3000,
+        equipment: [
+          '2x Jinbei 400W Lights',
+          '2x Light Stands',
+          '2x Softboxes',
+          '1x Reflector',
+          'Seamless Paper Backdrop',
+          'Multiple Backdrop Colors',
+          'C-Stands & Clamps',
+          'Sandbags',
+          'Background Stand',
+          'Extension Cords'
+        ],
+        image: 'https://images.unsplash.com/photo-1615458509633-f15b61bdacb8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwaG90b2dyYXBoeSUyMHN0dWRpbyUyMGxpZ2h0aW5nfGVufDF8fHx8MTc2Njc0ODY1Mnww&ixlib=rb-4.1.0&q=80&w=1080',
+        popular: true
+      },
+      '5hr': {
+        price: 15000,
+        extraHourPrice: 3000,
+        equipment: [
+          '2x Jinbei 400W Lights',
+          '2x Light Stands',
+          '2x Softboxes',
+          '1x Reflector',
+          'Seamless Paper Backdrop',
+          'Multiple Backdrop Colors',
+          'C-Stands & Clamps',
+          'Sandbags',
+          'Background Stand',
+          'Extension Cords',
+          'Hair Light Setup',
+          'Grid & Modifiers'
+        ],
+        image: 'https://images.unsplash.com/photo-1615458509633-f15b61bdacb8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwaG90b2dyYXBoeSUyMHN0dWRpbyUyMGxpZ2h0aW5nfGVufDF8fHx8MTc2Njc0ODY1Mnww&ixlib=rb-4.1.0&q=80&w=1080'
+      },
+      '8hr': {
+        price: 22000,
+        extraHourPrice: 3000,
+        equipment: [
+          '2x Jinbei 400W Lights',
+          '2x Light Stands',
+          '2x Softboxes',
+          '1x Reflector',
+          'Seamless Paper Backdrop',
+          'Multiple Backdrop Colors',
+          'C-Stands & Clamps',
+          'Sandbags',
+          'Background Stand',
+          'Extension Cords',
+          'Hair Light Setup',
+          'Grid & Modifiers',
+          'Color Gels',
+          'Full Day Access'
+        ],
+        image: 'https://images.unsplash.com/photo-1615458509633-f15b61bdacb8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwaG90b2dyYXBoeSUyMHN0dWRpbyUyMGxpZ2h0aW5nfGVufDF8fHx8MTc2Njc0ODY1Mnww&ixlib=rb-4.1.0&q=80&w=1080'
+      }
+    },
+    podcast: {
+      '1hr': {
+        price: 4000,
+        extraHourPrice: 2500,
+        equipment: [
+          'Interior Setup',
+          'Ambient Lighting',
+          '1x Camera Setup',
+          'Basic Audio Recording',
+          'Comfortable Seating',
+          'Props & Decorations'
+        ],
+        image: 'https://images.unsplash.com/photo-1716703433576-13ff2922db95?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwb2RjYXN0JTIwc3R1ZGlvJTIwaW50ZXJpb3J8ZW58MXx8fHwxNzY2NzYxNzA3fDA&ixlib=rb-4.1.0&q=80&w=1080'
+      },
+      '2hr': {
+        price: 6000,
+        extraHourPrice: 2500,
+        equipment: [
+          'Interior Setup',
+          'Ambient Lighting',
+          '1x Camera Setup',
+          'Professional Audio Recording',
+          'Comfortable Seating',
+          'Props & Decorations',
+          'Microphone Stands',
+          'Headphones'
+        ],
+        image: 'https://images.unsplash.com/photo-1716703433576-13ff2922db95?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwb2RjYXN0JTIwc3R1ZGlvJTIwaW50ZXJpb3J8ZW58MXx8fHwxNzY2NzYxNzA3fDA&ixlib=rb-4.1.0&q=80&w=1080',
+        popular: true
+      },
+      '5hr': {
+        price: 12000,
+        extraHourPrice: 2500,
+        equipment: [
+          'Interior Setup',
+          'Ambient Lighting',
+          '2x Camera Setup',
+          'Professional Audio Recording',
+          'Comfortable Seating',
+          'Props & Decorations',
+          'Microphone Stands',
+          'Headphones',
+          'Monitor Display',
+          'Green Screen Option'
+        ],
+        image: 'https://images.unsplash.com/photo-1716703433576-13ff2922db95?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwb2RjYXN0JTIwc3R1ZGlvJTIwaW50ZXJpb3J8ZW58MXx8fHwxNzY2NzYxNzA3fDA&ixlib=rb-4.1.0&q=80&w=1080'
+      },
+      '8hr': {
+        price: 18000,
+        extraHourPrice: 2500,
+        equipment: [
+          'Interior Setup',
+          'Ambient Lighting',
+          '2x Camera Setup',
+          'Professional Audio Recording',
+          'Comfortable Seating',
+          'Props & Decorations',
+          'Microphone Stands',
+          'Headphones',
+          'Monitor Display',
+          'Green Screen Option',
+          'Live Streaming Setup',
+          'Full Day Access'
+        ],
+        image: 'https://images.unsplash.com/photo-1716703433576-13ff2922db95?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwb2RjYXN0JTIwc3R1ZGlvJTIwaW50ZXJpb3J8ZW58MXx8fHwxNzY2NzYxNzA3fDA&ixlib=rb-4.1.0&q=80&w=1080'
+      }
+    }
+  };
+
+  const currentPackage = packages[packageType][selectedDuration];
+
+  function HeroSection() {
+    return (
+      <section className={styles.heroSection}>
+        {/* Single Hero Image */}
+        <motion.div 
+          className={styles.heroImageWrapper}
+          initial={{ opacity: 0, scale: 1.1 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8 }}
+        >
+          <img 
+            src="https://images.unsplash.com/photo-1615458509633-f15b61bdacb8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwaG90b2dyYXBoeSUyMHN0dWRpbyUyMGxpZ2h0aW5nfGVufDF8fHx8MTc2Njc0ODY1Mnww&ixlib=rb-4.1.0&q=80&w=1080" 
+            alt="Professional Studio" 
+            className={styles.heroImage}
+          />
+          <div className={styles.heroImageOverlay} />
+        </motion.div>
+
+        <div className={styles.heroContent}>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+          >
+            <h1 className={styles.heroTitle}>
+              Book Our Professional
+              <br />
+              <span className={styles.gradientText}>Creative Studio</span>
+            </h1>
+            <p className={styles.heroSubtitle}>
+              Fully-equipped studio space with professional lighting, backdrops, and equipment. 
+              Perfect for photography, videography, podcasts, and creative productions.
+            </p>
+          </motion.div>
+        </div>
+      </section>
+    );
+  }
+
+  function PackageSelector() {
+    return (
+      <section className={styles.packageSelectorSection}>
+        <div className={styles.container}>
+          {/* Package Type Toggle */}
+          <div className={styles.packageTypeToggle}>
+            <motion.button
+              className={`${styles.toggleButton} ${packageType === 'backdrop' ? styles.active : ''}`}
+              onClick={() => setPackageType('backdrop')}
+              whileHover={{ y: -2 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              <Camera className={styles.toggleIcon} />
+              <div className={styles.toggleContent}>
+                <span className={styles.toggleTitle}>Seamless Backdrop</span>
+                <span className={styles.toggleDesc}>Photography & Videography</span>
+              </div>
+            </motion.button>
+
+            <motion.button
+              className={`${styles.toggleButton} ${packageType === 'podcast' ? styles.active : ''}`}
+              onClick={() => setPackageType('podcast')}
+              whileHover={{ y: -2 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              <Mic2 className={styles.toggleIcon} />
+              <div className={styles.toggleContent}>
+                <span className={styles.toggleTitle}>Podcast / Interior</span>
+                <span className={styles.toggleDesc}>Content Creation & Interviews</span>
+              </div>
+            </motion.button>
+          </div>
+
+          {/* Duration Selector */}
+          <motion.div 
+            className={styles.durationSelector}
+            key={packageType}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4 }}
+          >
+            <div className={styles.durationHeader}>
+              <Clock className={styles.durationIcon} />
+              <h3 className={styles.durationTitle}>Select Duration</h3>
+            </div>
+
+            <div className={styles.durationOptions}>
+              {Object.keys(packages[packageType]).map((duration) => {
+                const pkg = packages[packageType][duration];
+                const maxPrice = Math.max(...Object.values(packages[packageType]).map(p => p.price));
+                const pricePercentage = (pkg.price / maxPrice) * 100;
+
+                return (
+                  <motion.div
+                    key={duration}
+                    className={`${styles.durationOption} ${selectedDuration === duration ? styles.active : ''}`}
+                    onClick={() => setSelectedDuration(duration)}
+                    whileHover={{ y: -4 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    {pkg.popular && (
+                      <div className={styles.popularPill}>Most Popular</div>
+                    )}
+                    <div className={styles.durationHours}>{duration}</div>
+                    <div className={styles.durationPrice}>
+                      <span className={styles.currency}>LKR</span>
+                      <span className={styles.amount}>{pkg.price.toLocaleString()}</span>
+                    </div>
+                    <div className={styles.priceBar}>
+                      <motion.div 
+                        className={styles.priceBarFill}
+                        initial={{ width: 0 }}
+                        animate={{ width: `${pricePercentage}%` }}
+                        transition={{ duration: 0.6, delay: 0.2 }}
+                      />
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </div>
+          </motion.div>
+
+          {/* Featured Package Display */}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={`${packageType}-${selectedDuration}`}
+              className={styles.featuredPackage}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -30 }}
+              transition={{ duration: 0.5 }}
+            >
+              <div className={styles.packageVisual}>
+                <div className={styles.packageImageWrapper}>
+                  <img src={currentPackage.image} alt="Studio Package" className={styles.packageImage} />
+                  <div className={styles.imageOverlay} />
+                </div>
+
+                <div className={styles.packageInfo}>
+                  <div className={styles.packageHeader}>
+                    <div>
+                      <h2 className={styles.packageTitle}>
+                        {packageType === 'backdrop' ? 'Seamless Backdrop Package' : 'Podcast / Interior Package'}
+                      </h2>
+                      <p className={styles.packageSubtitle}>{selectedDuration} Session</p>
+                    </div>
+                    <div className={styles.packagePriceBlock}>
+                      <div className={styles.mainPrice}>
+                        <span className={styles.currency}>LKR</span>
+                        <span className={styles.priceAmount}>{currentPackage.price.toLocaleString()}</span>
+                      </div>
+                      <div className={styles.extraHourPrice}>
+                        Extra hour: <span className={styles.highlight}>LKR {currentPackage.extraHourPrice.toLocaleString()}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className={styles.equipmentSection}>
+                    <h3 className={styles.equipmentHeading}>
+                      <Check size={20} />
+                      Included Equipment & Features
+                    </h3>
+                    <div className={styles.equipmentGrid}>
+                      {currentPackage.equipment.map((item, index) => (
+                        <motion.div
+                          key={index}
+                          className={styles.equipmentItem}
+                          initial={{ opacity: 0, x: -20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ duration: 0.3, delay: index * 0.05 }}
+                        >
+                          <Check className={styles.equipmentIcon} size={20} />
+                          <span className={styles.equipmentName}>{item}</span>
+                        </motion.div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <motion.button
+                    className={styles.bookNowButton}
+                    onClick={() => setIsModalOpen(true)}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    Book This Package
+                    <ArrowRight size={20} />
+                  </motion.button>
+                </div>
+              </div>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+      </section>
+    );
+  }
+
+  function LocationSection() {
+    return (
+      <section className={styles.locationSection}>
+        <div className={styles.container}>
+          <div className={styles.locationCard}>
+            <MapPin size={56} className={styles.locationIcon} />
+            <div className={styles.locationContent}>
+              <h3 className={styles.locationTitle}>Visit Our Studio</h3>
+              <p className={styles.locationAddress}>
+                Raster Media Creative Studio<br />
+                123 Main Street, Colombo, Sri Lanka
+              </p>
+              <div className={styles.locationFeatures}>
+                <div className={styles.locationFeature}>
+                  <Wifi size={18} />
+                  <span>High-Speed WiFi</span>
+                </div>
+                <div className={styles.locationFeature}>
+                  <Car size={18} />
+                  <span>Free Parking</span>
+                </div>
+                <div className={styles.locationFeature}>
+                  <Coffee size={18} />
+                  <span>Refreshments</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  function BookingModal() {
+    const [formData, setFormData] = useState({
+      name: '',
+      email: '',
+      phone: '',
+      date: '',
+      time: '',
+      additionalHours: '0',
+      notes: ''
+    });
+
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      console.log('Booking submitted:', {
+        ...formData,
+        packageType,
+        duration: selectedDuration,
+        basePrice: currentPackage.price
+      });
+      alert('Booking request submitted! We will contact you shortly.');
+      setIsModalOpen(false);
+    };
+
+    const handleChange = (e) => {
+      setFormData({
+        ...formData,
+        [e.target.name]: e.target.value
+      });
+    };
+
+    const totalPrice = currentPackage.price + (parseInt(formData.additionalHours || 0) * currentPackage.extraHourPrice);
+
+    return (
+      <AnimatePresence>
+        {isModalOpen && (
+          <motion.div
+            className={styles.modalOverlay}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setIsModalOpen(false)}
+          >
+            <motion.div
+              className={styles.modalContent}
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button className={styles.closeButton} onClick={() => setIsModalOpen(false)}>
+                <X size={20} />
+              </button>
+
+              <div className={styles.modalHeader}>
+                <Calendar size={48} className={styles.modalIcon} />
+                <div>
+                  <h2 className={styles.modalTitle}>Book Your Studio Session</h2>
+                  <p className={styles.modalSubtitle}>
+                    {packageType === 'backdrop' ? 'Seamless Backdrop Package' : 'Podcast / Interior Package'} - {selectedDuration}
+                  </p>
+                </div>
+              </div>
+
+              <form className={styles.bookingForm} onSubmit={handleSubmit}>
+                <div className={styles.formRow}>
+                  <div className={styles.formGroup}>
+                    <label className={styles.label}>
+                      <User size={16} />
+                      Full Name
+                    </label>
+                    <input
+                      type="text"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      className={styles.input}
+                      placeholder="John Doe"
+                      required
+                    />
+                  </div>
+
+                  <div className={styles.formGroup}>
+                    <label className={styles.label}>
+                      <Mail size={16} />
+                      Email Address
+                    </label>
+                    <input
+                      type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      className={styles.input}
+                      placeholder="john@example.com"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className={styles.formRow}>
+                  <div className={styles.formGroup}>
+                    <label className={styles.label}>
+                      <Phone size={16} />
+                      Phone Number
+                    </label>
+                    <input
+                      type="tel"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleChange}
+                      className={styles.input}
+                      placeholder="+94 77 123 4567"
+                      required
+                    />
+                  </div>
+
+                  <div className={styles.formGroup}>
+                    <label className={styles.label}>
+                      <Calendar size={16} />
+                      Preferred Date
+                    </label>
+                    <input
+                      type="date"
+                      name="date"
+                      value={formData.date}
+                      onChange={handleChange}
+                      className={styles.input}
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className={styles.formRow}>
+                  <div className={styles.formGroup}>
+                    <label className={styles.label}>
+                      <Clock size={16} />
+                      Preferred Time
+                    </label>
+                    <select
+                      name="time"
+                      value={formData.time}
+                      onChange={handleChange}
+                      className={styles.select}
+                      required
+                    >
+                      <option value="">Select time</option>
+                      <option value="9:00 AM">9:00 AM</option>
+                      <option value="10:00 AM">10:00 AM</option>
+                      <option value="11:00 AM">11:00 AM</option>
+                      <option value="12:00 PM">12:00 PM</option>
+                      <option value="1:00 PM">1:00 PM</option>
+                      <option value="2:00 PM">2:00 PM</option>
+                      <option value="3:00 PM">3:00 PM</option>
+                      <option value="4:00 PM">4:00 PM</option>
+                      <option value="5:00 PM">5:00 PM</option>
+                    </select>
+                  </div>
+
+                  <div className={styles.formGroup}>
+                    <label className={styles.label}>
+                      <Clock size={16} />
+                      Additional Hours
+                    </label>
+                    <select
+                      name="additionalHours"
+                      value={formData.additionalHours}
+                      onChange={handleChange}
+                      className={styles.select}
+                    >
+                      <option value="0">None</option>
+                      <option value="1">+1 Hour (LKR {currentPackage.extraHourPrice.toLocaleString()})</option>
+                      <option value="2">+2 Hours (LKR {(currentPackage.extraHourPrice * 2).toLocaleString()})</option>
+                      <option value="3">+3 Hours (LKR {(currentPackage.extraHourPrice * 3).toLocaleString()})</option>
+                      <option value="4">+4 Hours (LKR {(currentPackage.extraHourPrice * 4).toLocaleString()})</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className={styles.formGroup}>
+                  <label className={styles.label}>
+                    <MessageSquare size={16} />
+                    Additional Notes
+                  </label>
+                  <textarea
+                    name="notes"
+                    value={formData.notes}
+                    onChange={handleChange}
+                    className={styles.textarea}
+                    placeholder="Any special requirements or questions?"
+                  />
+                </div>
+
+                <div className={styles.priceSummary}>
+                  <div className={styles.summaryRow}>
+                    <span>Base Package ({selectedDuration})</span>
+                    <span className={styles.summaryPrice}>LKR {currentPackage.price.toLocaleString()}</span>
+                  </div>
+                  {parseInt(formData.additionalHours) > 0 && (
+                    <div className={styles.summaryRow}>
+                      <span>Additional Hours ({formData.additionalHours})</span>
+                      <span className={styles.summaryPrice}>
+                        LKR {(currentPackage.extraHourPrice * parseInt(formData.additionalHours)).toLocaleString()}
+                      </span>
+                    </div>
+                  )}
+                  <div className={styles.summaryRow} style={{ borderTop: '1px solid rgba(93, 205, 219, 0.2)', paddingTop: '12px', marginTop: '12px' }}>
+                    <span style={{ fontSize: '18px', color: '#FFFFFF' }}>Total</span>
+                    <span className={styles.summaryPrice} style={{ fontSize: '24px' }}>
+                      LKR {totalPrice.toLocaleString()}
+                    </span>
+                  </div>
+                </div>
+
+                <button type="submit" className={styles.submitButton}>
+                  Confirm Booking
+                  <ArrowRight size={20} />
+                </button>
+
+                <p className={styles.formNote}>
+                  * Final confirmation will be sent via email after reviewing your booking request.
+                </p>
+              </form>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    );
+  }
+
   return (
     <div className={styles.page}>
       <HeroSection />
-      <BackdropPackagesSection />
-      <PodcastPackagesSection />
-      <BookingFormSection />
+      <PackageSelector />
       <LocationSection />
+      <BookingModal />
     </div>
-  );
-}
-
-function HeroSection() {
-  return (
-    <section className={styles.heroSection}>
-      <div className={styles.heroContent}>
-        <h1 className={styles.heroTitle}>
-          Book Our Professional
-          <br />
-          <span className={styles.gradientText}>Creative Studio</span>
-        </h1>
-        <p className={styles.heroSubtitle}>
-          Fully-equipped studio space with professional lighting, backdrops, and equipment. Perfect for photography, videography, and creative productions.
-        </p>
-      </div>
-    </section>
-  );
-}
-
-function BackdropPackagesSection() {
-  const packages = [
-    {
-      title: '1 Hour Package',
-      price: '3,000',
-      image: '/images/studio-1hr.jpg',
-      equipment: [
-        'Godox 600 BM II',
-        'Nanlite FC-300B',
-        'Nanlite FC-120B',
-        'C-stand with boom arm',
-        '120 Parabolic Softbox',
-        '90 Softbox',
-        'Godox SB-FW 35x160cm Softbox',
-        'Makeup & Dressing Room',
-        'Fully Air-Conditioned',
-        'Pantry Area',
-        'Parking',
-      ],
-      extraHour: '2,500',
-    },
-    {
-      title: '2 Hours Package',
-      price: '5,500',
-      image: '/images/studio-2hr.jpg',
-      equipment: [
-        'Godox 600 BM II',
-        'Nanlite FC-300B',
-        'Nanlite FC-120B',
-        'C-stand with boom arm',
-        '120 Parabolic Softbox',
-        '90 Softbox',
-        'Godox SB-FW 35x160cm Softbox',
-        'Makeup & Dressing Room',
-        'Fully Air-Conditioned',
-        'Pantry Area',
-        'Parking',
-      ],
-      extraHour: '2,500',
-    },
-    {
-      title: '5 Hours Package',
-      price: '12,500',
-      image: '/images/studio-5hr.jpg',
-      popular: true,
-      equipment: [
-        'Godox 600 BM II',
-        'Nanlite FC-300B',
-        'Nanlite FC-120B',
-        'ZSYB LC60C RGB Video Light',
-        'C-stand with boom arm',
-        '120 Parabolic Softbox',
-        '90 Softbox',
-        'Godox SB-FW 35x160cm Softbox',
-        'Bowens Mount Spotlight Light Projector',
-        'Makeup & Dressing Room',
-        'Fully Air-Conditioned',
-        'Pantry Area',
-        'Parking',
-      ],
-      extraHour: '2,500',
-    },
-    {
-      title: '8 Hours Package',
-      price: '20,000',
-      image: '/images/studio-8hr.jpg',
-      equipment: [
-        'Godox 600 BM II',
-        'Nanlite FC-300B',
-        'Nanlite FC-120B',
-        'ZSYB LC60C RGB Video Light',
-        'C-stand with boom arm',
-        '120 Parabolic Softbox',
-        '90 Softbox',
-        'Godox SB-FW 35x160cm Softbox',
-        'Bowens Mount Spotlight Light Projector',
-        'Makeup & Dressing Room',
-        'Fully Air-Conditioned',
-        'Pantry Area',
-        'Parking',
-      ],
-      extraHour: '2,500',
-    },
-  ];
-
-  return (
-    <section className={styles.packagesSection}>
-      <div className={styles.container}>
-        <div className={styles.sectionHeader}>
-          <h2 className={styles.sectionTitle}>
-            Seamless Paper <span className={styles.gradientText}>Backdrop Packages</span>
-          </h2>
-          <p className={styles.sectionSubtitle}>
-            Professional studio setups with complete lighting equipment for photography and videography
-          </p>
-        </div>
-        <div className={styles.packagesGrid}>
-          {packages.map((pkg, index) => (
-            <PackageCard key={index} {...pkg} />
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function PodcastPackagesSection() {
-  const packages = [
-    {
-      title: '1 Hour Package',
-      price: '4,000',
-      image: '/images/podcast-1hr.jpg',
-      equipment: [
-        '1 Seated Sofa ×2',
-        'Nanlite FC-300B',
-        'Nanlite FC-120B',
-        'Godox 600 BM II',
-        'KF RGB Video Light',
-        'Floor Lamp',
-        'C-stand with boom arm',
-        '120 Parabolic Softbox',
-        '90 Softbox',
-        'Makeup & Dressing Room',
-        'Fully Air-Conditioned',
-        'Pantry Area',
-        'Parking',
-      ],
-      extraHour: '3,500',
-    },
-    {
-      title: '2 Hours Package',
-      price: '7,500',
-      image: '/images/podcast-2hr.jpg',
-      equipment: [
-        '1 Seated Sofa ×2',
-        'Nanlite FC-300B',
-        'Nanlite FC-120B',
-        'Godox 600 BM II',
-        'KF RGB Video Light',
-        'Floor Lamp',
-        'C-stand with boom arm',
-        '120 Parabolic Softbox',
-        '90 Softbox',
-        'Godox SB-FW 35x160cm Softbox',
-        'Makeup & Dressing Room',
-        'Fully Air-Conditioned',
-        'Pantry Area',
-        'Parking',
-      ],
-      extraHour: '3,500',
-    },
-    {
-      title: '5 Hours Package',
-      price: '14,500',
-      image: '/images/podcast-5hr.jpg',
-      popular: true,
-      equipment: [
-        '1 Seated Sofa ×2',
-        'Nanlite FC-300B',
-        'Nanlite FC-120B',
-        'Godox 600 BM II',
-        'KF RGB Video Light',
-        'Floor Lamp',
-        'ZSYB LC60C RGB Video Light',
-        'C-stand with boom arm',
-        '120 Parabolic Softbox',
-        '90 Softbox',
-        'Godox SB-FW 35x160cm Softbox',
-        'Bowens Mount Spotlight Light Projector',
-        'Makeup & Dressing Room',
-        'Fully Air-Conditioned',
-        'Pantry Area',
-        'Parking',
-      ],
-      extraHour: '3,500',
-    },
-    {
-      title: '8 Hours Package',
-      price: '22,500',
-      image: '/images/podcast-8hr.jpg',
-      equipment: [
-        '1 Seated Sofa ×2',
-        'Nanlite FC-300B',
-        'Nanlite FC-120B',
-        'Godox 600 BM II',
-        'KF RGB Video Light',
-        'Floor Lamp',
-        'ZSYB LC60C RGB Video Light',
-        'C-stand with boom arm',
-        '120 Parabolic Softbox',
-        '90 Softbox',
-        'Godox SB-FW 35x160cm Softbox',
-        'Bowens Mount Spotlight Light Projector',
-        'Makeup & Dressing Room',
-        'Fully Air-Conditioned',
-        'Pantry Area',
-        'Parking',
-      ],
-      extraHour: '3,500',
-    },
-  ];
-
-  return (
-    <section className={styles.packagesSection}>
-      <div className={styles.container}>
-        <div className={styles.sectionHeader}>
-          <h2 className={styles.sectionTitle}>
-            Podcast / Interior <span className={styles.gradientText}>Setup Packages</span>
-          </h2>
-          <p className={styles.sectionSubtitle}>
-            Complete interior setups perfect for podcasts, interviews, and content creation
-          </p>
-        </div>
-        <div className={styles.packagesGrid}>
-          {packages.map((pkg, index) => (
-            <PackageCard key={index} {...pkg} />
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function PackageCard({ title, price, image, equipment, extraHour, popular }) {
-  const [isExpanded, setIsExpanded] = useState(false);
-  const displayItems = isExpanded ? equipment : equipment.slice(0, 5);
-
-  return (
-    <div className={styles.packageCard}>
-      {popular && <div className={styles.popularBadge}>Most Popular</div>}
-      
-      <div className={styles.packageImage}>
-        {image && <img src={image} alt={title} />}
-      </div>
-
-      <div className={styles.packageContent}>
-        <h3 className={styles.packageTitle}>{title}</h3>
-        
-        <div className={styles.packagePrice}>
-          <span className={styles.currency}>LKR</span>
-          <span className={styles.amount}>{price}</span>
-        </div>
-
-        <div className={styles.equipmentList}>
-          <h4 className={styles.equipmentTitle}>Includes:</h4>
-          <ul className={styles.equipmentItems}>
-            {displayItems.map((item, index) => (
-              <li key={index} className={styles.equipmentItem}>
-                <span className={styles.checkIcon}>✓</span>
-                {item}
-              </li>
-            ))}
-          </ul>
-          
-          {equipment.length > 5 && (
-            <button
-              className={styles.readMoreButton}
-              onClick={() => setIsExpanded(!isExpanded)}
-            >
-              {isExpanded ? 'Show Less' : `Show ${equipment.length - 5} More`}
-              <span className={styles.arrow}>{isExpanded ? '↑' : '↓'}</span>
-            </button>
-          )}
-        </div>
-
-        <div className={styles.extraHour}>
-          Extra Hour: <span className={styles.extraPrice}>LKR {extraHour}</span>
-        </div>
-
-        <button className={styles.selectButton}>Select Package</button>
-      </div>
-    </div>
-  );
-}
-
-function BookingFormSection() {
-  const [formData, setFormData] = useState({
-    date: '',
-    timeSlot: 'morning',
-    name: '',
-    email: '',
-    phone: '',
-    company: '',
-    packageType: '',
-    requirements: '',
-  });
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('Form submitted:', formData);
-    alert('Booking request submitted! We will contact you within 24 hours.');
-  };
-
-  return (
-    <section className={styles.bookingSection}>
-      <div className={styles.container}>
-        <div className={styles.bookingCard}>
-          <div className={styles.bookingHeader}>
-            <div className={styles.iconWrapper}>
-              <span className={styles.calendarIcon}>📅</span>
-            </div>
-            <div>
-              <h2 className={styles.bookingTitle}>Book Your Session</h2>
-              <p className={styles.bookingSubtitle}>Fill in the details and we'll confirm your booking</p>
-            </div>
-          </div>
-
-          <form onSubmit={handleSubmit} className={styles.bookingForm}>
-            <div className={styles.formRow}>
-              <div className={styles.formGroup}>
-                <label className={styles.label}>Select Date *</label>
-                <input
-                  type="date"
-                  className={styles.input}
-                  value={formData.date}
-                  onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-                  required
-                />
-              </div>
-
-              <div className={styles.formGroup}>
-                <label className={styles.label}>Select Time Slot *</label>
-                <select
-                  className={styles.select}
-                  value={formData.timeSlot}
-                  onChange={(e) => setFormData({ ...formData, timeSlot: e.target.value })}
-                  required
-                >
-                  <option value="morning">Morning (9:00 AM - 1:00 PM)</option>
-                  <option value="afternoon">Afternoon (2:00 PM - 6:00 PM)</option>
-                  <option value="evening">Evening (6:00 PM - 10:00 PM)</option>
-                </select>
-              </div>
-            </div>
-
-            <div className={styles.formRow}>
-              <div className={styles.formGroup}>
-                <label className={styles.label}>Full Name *</label>
-                <input
-                  type="text"
-                  className={styles.input}
-                  placeholder="John Doe"
-                  value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  required
-                />
-              </div>
-
-              <div className={styles.formGroup}>
-                <label className={styles.label}>Email *</label>
-                <input
-                  type="email"
-                  className={styles.input}
-                  placeholder="john@example.com"
-                  value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  required
-                />
-              </div>
-            </div>
-
-            <div className={styles.formRow}>
-              <div className={styles.formGroup}>
-                <label className={styles.label}>Phone Number *</label>
-                <input
-                  type="tel"
-                  className={styles.input}
-                  placeholder="+94 77 123 4567"
-                  value={formData.phone}
-                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                  required
-                />
-              </div>
-
-              <div className={styles.formGroup}>
-                <label className={styles.label}>Company Name</label>
-                <input
-                  type="text"
-                  className={styles.input}
-                  placeholder="Your Company"
-                  value={formData.company}
-                  onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                />
-              </div>
-            </div>
-
-            <div className={styles.formGroup}>
-              <label className={styles.label}>Package Type *</label>
-              <select
-                className={styles.select}
-                value={formData.packageType}
-                onChange={(e) => setFormData({ ...formData, packageType: e.target.value })}
-                required
-              >
-                <option value="">Select package type</option>
-                <option value="backdrop-1hr">Seamless Backdrop - 1 Hour</option>
-                <option value="backdrop-2hr">Seamless Backdrop - 2 Hours</option>
-                <option value="backdrop-5hr">Seamless Backdrop - 5 Hours</option>
-                <option value="backdrop-8hr">Seamless Backdrop - 8 Hours</option>
-                <option value="podcast-1hr">Podcast/Interior - 1 Hour</option>
-                <option value="podcast-2hr">Podcast/Interior - 2 Hours</option>
-                <option value="podcast-5hr">Podcast/Interior - 5 Hours</option>
-                <option value="podcast-8hr">Podcast/Interior - 8 Hours</option>
-              </select>
-            </div>
-
-            <div className={styles.formGroup}>
-              <label className={styles.label}>Special Requirements</label>
-              <textarea
-                className={styles.textarea}
-                placeholder="Tell us about your project needs, equipment requirements, etc."
-                rows="5"
-                value={formData.requirements}
-                onChange={(e) => setFormData({ ...formData, requirements: e.target.value })}
-              ></textarea>
-            </div>
-
-            <button type="submit" className={styles.submitButton}>
-              <span>Request Booking</span>
-              <span className={styles.buttonArrow}>→</span>
-            </button>
-
-            <p className={styles.formNote}>
-              We'll review your request and confirm availability within 24 hours
-            </p>
-          </form>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function LocationSection() {
-  return (
-    <section className={styles.locationSection}>
-      <div className={styles.container}>
-        <div className={styles.locationCard}>
-          <div className={styles.locationIcon}>
-            <span>📍</span>
-          </div>
-          <div className={styles.locationContent}>
-            <h3 className={styles.locationTitle}>Studio Location</h3>
-            <p className={styles.locationAddress}>
-              123 Creative Avenue, Downtown Arts District
-              <br />
-              Los Angeles, CA 90012
-            </p>
-            <p className={styles.locationDetails}>
-              Free parking available • Easy metro access • Elevator access
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
   );
 }
