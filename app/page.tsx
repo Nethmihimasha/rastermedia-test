@@ -2,6 +2,8 @@
 
 import { useState, useEffect, useRef } from 'react';
 import type { CSSProperties } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
 
 export default function HomePage() {
   return (
@@ -34,31 +36,7 @@ function HeroSection() {
       <div style={styles.heroOverlay}></div>
       <div style={styles.heroGrid}></div>
       
-      <PixelPattern 
-        style={{ 
-          position: 'absolute',
-          top: '104px', 
-          right: '180px',
-          opacity: 0.6,
-          transform: 'rotate(4.96deg)',
-          animation: 'float 6s ease-in-out infinite',
-          zIndex: 3
-        }} 
-        size="large" 
-      />
       
-      <PixelPattern 
-        style={{ 
-          position: 'absolute',
-          bottom: '112px', 
-          left: '126px',
-          opacity: 0.5,
-          transform: 'rotate(-2.92deg)',
-          animation: 'float 8s ease-in-out infinite',
-          zIndex: 3
-        }} 
-        size="medium" 
-      />
       
       <div style={styles.heroContent} className="hero-content">
         <h1 style={styles.heroHeading} className="hero-heading">
@@ -69,8 +47,8 @@ function HeroSection() {
           We build modern, pixel-sharp campaigns for brands that want to stand out.
         </p>
         <div style={styles.heroButtons} className="hero-buttons">
-          <button style={styles.primaryButton} className="btn btn--primary">START A PROJECT</button>
-          <button style={styles.secondaryButton} className="btn btn--outline">VIEW PORTFOLIO</button>
+          <Link href="/contact" className="btn" aria-label="Start a project">START A PROJECT</Link>
+          <Link href="/studio" className="btn" aria-label="Book studio space">BOOK STUDIO SPACE</Link>
         </div>
         <div style={styles.heroDots}>
           {[0, 1, 2, 3, 4].map((i) => (
@@ -88,39 +66,70 @@ function HeroSection() {
 function ServicesSection() {
   const services = [
     {
-      icon: '🎨',
-      title: 'Creative & Branding',
-      description: 'Building distinctive brand identities that resonate with your audience.',
+      icon: (
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+          <rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+          <circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+          <path d="M21 7l-5 3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+        </svg>
+      ),
+      title: 'Photography & Video Production',
+      description: 'BCinematic photography and video for brands, fashion, products, and corporate projects from start to finish.',
       hasPattern: true,
     },
     {
-      icon: '✏️',
-      title: 'Graphic Design',
-      description: 'Pixel-perfect designs that blend creativity with strategy.',
+      icon: (
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+          <path d="M12 2l3 7 7 3-7 3-3 7-3-7-7-3 7-3 3-7z" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+        </svg>
+      ),
+      title: 'Brand Strategy & Identity',
+      description: 'We provide clarity and direction for brands with well-crafted messaging and visual systems.',
       hasPattern: true,
     },
     {
-      icon: '📷',
-      title: 'Photography',
-      description: 'Studio-quality imagery that captures your brand\'s essence.',
+      icon: (
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+          <rect x="2" y="3" width="20" height="14" rx="1.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+          <path d="M8 21v-4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+        </svg>
+      ),
+      title: 'Studio Space',
+      description: 'A professional studio for photography, video, content production, and podcasts, ensuring high quality results.',
       hasPattern: true,
     },
     {
-      icon: '🎥',
-      title: 'Videography',
-      description: 'Cinematic productions that engage audiences and bring stories to life.',
+      icon: (
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+          <path d="M3 21v-7l13-9 5 7v9H3z" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+          <path d="M14 10l7-7" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+        </svg>
+      ),
+      title: 'Design',
+      description: 'From logos to complete brand systems, we create designs with care, precision, and purpose.',
       hasPattern: true,
     },
     {
-      icon: '📱',
-      title: 'Social Media Advertising',
-      description: 'Data-driven campaigns that amplify your reach and drive results.',
+      icon: (
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+          <path d="M3 11v6a2 2 0 0 0 2 2h3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+          <path d="M21 7v10a2 2 0 0 1-2 2h-3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+          <path d="M8 11a4 4 0 0 1 8 0" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+        </svg>
+      ),
+      title: 'Social Media Management',
+      description: 'Managing social media with creative content to engage, grow, and maintain brand presence.',
       hasPattern: true,
     },
     {
-      icon: '📊',
-      title: 'Campaign Strategy',
-      description: 'Comprehensive marketing strategies designed to achieve your goals.',
+      icon: (
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+          <rect x="3" y="4" width="18" height="14" rx="1" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+          <path d="M8 4v4M16 4v4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+        </svg>
+      ),
+      title: 'Website Design & Development',
+      description: 'Premium websites built for seamless performance, usability, and a strong brand presence.',
       hasPattern: true,
     },
   ];
@@ -218,10 +227,10 @@ function StatsSection() {
   const sectionRef = useRef(null);
 
   const stats = [
-    { value: '12', suffix: '+', label: 'YEARS EXPERIENCE' },
-    { value: '500', suffix: '+', label: 'HAPPY CLIENTS' },
-    { value: '1200', suffix: '+', label: 'CAMPAIGNS' },
-    { value: '50', suffix: 'M+', label: 'AUDIENCE REACH' },
+    { value: '9', suffix: '+', label: 'YEARS EXPERIENCE' },
+    { value: '120', suffix: '+', label: 'BRANDS' },
+    { value: '300', suffix: '+', label: 'CAMPAIGNS' },
+    { value: '5', suffix: 'M+', label: 'COLLABORATORS' },
   ];
 
   useEffect(() => {
@@ -234,13 +243,14 @@ function StatsSection() {
       { threshold: 0.3 }
     );
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
+    const node = sectionRef.current;
+    if (node) {
+      observer.observe(node);
     }
 
     return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
+      if (node) {
+        observer.unobserve(node);
       }
     };
   }, []);
@@ -254,7 +264,6 @@ function StatsSection() {
               key={index} 
               {...stat} 
               startCounting={isVisible}
-              delay={index * 100}
             />
           ))}
         </div>
@@ -263,7 +272,7 @@ function StatsSection() {
   );
 }
 
-function StatItem({ value, suffix, label, startCounting, delay }: { value: string | number; suffix?: string; label: string; startCounting?: boolean; delay?: number }) {
+function StatItem({ value, suffix, label, startCounting }: { value: string | number; suffix?: string; label: string; startCounting?: boolean }) {
   const count = useCountUp(value, 2000, startCounting);
 
   return (
@@ -277,24 +286,25 @@ function StatItem({ value, suffix, label, startCounting, delay }: { value: strin
 }
 
 function FeaturedWorkSection() {
+
   const projects = [
     {
-      category: 'Branding & Photography',
+      category: 'Photography & Video Production',
+      title: 'Winter Reverie',
+      client: 'Winter Collection',
+      image: '/images/portfoliopic1.jpg',
+    },
+    {
+      category: 'Photography & Video Production',
+      title: 'Modern technology',
+      client: 'Martex Pvt Ltd',
+      image: '/images/portfoliopic2.jpg',
+    },
+    {
+      category: 'Photography & Video Production',
       title: 'Luxury Fashion Campaign',
-      client: 'Elegance Co.',
-      image: '/images/featured-fashion.jpg',
-    },
-    {
-      category: 'Photography & Video',
-      title: 'Modern Architecture Series',
-      client: 'Urban Spaces',
-      image: '/images/featured-architecture.jpg',
-    },
-    {
-      category: 'Photography',
-      title: 'Editorial Fashion Story',
-      client: 'Vogue Magazine',
-      image: '/images/featured-editorial.jpg',
+      client: 'Winter Collection',
+      image: '/images/portfoliopic3.jpg',
     },
   ];
 
@@ -315,7 +325,7 @@ function FeaturedWorkSection() {
           ))}
         </div>
         <div style={styles.portfolioButtonWrapper}>
-          <button style={styles.portfolioButton} className="btn btn--outline">View Full Portfolio</button>
+          <Link href="/portfolio" className="btn">VIEW FULL PORTFOLIO</Link>
         </div>
       </div>
     </section>
@@ -331,8 +341,8 @@ function PortfolioCard({ category, title, client, image }: { category: string; t
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div style={styles.portfolioImage}>
-        {image ? <img src={image} alt={title} style={styles.portfolioImg} /> : null}
+      <div style={{ ...styles.portfolioImage, position: 'relative' }}>
+        {image ? <Image src={image} alt={title} fill style={{ objectFit: 'cover' }} quality={75} /> : null}
       </div>
       <div style={styles.portfolioGradient}></div>
       <div style={{
@@ -351,7 +361,7 @@ function PortfolioCard({ category, title, client, image }: { category: string; t
 }
 
 function BrandsSection() {
-  const brands = ['NIKE', 'ADIDAS', 'APPLE', 'GOOGLE', 'AMAZON', 'MICROSOFT', 'META', 'SPOTIFY', 'NETFLIX', 'TESLA'];
+  const brands = ['WINTER COLLECTION', 'MARTEX', 'VILLA JAY', 'CLASSIC JACKET', 'BASILUR'];
   
   return (
     <section style={styles.brandsSection}>
@@ -441,9 +451,12 @@ function TestimonialsSection() {
 
   // snap to new base index on visible change
   useEffect(() => {
-    setIsAnimating(false);
-    setIndex(visible);
-    setTimeout(() => setIsAnimating(true), 40);
+    const id = setTimeout(() => {
+      setIsAnimating(false);
+      setIndex(visible);
+      setTimeout(() => setIsAnimating(true), 40);
+    }, 0);
+    return () => clearTimeout(id);
   }, [visible]);
 
   // autoplay
@@ -495,6 +508,9 @@ function TestimonialsSection() {
           <p style={styles.sectionSubtitle}>
             Hear what our clients have to say about working with us.
           </p>
+          <div style={styles.reviewButtonWrapper}>
+            <a href="/review" target="_blank" rel="noopener noreferrer" className="btn" aria-label="Leave a review">LEAVE A REVIEW</a>
+          </div>
         </div>
 
         <div
@@ -560,8 +576,8 @@ function TestimonialCard({ quote, name, role, avatar }: { quote: string; name: s
       <div style={styles.testimonialAuthor}>
         <div style={styles.authorAvatar}>
           {avatar ? (
-            <img src={avatar} alt={name} style={styles.authorAvatarImg} />
-          ) : null}
+            <Image src={avatar} alt={name} fill style={{ objectFit: 'cover' }} />
+          ) : null} 
         </div>
         <div>
           <div style={styles.authorName}>{name}</div>
@@ -575,36 +591,15 @@ function TestimonialCard({ quote, name, role, avatar }: { quote: string; name: s
 function CTASection() {
   return (
     <section style={styles.ctaSection}>
-      <PixelPattern 
-        style={{ 
-          position: 'absolute',
-          top: '32px', 
-          right: '32px',
-          opacity: 0.3,
-          zIndex: 0
-        }} 
-        size="large" 
-      />
-      <PixelPattern 
-        style={{ 
-          position: 'absolute',
-          bottom: '32px', 
-          left: '32px',
-          opacity: 0.3,
-          zIndex: 0
-        }} 
-        size="medium" 
-      />
+
       <div style={styles.ctaContent}>
         <h2 style={styles.ctaHeading}>
           Ready to Create Something <span style={styles.gradientText}>Extraordinary?</span>
         </h2>
         <p style={styles.ctaDescription}>
-          Let's collaborate and bring your vision to life with pixel-perfect precision.
+          Let us collaborate and bring your vision to life with pixel-perfect precision.
         </p>
-        <button style={styles.ctaPrimaryButton} className="btn btn--cta animate-shimmer">
-          Start Your Project
-        </button>
+        <Link href="/contact" className="btn animate-shimmer">Start Your Project</Link>
       </div>
     </section>
   );
@@ -750,30 +745,7 @@ const styles: Record<string, CSSProperties> = {
     gap: '24px',
     marginBottom: '60px',
   },
-  primaryButton: {
-    padding: '19.4px 40px',
-    background: '#5DCDDB',
-    border: 'none',
-    fontFamily: 'Cousine, monospace',
-    fontSize: '16px',
-    fontWeight: 700,
-    letterSpacing: '0.8px',
-    color: '#000000',
-    cursor: 'pointer',
-    transition: 'transform 0.3s',
-  },
-  secondaryButton: {
-    padding: '21px 42.6px',
-    background: 'transparent',
-    border: '1.6px solid #5DCDDB',
-    fontFamily: 'Cousine, monospace',
-    fontSize: '16px',
-    fontWeight: 700,
-    letterSpacing: '0.8px',
-    color: '#FFFFFF',
-    cursor: 'pointer',
-    transition: 'all 0.3s',
-  },
+
   heroDots: {
     display: 'flex',
     gap: '28px',
@@ -819,7 +791,7 @@ const styles: Record<string, CSSProperties> = {
     border: '0.8px solid rgba(93, 205, 219, 0.1)',
     minHeight: '293.5px',
     transition: 'all 0.3s',
-    cursor: 'pointer',
+    cursor: 'default',
   },
   serviceIcon: {
     width: '56px',
@@ -830,6 +802,7 @@ const styles: Record<string, CSSProperties> = {
     justifyContent: 'center',
     fontSize: '28px',
     marginBottom: '24px',
+    color: '#5DCDDB',
   },
   serviceTitle: {
     fontSize: '36px',
@@ -895,6 +868,7 @@ const styles: Record<string, CSSProperties> = {
     height: '100%',
     background: 'linear-gradient(45deg, #2A2A2A 0%, #3A3A3A 100%)',
     overflow: 'hidden',
+    position: 'relative',
   },
   portfolioImg: {
     width: '100%',
@@ -963,16 +937,7 @@ const styles: Record<string, CSSProperties> = {
     display: 'flex',
     justifyContent: 'center',
   },
-  portfolioButton: {
-    padding: '14.4px 25.6px',
-    background: 'transparent',
-    border: '1.6px solid #5DCDDB',
-    color: '#5DCDDB',
-    fontSize: '16px',
-    lineHeight: '24px',
-    cursor: 'pointer',
-    transition: 'all 0.3s',
-  },
+
   brandsSection: {
     padding: '128px 0',
   },
@@ -1022,6 +987,21 @@ const styles: Record<string, CSSProperties> = {
     alignItems: 'stretch',
     transition: 'transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1)',
     willChange: 'transform',
+  },
+  reviewButtonWrapper: {
+    marginTop: '18px',
+    display: 'flex',
+    justifyContent: 'center',
+  },
+  reviewButton: {
+    marginTop: '8px',
+    padding: '12px 22px',
+    borderRadius: '0',
+    border: '1.6px solid #5DCDDB',
+    color: '#5DCDDB',
+    background: 'transparent',
+    fontWeight: 700,
+    cursor: 'pointer',
   },
   testimonialsViewport: {
     overflow: 'hidden',
@@ -1104,6 +1084,7 @@ const styles: Record<string, CSSProperties> = {
     borderRadius: '50%',
     overflow: 'hidden',
     flexShrink: 0,
+    position: 'relative',
   },
   authorAvatarImg: {
     width: '100%',
@@ -1158,5 +1139,6 @@ const styles: Record<string, CSSProperties> = {
     cursor: 'pointer',
     transition: 'transform 0.3s',
     fontWeight: 600,
+    borderRadius: '0',
   },
 };
