@@ -1,7 +1,7 @@
 'use client';
 
 import styles from './about.module.css';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export default function AboutPage() {
   return (
@@ -40,16 +40,21 @@ function StorySection() {
         <div className={styles.storyGrid}>
           <div className={styles.storyImage}>
             {/* Add an image at public/images/about-story.jpg or change the src to your image path */}
-            <img src="/images/about-story.jpg" alt="Our Story" className={styles.storyImg} />
+            <img src="/images/about.jpg" alt="Our Story" className={styles.storyImg} />
           </div>
           <div className={styles.storyContent}>
             <h2 className={styles.storyTitle}>Our Story</h2>
             <p className={styles.storyText}>
-              Founded in 2012, Raster Media emerged from a simple belief: every brand deserves creative solutions that go beyond the ordinary. What started as a small design studio has grown into a full-service creative agency.
+              Raster Media began with a simple thought. Every idea starts small. Every design begins with a single pixel. We believed that if we took responsibility for each pixel, the final work would speak for itself.
+
             </p>
             <p className={styles.storyText}>
-              Our name reflects our philosophy—every pixel, every element, and every detail matters. We combine artistic vision with technical precision to deliver work that stands the test of time.
+               Over the years, we proved that belief through every project we delivered. Today, Raster Media is a 
+                hybrid creative studio where strategy meets design and production. Every idea is crafted with 
+                care, every project is managed with intention, and every outcome reflects our standard.
+                confidence, creating work that feels relevant today and meaningful tomorrow.
             </p>
+          
             <div className={styles.storyPattern}>
               {Array.from({ length: 9 }).map((_, i) => (
                 <div key={i} className={styles.pixel}></div>
@@ -78,7 +83,8 @@ function MissionVisionSection() {
             </div>
             <h3 className={styles.mvTitle}>Our Mission</h3>
             <p className={styles.mvText}>
-              To empower brands with creative solutions that challenge conventions, inspire audiences, and deliver measurable results that exceed expectations.
+              To empower brands with creative solutions that inspire audiences, challenge conventions, and 
+              deliver measurable impact through responsible creativity and precise execution.
             </p>
           </div>
           <div className={styles.mvCard}>
@@ -91,7 +97,8 @@ function MissionVisionSection() {
             </div>
             <h3 className={styles.mvTitle}>Our Vision</h3> 
             <p className={styles.mvText}>
-              To be the world's most trusted creative partner, renowned for innovation, excellence, and our unwavering commitment to excellence.
+              To be the world's most trusted creative partner, building brands among the top 10 globally 
+              through innovative design, strategic thinking, and unwavering commitment to excellence.
             </p>
           </div>
         </div>
@@ -184,6 +191,17 @@ function WhyChooseUsSection() {
 }
 
 function BehindTheScenesSection() {
+  const [openVideo, setOpenVideo] = useState(null);
+
+  useEffect(() => {
+    if (!openVideo) return;
+    const onKey = (e) => {
+      if (e.key === 'Escape') setOpenVideo(null);
+    };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [openVideo]);
+
   return (
     <section className={styles.btsSection}>
       <div className="container">
@@ -191,8 +209,70 @@ function BehindTheScenesSection() {
           Behind <span className="gradient-text">The Scenes</span>
         </h2>
         <div className={styles.btsGrid}>
-          <div className={styles.btsImage}></div>
-          <div className={styles.btsImage}></div>
+          {/* Card 1: YouTube Short (lSGSBUobk2U) — opens modal */}
+          <button
+            type="button"
+            onClick={() => setOpenVideo('lSGSBUobk2U')}
+            className={styles.btsCard}
+            aria-label="Play YouTube Short lSGSBUobk2U"
+          >
+            <div className={styles.btsImage} style={{ backgroundImage: `url('https://i.ytimg.com/vi/lSGSBUobk2U/hqdefault.jpg')` }}>
+              <div className={styles.playOverlay} aria-hidden="true">
+                <svg viewBox="0 0 64 64" width="32" height="32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                  <path d="M22 16v32l28-16z" fill="#fff" />
+                </svg>
+              </div>
+            </div>
+            <div className={styles.btsGradient}></div>
+            <div className={styles.btsContent}>
+              <div className={styles.btsCategory}>Video</div>
+              <h3 className={styles.btsTitle}>Shorts: Behind the Scenes</h3>
+            </div>
+          </button>
+
+          {/* Card 2: YouTube Short (n5y-MjIwUh0) */}
+          <a
+            href="https://www.youtube.com/shorts/n5y-MjIwUh0"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Open YouTube Short n5y-MjIwUh0"
+            className={styles.btsCard}
+          >
+            <div className={styles.btsImage} style={{ backgroundImage: `url('https://i.ytimg.com/vi/n5y-MjIwUh0/hqdefault.jpg')` }}>
+              <div className={styles.playOverlay} aria-hidden="true">
+                <svg viewBox="0 0 64 64" width="32" height="32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                  <path d="M22 16v32l28-16z" fill="#fff" />
+                </svg>
+              </div>
+            </div>
+            <div className={styles.btsGradient}></div>
+            <div className={styles.btsContent}>
+              <div className={styles.btsCategory}>Video</div>
+              <h3 className={styles.btsTitle}>Shorts: Behind the Scenes (1)</h3>
+            </div>
+          </a>
+
+          {/* Card 3: YouTube Short (xNJEw8xTqc8) */}
+          <a
+            href="https://www.youtube.com/shorts/xNJEw8xTqc8"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Open YouTube Short xNJEw8xTqc8"
+            className={styles.btsCard}
+          >
+            <div className={styles.btsImage} style={{ backgroundImage: `url('https://i.ytimg.com/vi/xNJEw8xTqc8/hqdefault.jpg')` }}>
+              <div className={styles.playOverlay} aria-hidden="true">
+                <svg viewBox="0 0 64 64" width="32" height="32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                  <path d="M22 16v32l28-16z" fill="#fff" />
+                </svg>
+              </div>
+            </div>
+            <div className={styles.btsGradient}></div>
+            <div className={styles.btsContent}>
+              <div className={styles.btsCategory}>Video</div>
+              <h3 className={styles.btsTitle}>Shorts: Behind the Scenes (2)</h3>
+            </div>
+          </a>
         </div>
       </div>
     </section>
@@ -201,27 +281,22 @@ function BehindTheScenesSection() {
 
 function TechnologyStackSection() {
   const creativeTech = [
-    'Adobe InDesign',
+    'Adobe Suit',
+    'Davince Resolve',
+    'Meta Ads Manager',
+    'Mail Chimp',
     'Figma',
-    'Adobe Premiere Pro',
-    'After Effects',
-    'Adobe Lightroom',
-    'Cinema 4D'
+    'Midjourney',
+    'Canva Pro',
+    'Milanote',
+    'wordpress',
+    'next.js',
+    'react.js'
   ];
 
-  const devTech = [
-    'React.js',
-    'Next.js',
-    'TypeScript',
-    'Tailwind CSS',
-    'Node.js',
-    'WordPress',
-    'Webflow',
-    'Shopify'
-  ];
+
 
   const leftRef = useRef(null);
-  const rightRef = useRef(null);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -243,19 +318,15 @@ function TechnologyStackSection() {
 
     const ro = new ResizeObserver(() => {
       setupTrack(leftRef.current);
-      setupTrack(rightRef.current);
     });
 
     if (leftRef.current) ro.observe(leftRef.current);
-    if (rightRef.current) ro.observe(rightRef.current);
 
     // initial setup
     setupTrack(leftRef.current);
-    setupTrack(rightRef.current);
 
     const onResize = () => {
       setupTrack(leftRef.current);
-      setupTrack(rightRef.current);
     };
 
     window.addEventListener('resize', onResize);
@@ -276,10 +347,7 @@ function TechnologyStackSection() {
 
         <div className={styles.techGroups}>
           <div className={styles.techGroup}>
-            <div className={styles.groupHeader}>
-              <div className={styles.groupIcon}>🎨</div>
-              <div className={styles.groupTitle}>Creative &amp; Design</div>
-            </div>
+            
             <div className={styles.techRibbon}>
               <div ref={leftRef} className={`${styles.techTrack} ${styles.techTrackLeft}`} aria-hidden>
                 {[...creativeTech, ...creativeTech].map((tech, i) => (
@@ -292,27 +360,10 @@ function TechnologyStackSection() {
             </div>
           </div>
 
-          <div className={styles.techGroup}>
-            <div className={styles.groupHeader}>
-              <div className={styles.groupIcon}>&lt;/&gt;</div>
-              <div className={styles.groupTitle}>Development &amp; Web</div>
-            </div>
-            <div className={styles.techRibbon}>
-              <div ref={rightRef} className={`${styles.techTrack} ${styles.techTrackRight}`} aria-hidden>
-                {[...devTech, ...devTech].map((tech, i) => (
-                  <div key={i} className={styles.techItem}>
-                    <div className={styles.techDot}></div>
-                    <span>{tech}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
+
         </div>
 
-        <div className={styles.techNote}>
-          Expanding into custom software development &amp; web solutions
-        </div>
+        
       </div>
     </section>
   );

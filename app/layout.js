@@ -82,8 +82,10 @@ function Footer() {
               <li><Link href="/about_us" style={styles.footerLink} className="footer-link">About</Link></li>
               <li><Link href="/services" style={styles.footerLink} className="footer-link">Services</Link></li>
               <li><Link href="/portfolio" style={styles.footerLink} className="footer-link">Portfolio</Link></li>
-              <li><Link href="/careers" style={styles.footerLink} className="footer-link">Careers</Link></li>
+              <li><Link href="/careers" style={styles.footerLink} className="footer-link">Career</Link></li>
               <li><Link href="/booking" style={styles.footerLink} className="footer-link">Studio Booking</Link></li>
+              <li><Link href="/contact" style={styles.footerLink} className="footer-link">Contact</Link></li>
+              <li><Link href="/review" style={styles.footerLink} className="footer-link">Review Us</Link></li>
             </ul>
           </div>
 
@@ -125,11 +127,6 @@ function Footer() {
 
         <div style={styles.footerBottom}>
           <p style={styles.copyright}>© 2025 Raster Media. All rights reserved.</p>
-          <div style={styles.socialLinks}>
-            <a href="#" style={styles.socialLink}>🔗</a>
-            <a href="#" style={styles.socialLink}>📘</a>
-            <a href="#" style={styles.socialLink}>📷</a>
-          </div>
         </div>
       </div>
     </footer>
