@@ -26,7 +26,7 @@ function HeroSection() {
           <span> Brand Experiences</span>
         </h1>
         <p className={styles.heroDescription}>
-          We're a team of creative professionals dedicated to transforming ideas into reality through innovative design, strategic thinking, and flawless execution.
+          We&apos;re a team of creative professionals dedicated to transforming ideas into reality through innovative design, strategic thinking, and flawless execution.
         </p>
       </div>
     </section>
@@ -97,7 +97,7 @@ function MissionVisionSection() {
             </div>
             <h3 className={styles.mvTitle}>Our Vision</h3> 
             <p className={styles.mvText}>
-              To be the world's most trusted creative partner, building brands among the top 10 globally 
+              To be the world&apos;s most trusted creative partner, building brands among the top 10 globally 
               through innovative design, strategic thinking, and unwavering commitment to excellence.
             </p>
           </div>

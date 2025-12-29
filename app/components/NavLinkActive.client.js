@@ -10,7 +10,7 @@ export default function NavLinkActive() {
         try {
           const url = new URL(a.href);
           a.classList.toggle('active', url.pathname === window.location.pathname);
-        } catch (e) {
+        } catch {
           // ignore
         }
       });

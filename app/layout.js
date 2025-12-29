@@ -50,7 +50,7 @@ function Header() {
   
 </nav>
         <NavLinkActive />
-        <button style={styles.ctaButton}>Get Started</button>
+        <Link href="/contact" style={styles.ctaButton} aria-label="Get Started - Contact Us">Get Started</Link>
       </div>
     </header>
   );
@@ -188,6 +188,8 @@ const styles = {
     fontWeight: '600',
     cursor: 'pointer',
     transition: 'transform 0.3s',
+    textDecoration: 'none',
+    display: 'inline-block'
   },
   footer: {
     backgroundColor: '#1A1A1A',

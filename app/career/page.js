@@ -355,9 +355,9 @@ export default function CareersPage() {
         <section className={styles.customRoleSection}>
           <div className={styles.customRoleContainer}>
             <div className={styles.pixelPattern}></div>
-            <h3 className={styles.customRoleHeading}>Don't See Your Role?</h3>
+            <h3 className={styles.customRoleHeading}>Don&apos;t See Your Role?</h3>
             <p className={styles.customRoleParagraph}>
-              We are always interested in meeting talented individuals. Send us your resume and we'll keep you in mind for future opportunities.
+              We are always interested in meeting talented individuals. Send us your resume and we&apos;ll keep you in mind for future opportunities.
             </p>
             <form className={styles.customRoleForm}>
               <div className={styles.formRow}>
@@ -387,85 +387,7 @@ export default function CareersPage() {
         </section>
       </div>
 
-      {/* Footer */}
-      <footer className={styles.footer}>
-        <div className={styles.footerContent}>
-          <div className={styles.footerBrand}>
-            <div className={styles.footerLogo}></div>
-            <p className={styles.footerTagline}>
-              Responsible creativity for every pixel. Building brands that matter.
-            </p>
-            <div className={styles.footerPixelPattern}></div>
-          </div>
 
-          <div className={styles.footerLinks}>
-            <h4 className={styles.footerHeading}>Quick Links</h4>
-            <ul className={styles.footerList}>
-              <li><a href="#">About</a></li>
-              <li><a href="#">Services</a></li>
-              <li><a href="#">Portfolio</a></li>
-              <li><a href="#">Careers</a></li>
-              <li><a href="#">Studio Booking</a></li>
-            </ul>
-          </div>
-
-          <div className={styles.footerLinks}>
-            <h4 className={styles.footerHeading}>Portfolio</h4>
-            <ul className={styles.footerList}>
-              <li><a href="#">Branding Projects</a></li>
-              <li><a href="#">Photography</a></li>
-              <li><a href="#">Video Production</a></li>
-              <li><a href="#">Digital Campaigns</a></li>
-              <li><a href="#">Case Studies</a></li>
-            </ul>
-          </div>
-
-          <div className={styles.footerLinks}>
-            <h4 className={styles.footerHeading}>Contact</h4>
-            <ul className={styles.footerContactList}>
-              <li>
-                <svg className={styles.contactIcon} viewBox="0 0 18 18">
-                  <path d="M3 6l6 4 6-4M3 6v9h12V6" stroke="currentColor" fill="none"/>
-                </svg>
-                hello@rastermedia.com
-              </li>
-              <li>
-                <svg className={styles.contactIcon} viewBox="0 0 18 18">
-                  <path d="M3 3h12v12H3z" stroke="currentColor" fill="none"/>
-                </svg>
-                +1 (555) 123-4567
-              </li>
-              <li>
-                <svg className={styles.contactIcon} viewBox="0 0 18 18">
-                  <path d="M9 3a3 3 0 100 6 3 3 0 000-6zM5 13a3 3 0 00-3 3v1h14v-1a3 3 0 00-3-3H5z" />
-                </svg>
-                123 Creative Street, NY 10001
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <div className={styles.footerBottom}>
-          <p className={styles.copyright}>© 2024 Raster Media. All rights reserved.</p>
-          <div className={styles.socialLinks}>
-            <a href="#" className={styles.socialLink}>
-              <svg viewBox="0 0 20 20">
-                <circle cx="10" cy="10" r="8" stroke="currentColor" fill="none"/>
-              </svg>
-            </a>
-            <a href="#" className={styles.socialLink}>
-              <svg viewBox="0 0 20 20">
-                <path d="M8 7h4v6H8z" fill="currentColor"/>
-              </svg>
-            </a>
-            <a href="#" className={styles.socialLink}>
-              <svg viewBox="0 0 20 20">
-                <path d="M6 5h8v8H6z" stroke="currentColor" fill="none"/>
-              </svg>
-            </a>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }

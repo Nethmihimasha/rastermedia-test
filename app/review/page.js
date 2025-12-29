@@ -85,7 +85,7 @@ export default function ReviewsPage() {
           </h1>
           
           <p className={styles.heroSubtitle}>
-            Join 500+ happy clients who've shared their success stories. Your feedback shapes our future.
+            Join 500+ happy clients who&apos;ve shared their success stories. Your feedback shapes our future.
           </p>
 
           <div className={styles.statsGrid}>
@@ -308,7 +308,7 @@ export default function ReviewsPage() {
                 <div className={styles.reviewStars}>
                   {'★'.repeat(review.rating)}
                 </div>
-                <p className={styles.reviewText}>"{review.text}"</p>
+                <p className={styles.reviewText}>&ldquo;{review.text}&rdquo;</p>
                 <div className={styles.reviewBadge}>Verified Client</div>
               </div>
             ))}
@@ -323,7 +323,7 @@ export default function ReviewsPage() {
             <div className={styles.interactiveCard}>
               <div className={styles.interactiveIcon}>🚀</div>
               <h3 className={styles.interactiveTitle}>Ready to Start?</h3>
-              <p className={styles.interactiveText}>Let's create something extraordinary together</p>
+              <p className={styles.interactiveText}>Let&apos;s create something extraordinary together</p>
               <button className={styles.interactiveButton}>Start Your Project</button>
             </div>
             <div className={styles.interactiveCard}>

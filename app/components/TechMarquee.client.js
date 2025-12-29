@@ -11,7 +11,6 @@ import {
   SiFacebook,
   SiMailchimp,
   SiFigma,
-  SiMidjourney,
   SiCanva,
   SiMilanote,
   SiWordpress,
@@ -25,7 +24,7 @@ const logos = [
   { Icon: SiFacebook, label: "Meta Ads Manager" },
   { Icon: SiMailchimp, label: "Mailchimp" },
   { Icon: SiFigma, label: "Figma" },
-  { Icon: SiMidjourney, label: "Midjourney" },
+  { Icon: null, label: "Midjourney" },
   { Icon: SiCanva, label: "Canva Pro" },
   { Icon: SiMilanote, label: "Milanote" },
   { Icon: SiWordpress, label: "WordPress" },
@@ -33,7 +32,7 @@ const logos = [
   { Icon: SiReact, label: "React.js" },
 ];
 
-export default function TechMarquee({ speed = 30, pauseOnHover = true }) {
+export default function TechMarquee({ speed = 30 }) {
   // Duplicate sequence to make seamless loop
   const repeated = [...logos, ...logos];
 
