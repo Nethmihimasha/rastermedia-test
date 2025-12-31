@@ -100,33 +100,6 @@ export default function CareersPage() {
           </div>
         )}
 
-        {/* Why Work With Us Section */}
-        <section className={styles.whyWorkSection}>
-          <div className={styles.container}>
-            <h2 className={styles.heading2}>Why Work With Us</h2>
-            <div className={styles.benefitsContainer}>
-              <div className={styles.benefitCard}>
-                <h3 className={styles.benefitTitle}>Creative Freedom</h3>
-                <p className={styles.benefitText}>
-                  Work on diverse projects with creative autonomy and collaborative support
-                </p>
-              </div>
-              <div className={styles.benefitCard}>
-                <h3 className={styles.benefitTitle}>Growth Opportunities</h3>
-                <p className={styles.benefitText}>
-                  Continuous learning, mentorship, and career advancement opportunities
-                </p>
-              </div>
-              <div className={styles.benefitCard}>
-                <h3 className={styles.benefitTitle}>Premium Benefits</h3>
-                <p className={styles.benefitText}>
-                  Competitive salary, health insurance, retirement plans, and more
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
         {/* Open Positions Section */}
         <section className={styles.positionsSection}>
           <div className={styles.positionsHeader}>
@@ -198,7 +171,12 @@ export default function CareersPage() {
                 <li>Professional development and mentorship</li>
                 <li>Competitive rates and flexible schedules</li>
               </ul>
-              <button className={styles.modelButton}>Apply as a Model</button>
+              <button 
+                className={styles.modelButton}
+                onClick={() => window.open('/modelregistry', '_blank')}
+              >
+                Apply as a Model
+              </button>
             </div>
             <div className={styles.modelImage}>
               {/* Replace with actual image */}
@@ -207,23 +185,9 @@ export default function CareersPage() {
           </div>
         </section>
 
-        export const metadata = {
-  title: 'Model Registration - Raster Media',
-  description: 'Join our exclusive roster of professional models',
-};
-
-export default function ModelRegistryLayout({ children }) {
-  return (
-    <>
-      {children}
-    </>
-  );
-}
-
         {/* Don't See Your Role Section */}
         <section className={styles.customRoleSection}>
           <div className={styles.customRoleContainer}>
-            <div className={styles.pixelPattern}></div>
             <h3 className={styles.customRoleHeading}>Don&apos;t See Your Role?</h3>
             <p className={styles.customRoleParagraph}>
               We are always interested in meeting talented individuals. Send us your resume and we&apos;ll keep you in mind for future opportunities.
@@ -249,7 +213,7 @@ export default function ModelRegistryLayout({ children }) {
                 <p className={styles.uploadSubtext}>PDF or DOCX (Max 5MB)</p>
               </div>
               <button type="submit" className={styles.submitButton}>
-                Submit Resume
+                Submit Application
               </button>
             </form>
           </div>
