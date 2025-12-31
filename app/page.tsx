@@ -333,30 +333,94 @@ function FeaturedWorkSection() {
 }
 
 function PortfolioCard({ category, title, client, image }: { category: string; title: string; client: string; image: string }) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <div 
-      style={styles.portfolioCard}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      <div style={{ ...styles.portfolioImage, position: 'relative' }}>
-        {image ? <Image src={image} alt={title} fill style={{ objectFit: 'cover' }} quality={75} /> : null}
+    <>
+      <div 
+        style={{
+          ...styles.portfolioCard,
+          transform: isHovered ? 'translateY(-8px)' : 'translateY(0)',
+          borderColor: isHovered ? 'rgba(93, 205, 219, 0.5)' : 'rgba(93, 205, 219, 0.1)',
+          boxShadow: isHovered ? '0 12px 40px rgba(93, 205, 219, 0.15)' : 'none',
+        }}
+        onClick={() => setIsModalOpen(true)}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
+        <div style={{ 
+          ...styles.portfolioImage, 
+          position: 'relative',
+          transform: isHovered ? 'scale(1.05)' : 'scale(1)',
+          transition: 'transform 0.5s ease',
+        }}>
+          {image ? <Image src={image} alt={title} fill style={{ objectFit: 'cover' }} quality={75} /> : null}
+        </div>
+        <div style={{ 
+          ...styles.portfolioGradient,
+          opacity: isHovered ? 0.85 : 0.6,
+          transition: 'opacity 0.3s ease',
+        }}></div>
+        <div style={{
+          ...styles.portfolioContent,
+          transform: isHovered ? 'translateY(-8px)' : 'translateY(0)',
+          transition: 'transform 0.4s ease',
+        }}>
+          <div style={{
+            ...styles.portfolioCategory,
+            color: isHovered ? '#7DD8E5' : '#5DCDDB',
+            transition: 'color 0.3s ease',
+          }}>{category}</div>
+          <h3 style={styles.portfolioTitle}>{title}</h3>
+          <p style={styles.portfolioClient}>{client}</p>
+        </div>
       </div>
-      <div style={styles.portfolioGradient}></div>
-      <div style={{
-        ...styles.portfolioHover,
-        opacity: isHovered ? 1 : 0,
-      }}>
-        <div style={styles.portfolioIcon}>🔍</div>
-      </div>
-      <div style={styles.portfolioContent}>
-        <div style={styles.portfolioCategory}>{category}</div>
-        <h3 style={styles.portfolioTitle}>{title}</h3>
-        <p style={styles.portfolioClient}>{client}</p>
-      </div>
-    </div>
+
+      {isModalOpen && (
+        <div 
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: 'rgba(0, 0, 0, 0.95)',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            zIndex: 9999,
+            cursor: 'pointer',
+          }}
+          onClick={() => setIsModalOpen(false)}
+        >
+          <div style={{ position: 'relative', width: '90%', height: '90vh', maxWidth: '1200px' }}>
+            {image ? <Image src={image} alt={title} fill style={{ objectFit: 'contain' }} quality={90} /> : null}
+            <button
+              onClick={() => setIsModalOpen(false)}
+              style={{
+                position: 'absolute',
+                top: '20px',
+                right: '20px',
+                background: '#5DCDDB',
+                color: '#000',
+                border: 'none',
+                width: '48px',
+                height: '48px',
+                borderRadius: '50%',
+                fontSize: '28px',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              ×
+            </button>
+          </div>
+        </div>
+      )}
+    </>
   );
 }
 
@@ -867,6 +931,7 @@ const styles: Record<string, CSSProperties> = {
     overflow: 'hidden',
     cursor: 'pointer',
     border: '0.8px solid rgba(93, 205, 219, 0.1)',
+    transition: 'transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), border-color 0.3s ease, box-shadow 0.3s ease',
   },
   portfolioImage: {
     width: '100%',
@@ -899,6 +964,14 @@ const styles: Record<string, CSSProperties> = {
     alignItems: 'center',
     justifyContent: 'center',
     fontSize: '28px',
+  },
+  portfolioHover: {
+    position: 'absolute',
+    inset: 0,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 2,
   },
   portfolioContent: {
     position: 'absolute',

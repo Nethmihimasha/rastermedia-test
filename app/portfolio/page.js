@@ -1,6 +1,8 @@
 'use client';
 
 import { useState } from 'react';
+import { motion } from 'motion/react';
+import Image from 'next/image';
 import styles from './portfolio.module.css';
 
 const portfolioItems = [
@@ -81,15 +83,35 @@ export default function Portfolio() {
 
   return (
     <div className={styles.portfolioPage}>
-      {/* Header Section */}
+      {/* Header Section with Image */}
       <section className={styles.header}>
+        <motion.div 
+          className={styles.heroImageWrapper}
+          initial={{ opacity: 0, scale: 1.1 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8 }}
+        >
+          <img 
+            src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDN8fGNyZWF0aXZlJTIwd29ya3xlbnwwfHx8fDE2Nzg5ODc3MzE&ixlib=rb-4.0.3&q=80&w=1920"
+            alt="Our Work" 
+            className={styles.heroImage}
+          />
+          <div className={styles.heroImageOverlay} />
+        </motion.div>
+
         <div className={styles.headerContent}>
-          <h1 className={styles.heading}>
-            Our <span className={styles.gradient}>Creative Work</span>
-          </h1>
-          <p className={styles.subtitle}>
-            A showcase of our most impactful projects across branding, photography, video, and digital campaigns.
-          </p>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+          >
+            <h1 className={styles.heading}>
+              Our <span className={styles.gradient}>Creative Work</span>
+            </h1>
+            <p className={styles.subtitle}>
+              A showcase of our most impactful projects across branding, photography, video, and digital campaigns.
+            </p>
+          </motion.div>
         </div>
       </section>
 
@@ -114,32 +136,77 @@ export default function Portfolio() {
       <section className={styles.portfolioGrid}>
         <div className={styles.gridContainer}>
           {filteredItems.map((item) => (
-            <div key={item.id} className={styles.portfolioCard}>
-              {/* Image Placeholder */}
-              <div className={styles.imageContainer}>
-                <div className={styles.imagePlaceholder} />
-                <div className={styles.overlay} />
-                
-                {/* Hover Icon */}
-                <div className={styles.hoverIcon}>
-                  <div className={styles.iconBox}>
-                    <svg width="28" height="28" fill="none" viewBox="0 0 28 28">
-                      <circle cx="14" cy="14" r="6" stroke="white" strokeWidth="2.33" />
-                    </svg>
-                  </div>
-                </div>
-
-                {/* Card Content */}
-                <div className={styles.cardContent}>
-                  <div className={styles.category}>{item.category.toUpperCase()}</div>
-                  <h3 className={styles.cardTitle}>{item.title}</h3>
-                  <p className={styles.client}>{item.client}</p>
-                </div>
-              </div>
-            </div>
+            <PortfolioCard key={item.id} {...item} />
           ))}
         </div>
       </section>
     </div>
+  );
+}
+
+function PortfolioCard({ category, title, client, image }) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  return (
+    <>
+      <div
+        className={styles.portfolioCard}
+        onClick={() => setIsModalOpen(true)}
+      >
+        <div className={styles.portfolioImage}>
+          {image ? <Image src={image} alt={title} fill style={{ objectFit: 'cover' }} quality={75} /> : null}
+        </div>
+        <div className={styles.portfolioGradient}></div>
+        <div className={styles.portfolioContent}>
+          <div className={styles.portfolioCategory}>{category}</div>
+          <h3 className={styles.portfolioTitle}>{title}</h3>
+          <p className={styles.portfolioClient}>{client}</p>
+        </div>
+      </div>
+
+      {isModalOpen && (
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: 'rgba(0, 0, 0, 0.95)',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            zIndex: 9999,
+            cursor: 'pointer',
+          }}
+          onClick={() => setIsModalOpen(false)}
+        >
+          <div style={{ position: 'relative', width: '90%', height: '90vh', maxWidth: '1200px' }}>
+            {image ? <Image src={image} alt={title} fill style={{ objectFit: 'contain' }} quality={90} /> : null}
+            <button
+              onClick={() => setIsModalOpen(false)}
+              style={{
+                position: 'absolute',
+                top: '20px',
+                right: '20px',
+                background: '#5DCDDB',
+                color: '#000',
+                border: 'none',
+                width: '48px',
+                height: '48px',
+                borderRadius: '50%',
+                fontSize: '28px',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              ×
+            </button>
+          </div>
+        </div>
+      )}
+    </>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from 'react';
+import { motion } from 'motion/react';
 import styles from './career.module.css';
 
 
@@ -27,17 +28,39 @@ export default function CareersPage() {
   return (
     <div className={styles.app}>
       <div className={styles.careersPage}>
-        {/* Hero Section */}
+        {/* Hero Section with Image */}
         <section className={styles.heroSection}>
-          <div className={styles.heading1}>
-            <span className={styles.joinOur}>Join Our</span>
-            <div className={styles.textWrapper}>
-              <span className={styles.creativeTeam}>Creative Team</span>
-            </div>
+          <motion.div 
+            className={styles.heroImageWrapper}
+            initial={{ opacity: 0, scale: 1.1 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8 }}
+          >
+            <img 
+              src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDR8fHRlYW0lMjBjcmVhdGl2ZXxlbnwwfHx8fDE2Nzg5ODc3ODA&ixlib=rb-4.0.3&q=80&w=1920"
+              alt="Join Our Team" 
+              className={styles.heroImage}
+            />
+            <div className={styles.heroImageOverlay} />
+          </motion.div>
+
+          <div className={styles.heroContent}>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+            >
+              <div className={styles.heading1}>
+                <span className={styles.joinOur}>Join Our</span>
+                <div className={styles.textWrapper}>
+                  <span className={styles.creativeTeam}>Creative Team</span>
+                </div>
+              </div>
+              <p className={styles.heroParagraph}>
+               Be part of a talented team creating exceptional work for world-class brands
+              </p>
+            </motion.div>
           </div>
-          <p className={styles.heroParagraph}>
-           Be part of a talented team creating exceptional work for world-class brands
-          </p>
         </section>
 
         {isModalOpen && (

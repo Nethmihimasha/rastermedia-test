@@ -1,5 +1,6 @@
 'use client';
 
+import { motion } from 'motion/react';
 import MagicBento from '../components/MagicBento';
 import styles from './services.module.css';
 import { 
@@ -8,8 +9,7 @@ import {
   Camera, 
   Video, 
   TrendingUp, 
-  Target, 
-  Building2 
+  Target
 } from 'lucide-react';
 
 // --- Data with Lucide Icons ---
@@ -55,13 +55,6 @@ const services = [
     title: 'Campaign Strategy',
     description: 'Comprehensive marketing strategies driving sustainable growth through insights.',
     features: ['Market Research', 'Creative Concepting', 'Multi-Channel Planning', 'ROI Analysis']
-  },
-  {
-    number: '07',
-    icon: <Building2 size={32} strokeWidth={1.5} />,
-    title: 'Studio Rental',
-    description: 'Fully-equipped professional studio space with flexible booking options for your creative needs.',
-    features: ['Professional Lighting', 'Camera Equipment', 'Backdrops & Props', '$75/hour']
   }
 ];
 
@@ -69,23 +62,45 @@ export default function ServicesPage() {
   return (
     <div className={styles.app}>
       <div className={styles.servicesPage}>
-        {/* Hero Section */}
+        {/* Hero Section with Image */}
         <section className={styles.heroSection}>
-          <div className={styles.heading1}>
-            <h1 className={styles.mainTitle}>
-              Comprehensive Creative
-            </h1>
-            <div className={styles.gradientText}>
-              <span>Solutions</span>
-            </div>
+          <motion.div 
+            className={styles.heroImageWrapper}
+            initial={{ opacity: 0, scale: 1.1 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8 }}
+          >
+            <img 
+              src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDJ8fGNyZWF0aXZlJTIwYWdlbmN5fGVufDB8fHx8MTY3ODk4NzY1Mg&ixlib=rb-4.0.3&q=80&w=1920"
+              alt="Creative Services" 
+              className={styles.heroImage}
+            />
+            <div className={styles.heroImageOverlay} />
+          </motion.div>
+
+          <div className={styles.heroContent}>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+            >
+              <div className={styles.heading1}>
+                <h1 className={styles.mainTitle}>
+                  Comprehensive Creative
+                </h1>
+                <div className={styles.gradientText}>
+                  <span>Solutions</span>
+                </div>
+              </div>
+              <p className={styles.heroParagraph}>
+                End-to-end creative services that transform ideas into impactful experiences
+              </p>
+            </motion.div>
           </div>
-          <p className={styles.heroParagraph}>
-            End-to-end creative services that transform ideas into impactful experiences
-          </p>
         </section>
 
         {/* Magic Bento Section */}
-        <div style={{ paddingBottom: '80px' }}>
+        <div style={{ padding: '0 24px 80px', maxWidth: '1400px', width: '100%', margin: '0 auto' }}>
           <MagicBento 
             items={services}
             enableStars={true}

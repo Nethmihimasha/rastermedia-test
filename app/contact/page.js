@@ -1,3 +1,6 @@
+'use client';
+
+import { motion } from 'motion/react';
 import styles from './contact.module.css';
 import { Mail, Phone, MapPin, Send, MessageCircle } from 'lucide-react';
 
@@ -5,19 +8,41 @@ export default function ContactPage() {
   return (
     <div className={styles.app}>
       <div className={styles.contactPage}>
-        {/* Hero Section */}
+        {/* Hero Section with Image */}
         <section className={styles.heroSection}>
-          <div className={styles.heading1}>
-            <h1 className={styles.mainTitle}>
-              Let us Create Something
-            </h1>
-            <div className={styles.gradientText}>
-              <span>Extraordinary</span>
-            </div>
+          <motion.div 
+            className={styles.heroImageWrapper}
+            initial={{ opacity: 0, scale: 1.1 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8 }}
+          >
+            <img 
+              src="https://images.unsplash.com/photo-1423666639041-f56000c27a9a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDE3fHxjb250YWN0JTIwdXN8ZW58MHx8fHwxNjc4OTg3ODMx&ixlib=rb-4.0.3&q=80&w=1920"
+              alt="Contact Us" 
+              className={styles.heroImage}
+            />
+            <div className={styles.heroImageOverlay} />
+          </motion.div>
+
+          <div className={styles.heroContent}>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+            >
+              <div className={styles.heading1}>
+                <h1 className={styles.mainTitle}>
+                  Let us Create Something
+                </h1>
+                <div className={styles.gradientText}>
+                  <span>Extraordinary</span>
+                </div>
+              </div>
+              <p className={styles.heroParagraph}>
+                Have a project in mind? We&apos;d love to hear from you
+              </p>
+            </motion.div>
           </div>
-          <p className={styles.heroParagraph}>
-            Have a project in mind? We&apos;d love to hear from you
-          </p>
         </section>
 
         {/* Main Content Section */}

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import styles from './review.module.css';
 
 export default function ReviewsPage() {
@@ -11,16 +11,6 @@ export default function ReviewsPage() {
     email: '',
     review: ''
   });
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-    };
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
-
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log({ ...formData, rating });
@@ -46,32 +36,8 @@ export default function ReviewsPage() {
 
   return (
     <div className={styles.page}>
-      {/* Animated Background Orbs */}
-      <div className={styles.orb1}></div>
-      <div className={styles.orb2}></div>
-      <div className={styles.orb3}></div>
-
-      {/* Mouse Follower Effect */}
-      <div 
-        className={styles.mouseFollower}
-        style={{
-          left: `${mousePosition.x}px`,
-          top: `${mousePosition.y}px`,
-        }}
-      ></div>
-
       {/* Hero Section */}
       <section className={styles.hero}>
-        <div className={styles.heroBackground}></div>
-        <div className={styles.heroGrid}></div>
-        
-        <div className={styles.pixelPattern1}>
-          <PixelPattern size="large" />
-        </div>
-        <div className={styles.pixelPattern2}>
-          <PixelPattern size="medium" />
-        </div>
-
         <div className={styles.heroContent}>
           <div className={styles.badge}>
             <span className={styles.badgeIcon}>⭐</span>
@@ -315,64 +281,6 @@ export default function ReviewsPage() {
           </div>
         </div>
       </section>
-
-      {/* Extraordinary Interactive Section */}
-      <section className={styles.interactiveSection}>
-        <div className={styles.container}>
-          <div className={styles.interactiveGrid}>
-            <div className={styles.interactiveCard}>
-              <div className={styles.interactiveIcon}>🚀</div>
-              <h3 className={styles.interactiveTitle}>Ready to Start?</h3>
-              <p className={styles.interactiveText}>Let&apos;s create something extraordinary together</p>
-              <button className={styles.interactiveButton}>Start Your Project</button>
-            </div>
-            <div className={styles.interactiveCard}>
-              <div className={styles.interactiveIcon}>💬</div>
-              <h3 className={styles.interactiveTitle}>Have Questions?</h3>
-              <p className={styles.interactiveText}>Our team is here to help you every step of the way</p>
-              <button className={styles.interactiveButton}>Contact Us</button>
-            </div>
-            <div className={styles.interactiveCard}>
-              <div className={styles.interactiveIcon}>📱</div>
-              <h3 className={styles.interactiveTitle}>Follow Our Journey</h3>
-              <p className={styles.interactiveText}>Stay updated with our latest projects and insights</p>
-              <button className={styles.interactiveButton}>Follow Us</button>
-            </div>
-          </div>
-        </div>
-      </section>
-    </div>
-  );
-}
-
-function PixelPattern({ size = 'small' }) {
-  const gridConfig = {
-    small: { rows: 3, cols: 3, pixelSize: 8, gap: 4 },
-    medium: { rows: 4, cols: 4, pixelSize: 10, gap: 5 },
-    large: { rows: 5, cols: 5, pixelSize: 12, gap: 6 },
-  };
-
-  const config = gridConfig[size];
-  const totalPixels = config.rows * config.cols;
-
-  return (
-    <div
-      style={{
-        display: 'grid',
-        gridTemplateColumns: `repeat(${config.cols}, ${config.pixelSize}px)`,
-        gap: `${config.gap}px`,
-      }}
-    >
-      {Array.from({ length: totalPixels }).map((_, i) => (
-        <div 
-          key={i} 
-          style={{
-            width: `${config.pixelSize}px`,
-            height: `${config.pixelSize}px`,
-            background: 'linear-gradient(135deg, #5DCDDB 0%, #7DD8E5 100%)',
-          }}
-        ></div>
-      ))}
     </div>
   );
 }
