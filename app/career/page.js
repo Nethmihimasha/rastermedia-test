@@ -45,22 +45,56 @@ export default function CareersPage() {
             <div className={styles.modalContainer} onClick={(e) => e.stopPropagation()}>
               <div className={styles.modalInner}>
                 <div className={styles.modalHeader}>
-                  <h3 className={styles.modalTitle}>{selectedJob}</h3>
+                  <h3 className={styles.modalTitle}>{selectedJob || 'Studio Assistant'}</h3>
                   <button className={styles.modalClose} onClick={closeModal} aria-label="Close">×</button>
                 </div>
-                <p className={styles.modalSubtitle}>Apply for this position</p>
-                <form className={styles.modalForm} onSubmit={handleSubmit}>
-                  <div className={styles.modalRow}>
-                    <input name="name" placeholder="Full Name" className={styles.modalInput} required />
-                    <input name="email" type="email" placeholder="Email Address" className={styles.modalInput} required />
+
+                <div className={styles.modalBodyGrid}>
+                  <div className={styles.modalDetails}>
+                    <div className={styles.jobDetailsTop}>
+                      <div className={styles.jobDetail}><span>New York, NY</span></div>
+                      <div className={styles.jobDetail}><span>Full-time</span></div>
+                      <div className={styles.jobDetail}><span>$35k - $45k</span></div>
+                    </div>
+
+                    <h4 className={styles.sectionHeading}>Responsibilities</h4>
+                    <ul className={styles.modalList}>
+                      <li>Assist studio sessions and prepare equipment</li>
+                      <li>Support photographers and videographers on set</li>
+                      <li>Manage gear inventory and studio upkeep</li>
+                      <li>Help with client communication and logistics</li>
+                    </ul>
+
+                    <h4 className={styles.sectionHeading}>Requirements</h4>
+                    <ul className={styles.modalList}>
+                      <li>1+ years in a studio or production environment</li>
+                      <li>Comfortable handling camera and lighting equipment</li>
+                      <li>Strong communication and teamwork skills</li>
+                      <li>Reliable, punctual, and detail oriented</li>
+                    </ul>
                   </div>
-                  <div className={styles.modalFile}>
-                    <input type="file" name="resume" accept=".pdf,.doc,.docx" />
-                    <p className={styles.modalUploadText}>PDF or DOCX (Max 10MB)</p>
+
+                  <div className={styles.modalApply}> 
+                    <p className={styles.modalSubtitle}>Apply for this Position</p>
+                    <form className={styles.modalForm} onSubmit={handleSubmit}>
+                      <div className={styles.modalRow}>
+                        <input name="name" placeholder="Full Name" className={styles.modalInput} required />
+                        <input name="email" type="email" placeholder="Email Address" className={styles.modalInput} required />
+                      </div>
+                      <label className={styles.uploadBox}>
+                        <div className={styles.uploadIconPlaceholder}></div>
+                        <div className={styles.uploadTextBlock}>
+                          <span className={styles.uploadTitle}>Upload Resume & Portfolio</span>
+                          <span className={styles.uploadSubtitle}>PDF or DOCX (Max 10MB)</span>
+                        </div>
+                        <input className={styles.hiddenFileInput} type="file" name="resume" accept=".pdf,.doc,.docx" />
+                      </label>
+                      <textarea name="cover" placeholder="Cover letter (optional)" className={styles.modalTextarea}></textarea>
+                      <button type="submit" className={styles.modalSubmit}>Submit Application</button>
+                    </form>
                   </div>
-                  <textarea name="cover" placeholder="Cover letter (optional)" className={styles.modalTextarea}></textarea>
-                  <button type="submit" className={styles.modalSubmit}>Submit Application</button>
-                </form>
+                </div>
+
               </div>
             </div>
           </div>
@@ -106,88 +140,15 @@ export default function CareersPage() {
           </div>
 
           <div className={styles.jobListings}>
-            {/* Job 1 */}
             <div className={styles.jobCard}>
               <div className={styles.jobHeader}>
                 <div className={styles.jobInfo}>
-                  <h3 className={styles.jobTitle}>Senior Graphic Designer</h3>
-                  <span className={styles.jobCategory}>Creative</span>
-                </div>
-                <button
-                  className={styles.applyButton}
-                  onClick={() => openModal('Senior Graphic Designer')}
-                >
-                  <span>Apply Now</span>
-                </button>
-              </div>
-              <div className={styles.jobDetails}>
-                <div className={styles.jobDetail}>
-                  <svg className={styles.icon} viewBox="0 0 16 16">
-                    <path d="M8 2a3 3 0 100 6 3 3 0 000-6zM4 11a3 3 0 00-3 3v1h14v-1a3 3 0 00-3-3H4z" />
-                  </svg>
-                  <span>New York, NY</span>
-                </div>
-                <div className={styles.jobDetail}>
-                  <svg className={styles.icon} viewBox="0 0 16 16">
-                    <path d="M8 2a6 6 0 100 12A6 6 0 008 2z" />
-                  </svg>
-                  <span>Full-time</span>
-                </div>
-                <div className={styles.jobDetail}>
-                  <svg className={styles.icon} viewBox="0 0 16 16">
-                    <path d="M2 4h12v8H2z" />
-                  </svg>
-                  <span>$80k - $100k</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Job 2 */}
-            <div className={styles.jobCard}>
-              <div className={styles.jobHeader}>
-                <div className={styles.jobInfo}>
-                  <h3 className={styles.jobTitle}>Photographer</h3>
+                  <h3 className={styles.jobTitle}>Studio Assistant</h3>
                   <span className={styles.jobCategory}>Production</span>
                 </div>
                 <button
                   className={styles.applyButton}
-                  onClick={() => openModal('Photographer')}
-                >
-                  <span>Apply Now</span>
-                </button>
-              </div>
-              <div className={styles.jobDetails}>
-                <div className={styles.jobDetail}>
-                  <svg className={styles.icon} viewBox="0 0 16 16">
-                    <path d="M8 2a3 3 0 100 6 3 3 0 000-6zM4 11a3 3 0 00-3 3v1h14v-1a3 3 0 00-3-3H4z" />
-                  </svg>
-                  <span>New York, NY / Remote</span>
-                </div>
-                <div className={styles.jobDetail}>
-                  <svg className={styles.icon} viewBox="0 0 16 16">
-                    <path d="M8 2a6 6 0 100 12A6 6 0 008 2z" />
-                  </svg>
-                  <span>Full-time</span>
-                </div>
-                <div className={styles.jobDetail}>
-                  <svg className={styles.icon} viewBox="0 0 16 16">
-                    <path d="M2 4h12v8H2z" />
-                  </svg>
-                  <span>$70k - $90k</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Job 3 */}
-            <div className={styles.jobCard}>
-              <div className={styles.jobHeader}>
-                <div className={styles.jobInfo}>
-                  <h3 className={styles.jobTitle}>Video Producer</h3>
-                  <span className={styles.jobCategory}>Production</span>
-                </div>
-                <button
-                  className={styles.applyButton}
-                  onClick={() => openModal('Video Producer')}
+                  onClick={() => openModal('Studio Assistant')}
                 >
                   <span>Apply Now</span>
                 </button>
@@ -209,117 +170,12 @@ export default function CareersPage() {
                   <svg className={styles.icon} viewBox="0 0 16 16">
                     <path d="M2 4h12v8H2z" />
                   </svg>
-                  <span>$85k - $110k</span>
+                  <span>$35k - $45k</span>
                 </div>
               </div>
-            </div>
-
-            {/* Job 4 */}
-            <div className={styles.jobCard}>
-              <div className={styles.jobHeader}>
-                <div className={styles.jobInfo}>
-                  <h3 className={styles.jobTitle}>Social Media Strategist</h3>
-                  <span className={styles.jobCategory}>Strategy</span>
-                </div>
-                <button
-                  className={styles.applyButton}
-                  onClick={() => openModal('Social Media Strategist')}
-                >
-                  <span>Apply Now</span>
-                </button>
-              </div>
-              <div className={styles.jobDetails}>
-                <div className={styles.jobDetail}>
-                  <svg className={styles.icon} viewBox="0 0 16 16">
-                    <path d="M8 2a3 3 0 100 6 3 3 0 000-6zM4 11a3 3 0 00-3 3v1h14v-1a3 3 0 00-3-3H4z" />
-                  </svg>
-                  <span>Remote</span>
-                </div>
-                <div className={styles.jobDetail}>
-                  <svg className={styles.icon} viewBox="0 0 16 16">
-                    <path d="M8 2a6 6 0 100 12A6 6 0 008 2z" />
-                  </svg>
-                  <span>Full-time</span>
-                </div>
-                <div className={styles.jobDetail}>
-                  <svg className={styles.icon} viewBox="0 0 16 16">
-                    <path d="M2 4h12v8H2z" />
-                  </svg>
-                  <span>$65k - $85k</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Job 5 */}
-            <div className={styles.jobCard}>
-              <div className={styles.jobHeader}>
-                <div className={styles.jobInfo}>
-                  <h3 className={styles.jobTitle}>Creative Director</h3>
-                  <span className={styles.jobCategory}>Creative</span>
-                </div>
-                <button
-                  className={styles.applyButton}
-                  onClick={() => openModal('Creative Director')}
-                >
-                  <span>Apply Now</span>
-                </button>
-              </div>
-              <div className={styles.jobDetails}>
-                <div className={styles.jobDetail}>
-                  <svg className={styles.icon} viewBox="0 0 16 16">
-                    <path d="M8 2a3 3 0 100 6 3 3 0 000-6zM4 11a3 3 0 00-3 3v1h14v-1a3 3 0 00-3-3H4z" />
-                  </svg>
-                  <span>New York, NY</span>
-                </div>
-                <div className={styles.jobDetail}>
-                  <svg className={styles.icon} viewBox="0 0 16 16">
-                    <path d="M8 2a6 6 0 100 12A6 6 0 008 2z" />
-                  </svg>
-                  <span>Full-time</span>
-                </div>
-                <div className={styles.jobDetail}>
-                  <svg className={styles.icon} viewBox="0 0 16 16">
-                    <path d="M2 4h12v8H2z" />
-                  </svg>
-                  <span>$120k - $150k</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Job 6 */}
-            <div className={styles.jobCard}>
-              <div className={styles.jobHeader}>
-                <div className={styles.jobInfo}>
-                  <h3 className={styles.jobTitle}>Account Manager</h3>
-                  <span className={styles.jobCategory}>Client Services</span>
-                </div>
-                <button
-                  className={styles.applyButton}
-                  onClick={() => openModal('Account Manager')}
-                >
-                  <span>Apply Now</span>
-                </button>
-              </div>
-              <div className={styles.jobDetails}>
-                <div className={styles.jobDetail}>
-                  <svg className={styles.icon} viewBox="0 0 16 16">
-                    <path d="M8 2a3 3 0 100 6 3 3 0 000-6zM4 11a3 3 0 00-3 3v1h14v-1a3 3 0 00-3-3H4z" />
-                  </svg>
-                  <span>New York, NY</span>
-                </div>
-                <div className={styles.jobDetail}>
-                  <svg className={styles.icon} viewBox="0 0 16 16">
-                    <path d="M8 2a6 6 0 100 12A6 6 0 008 2z" />
-                  </svg>
-                  <span>Full-time</span>
-                </div>
-                <div className={styles.jobDetail}>
-                  <svg className={styles.icon} viewBox="0 0 16 16">
-                    <path d="M2 4h12v8H2z" />
-                  </svg>
-                  <span>$60k - $80k</span>
-                </div>
-              </div>
+              <p className={styles.jobExcerpt}>
+                Support studio operations and assist on shoots. This role helps keep productions running smoothly and provides hands-on experience with equipment and client services.
+              </p>
             </div>
           </div>
         </section>
@@ -350,6 +206,19 @@ export default function CareersPage() {
             </div>
           </div>
         </section>
+
+        export const metadata = {
+  title: 'Model Registration - Raster Media',
+  description: 'Join our exclusive roster of professional models',
+};
+
+export default function ModelRegistryLayout({ children }) {
+  return (
+    <>
+      {children}
+    </>
+  );
+}
 
         {/* Don't See Your Role Section */}
         <section className={styles.customRoleSection}>

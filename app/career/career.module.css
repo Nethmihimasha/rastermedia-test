@@ -742,7 +742,8 @@
 .modalOverlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.6);
+  /* darker overlay to avoid transparent pop-up behind */
+  background: rgba(0, 0, 0, 0.85);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -754,8 +755,9 @@
   position: relative;
   width: 768px;
   max-width: 100%;
-  background: rgba(37, 37, 37, 0.6);
-  border: 0.8px solid rgba(93, 205, 219, 0.1);
+  /* use a solid background so the modal isn't transparent */
+  background: #0F0F10;
+  border: 0.8px solid rgba(93, 205, 219, 0.12);
   border-radius: 16px;
   box-sizing: border-box;
   padding: 48.8px;
