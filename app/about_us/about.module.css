@@ -7,10 +7,9 @@
   padding-top: 72px;
 }
 
-
+/* Hero Section */
 .hero {
-  position: relative; 
-  padding: 128px 240px;
+  padding: 128px 240px ;
   text-align: center;
   overflow: hidden; 
 }
@@ -25,8 +24,6 @@
 }
 
 .heroContent {
-  position: relative;
-  z-index: 1;
   max-width: 1800px;
   margin: 0 auto;
 }
