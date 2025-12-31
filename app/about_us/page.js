@@ -19,6 +19,7 @@ export default function AboutPage() {
 function HeroSection() {
   return (
     <section className={styles.hero}>
+      {/* Foreground Content */}
       <div className={styles.heroContent}>
         <h1 className={styles.heroHeading}>
           <span>Crafting </span>

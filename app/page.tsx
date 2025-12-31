@@ -714,7 +714,7 @@ const styles: Record<string, CSSProperties> = {
     alignItems: 'center',
   },
   heroHeading: {
-    fontFamily: 'Cousine, monospace',
+    fontFamily: 'Erbaum, Cousine, monospace',
     fontWeight: 700,
     fontSize: '77.712px',
     lineHeight: '85px',
@@ -765,6 +765,7 @@ const styles: Record<string, CSSProperties> = {
     marginBottom: '64px',
   },
   sectionTitle: {
+    fontFamily: 'Erbaum, Cousine, monospace',
     fontSize: '51.808px',
     fontWeight: 700,
     lineHeight: '60px',
@@ -773,6 +774,7 @@ const styles: Record<string, CSSProperties> = {
     color: '#FFFFFF',
   },
   sectionSubtitle: {
+    fontFamily: 'Erbaum, Cousine, monospace',
     fontSize: '18px',
     lineHeight: '31px',
     color: '#A0A0A0',
@@ -805,6 +807,7 @@ const styles: Record<string, CSSProperties> = {
     color: '#5DCDDB',
   },
   serviceTitle: {
+    fontFamily: 'Erbaum, Cousine, monospace',
     fontSize: '36px',
     fontWeight: 600,
     lineHeight: '43px',
@@ -837,12 +840,14 @@ const styles: Record<string, CSSProperties> = {
     textAlign: 'center',
   },
   statValue: {
+    fontFamily: 'Erbaum, Cousine, monospace',
     fontSize: '64px',
     fontWeight: 700,
     lineHeight: '72px',
     marginBottom: '16px',
   },
   statLabel: {
+    fontFamily: 'Erbaum, Cousine, monospace',
     fontSize: '14px',
     lineHeight: '20px',
     letterSpacing: '0.7px',
@@ -885,18 +890,7 @@ const styles: Record<string, CSSProperties> = {
     background: 'linear-gradient(0deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.2) 50%, rgba(0, 0, 0, 0) 100%)',
     opacity: 0.6,
   },
-  portfolioHover: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: '100%',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    transition: 'opacity 0.3s',
-    background: 'rgba(93, 205, 219, 0.1)',
-  },
+
   portfolioIcon: {
     width: '64px',
     height: '64px',
@@ -922,6 +916,7 @@ const styles: Record<string, CSSProperties> = {
     marginBottom: '8px',
   },
   portfolioTitle: {
+    fontFamily: 'Erbaum, Cousine, monospace',
     fontSize: '36px',
     fontWeight: 600,
     lineHeight: '43px',
@@ -942,6 +937,7 @@ const styles: Record<string, CSSProperties> = {
     padding: '128px 0',
   },
   brandsTitle: {
+    fontFamily: 'Erbaum, Cousine, monospace',
     fontSize: '36px',
     fontWeight: 600,
     lineHeight: '43px',
@@ -1116,6 +1112,7 @@ const styles: Record<string, CSSProperties> = {
     zIndex: 1,
   },
   ctaHeading: {
+    fontFamily: 'Erbaum, Cousine, monospace',
     fontSize: '51.808px',
     fontWeight: 700,
     lineHeight: '60px',
