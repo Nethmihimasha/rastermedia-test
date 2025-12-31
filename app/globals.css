@@ -81,6 +81,18 @@ h1, h2, h3, h4, h5, h6 {
   font-family: 'Erbaum', 'Cousine', monospace;
 }
 
+/* Ensure key headings and hero lines use Erbaum explicitly */
+.heroHeading,
+.heroTitle,
+.sectionTitle,
+.storyTitle,
+.mvTitle,
+.valueTitle,
+.btsTitle,
+.techTitle {
+  font-family: 'Erbaum', 'Cousine', monospace;
+}
+
 /* Utility Classes */
 .container {
   max-width: 1800px;

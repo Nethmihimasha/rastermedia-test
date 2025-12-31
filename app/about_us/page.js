@@ -2,6 +2,8 @@
 
 import styles from './about.module.css';
 import { useEffect, useRef, useState } from 'react';
+// Import the RippleGrid component
+import RippleGrid from '../components/RippleGrid';
 
 export default function AboutPage() {
   return (
@@ -19,6 +21,23 @@ export default function AboutPage() {
 function HeroSection() {
   return (
     <section className={styles.hero}>
+      {/* Background Ripple Layer */}
+      <div className={styles.heroBackground}>
+        <RippleGrid
+          enableRainbow={false}
+          gridColor="#41ace1"
+          rippleIntensity={0.025}
+          gridSize={10}
+          gridThickness={15}
+          mouseInteraction={true}
+          mouseInteractionRadius={1.2}
+          opacity={0.8}
+          vignetteStrength={5}   
+          glowIntensity={0.5}    
+        />
+      </div>
+
+      {/* Foreground Content */}
       <div className={styles.heroContent}>
         <h1 className={styles.heroHeading}>
           <span>Crafting </span>
