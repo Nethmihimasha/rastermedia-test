@@ -112,28 +112,31 @@ function ValueIcon({ name }) {
   switch (name) {
     case 'lightbulb':
       return (
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" role="img">
-          <path d="M9 18h6M10 2a6 6 0 00-4 10v2a2 2 0 002 2h8a2 2 0 002-2v-2a6 6 0 00-6-10z" stroke="currentColor" strokeWidth="1.8" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" role="img" preserveAspectRatio="xMidYMid meet">
+          <path d="M9 18h6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+          <path d="M12 3a6 6 0 00-6 6c0 2 .9 3.6 2.2 4.8.8.7 1.3 1.7 1.3 2.8v.4h5v-.4c0-1.1.5-2.1 1.3-2.8A6 6 0 0018 9a6 6 0 00-6-6z" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M10.5 21h3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
         </svg>
       );
     case 'handshake':
       return (
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" role="img">
-          <path d="M2 12l4 4 6-6 8 8" stroke="currentColor" strokeWidth="1.8" fill="none" strokeLinecap="round" strokeLinejoin="round" />
-          <path d="M14 10l-2-2" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" role="img" preserveAspectRatio="xMidYMid meet">
+          <path d="M3 12l3.5 3.5a2 2 0 002.8 0L14 11l2.2 2.2a2 2 0 002.8 0L21 11" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M7 9l3-3 3 3" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       );
     case 'bolt':
       return (
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" role="img">
-          <path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z" stroke="currentColor" strokeWidth="1.8" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" role="img" preserveAspectRatio="xMidYMid meet">
+          <path d="M13 2L5 14h6l-2 8 10-12h-6l2-8z" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       );
     case 'target':
       return (
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" role="img">
-          <circle cx="12" cy="12" r="6" stroke="currentColor" strokeWidth="1.8" fill="none" />
-          <circle cx="12" cy="12" r="2" fill="currentColor" />
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" role="img" preserveAspectRatio="xMidYMid meet">
+          <circle cx="12" cy="12" r="8" stroke="currentColor" strokeWidth="2" fill="none" />
+          <circle cx="12" cy="12" r="4" stroke="currentColor" strokeWidth="2" fill="none" />
+          <circle cx="12" cy="12" r="1.6" fill="currentColor" />
         </svg>
       );
     default:

@@ -1,5 +1,22 @@
 @import url('https://fonts.googleapis.com/css2?family=Cousine:wght@400;700&display=swap');
 
+/* Erbaum font placeholders — add actual font files under public/fonts/erbaum/ */
+@font-face {
+  font-family: 'Erbaum';
+  src: url('/fonts/erbaum/Erbaum-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Erbaum';
+  src: url('/fonts/erbaum/Erbaum-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -12,6 +29,10 @@ body {
   color: #FFFFFF;
   overflow-x: hidden;
 } 
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Erbaum', 'Cousine', monospace;
+}
 
 /* Utility Classes */
 .container {
