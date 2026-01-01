@@ -11,6 +11,7 @@ export async function POST(request) {
     const body = await request.json();
     const { fullName, email, phone, company, projectType, message } = body;
 
+    // Validation
     if (!fullName || !email || !projectType || !message) {
       return NextResponse.json(
         { error: 'Missing required fields' },
@@ -18,11 +19,18 @@ export async function POST(request) {
       );
     }
 
+    // Save to database
     const contact = await Contact.create({
-      fullName, email, phone, company, projectType, message,
+      fullName, 
+      email, 
+      phone, 
+      company, 
+      projectType, 
+      message,
     });
 
-    const transporter = nodemailer.createTransporter({
+    // Create transporter - FIXED: Use nodemailer.createTransport (not createTransporter)
+    const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
         user: process.env.EMAIL_USER,
@@ -30,6 +38,7 @@ export async function POST(request) {
       },
     });
 
+    // Send confirmation email to user
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
       to: email,
@@ -47,6 +56,7 @@ export async function POST(request) {
       `,
     });
 
+    // Send notification email to admin
     const projectTypeLabels = {
       'branding': 'Branding',
       'web-development': 'Web Development',

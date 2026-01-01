@@ -1,10 +1,70 @@
 'use client';
-
+import { useState } from 'react';
 import { motion } from 'motion/react';
 import styles from './contact.module.css';
 import { Mail, Phone, MapPin, Send, MessageCircle } from 'lucide-react';
 
 export default function ContactPage() {
+  // Form state
+  const [formData, setFormData] = useState({
+    fullName: '',
+    email: '',
+    phone: '',
+    company: '',
+    projectType: '',
+    message: '',
+  });
+  
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState('');
+
+  // Handle input changes
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  // Handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setMessage('');
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        setMessage('Message sent successfully! We\'ll get back to you soon.');
+        // Reset form
+        setFormData({
+          fullName: '',
+          email: '',
+          phone: '',
+          company: '',
+          projectType: '',
+          message: '',
+        });
+      } else {
+        setMessage(data.error || 'Failed to send message. Please try again.');
+      }
+    } catch (error) {
+      console.error('Contact form error:', error);
+      setMessage('An error occurred. Please try again later.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className={styles.app}>
       <div className={styles.contactPage}>
@@ -145,7 +205,7 @@ export default function ContactPage() {
           {/* Right Column - Contact Form */}
           <div className={styles.formCard}>
             <h2 className={styles.formTitle}>Send Us a Message</h2>
-            <form className={styles.form}>
+            <form className={styles.form} onSubmit={handleSubmit}>
               <div className={styles.formRow}>
                 <div className={styles.formGroup}>
                   <label htmlFor="fullName" className={styles.formLabel}>
@@ -154,8 +214,12 @@ export default function ContactPage() {
                   <input
                     type="text"
                     id="fullName"
+                    name="fullName"
+                    value={formData.fullName}
+                    onChange={handleChange}
                     placeholder="John Doe"
                     className={styles.formInput}
+                    required
                   />
                 </div>
                 <div className={styles.formGroup}>
@@ -165,8 +229,12 @@ export default function ContactPage() {
                   <input
                     type="email"
                     id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
                     placeholder="john@example.com"
                     className={styles.formInput}
+                    required
                   />
                 </div>
               </div>
@@ -179,6 +247,9 @@ export default function ContactPage() {
                   <input
                     type="tel"
                     id="phone"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
                     placeholder="+1 (555) 000-0000"
                     className={styles.formInput}
                   />
@@ -190,6 +261,9 @@ export default function ContactPage() {
                   <input
                     type="text"
                     id="company"
+                    name="company"
+                    value={formData.company}
+                    onChange={handleChange}
                     placeholder="Your Company"
                     className={styles.formInput}
                   />
@@ -200,13 +274,20 @@ export default function ContactPage() {
                 <label htmlFor="projectType" className={styles.formLabel}>
                   Project Type *
                 </label>
-                <select id="projectType" className={styles.formSelect}>
+                <select
+                  id="projectType"
+                  name="projectType"
+                  value={formData.projectType}
+                  onChange={handleChange}
+                  className={styles.formSelect}
+                  required
+                >
                   <option value="">Select a project type</option>
                   <option value="branding">Branding</option>
-                  <option value="web">Web Development</option>
+                  <option value="web-development">Web Development</option>
                   <option value="photography">Photography</option>
-                  <option value="video">Video Production</option>
-                  <option value="marketing">Digital Marketing</option>
+                  <option value="video-production">Video Production</option>
+                  <option value="digital-marketing">Digital Marketing</option>
                   <option value="other">Other</option>
                 </select>
               </div>
@@ -217,17 +298,47 @@ export default function ContactPage() {
                 </label>
                 <textarea
                   id="message"
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
                   rows="6"
                   placeholder="Tell us about your project..."
                   className={styles.formTextarea}
+                  required
                 ></textarea>
               </div>
 
-              <button type="submit" className={styles.submitButton}>
+              <button
+                type="submit"
+                className={styles.submitButton}
+                disabled={loading}
+              >
                 <div className={styles.buttonShine}></div>
                 <Send size={20} />
-                <span>Send Message</span>
+                <span>{loading ? 'Sending...' : 'Send Message'}</span>
               </button>
+
+              {/* Success/Error Message */}
+              {message && (
+                <div
+                  style={{
+                    padding: '16px',
+                    marginTop: '16px',
+                    borderRadius: '4px',
+                    background: message.includes('success')
+                      ? 'rgba(93, 205, 219, 0.1)'
+                      : 'rgba(255, 0, 0, 0.1)',
+                    border: `1px solid ${
+                      message.includes('success') ? '#5DCDDB' : '#ff0000'
+                    }`,
+                    color: message.includes('success') ? '#5DCDDB' : '#ff6b6b',
+                    fontFamily: "'Cousine', monospace",
+                    fontSize: '14px',
+                  }}
+                >
+                  {message}
+                </div>
+              )}
             </form>
           </div>
         </section>
@@ -246,8 +357,6 @@ export default function ContactPage() {
           </div>
         </section>
       </div>
-
-
     </div>
   );
 }
