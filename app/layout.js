@@ -13,6 +13,26 @@ import CleanBodyAttributes from './components/CleanBodyAttributes.client';
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <head>
+        <link
+          rel="preload"
+          href="/fonts/erbaum/Erbaum-Regular.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="preload"
+          href="/fonts/erbaum/Erbaum-Bold.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
+        <style>{`
+          .hero-heading { font-family: 'Erbaum', 'Cousine', monospace !important; }
+          .btn { font-family: 'Erbaum', 'Cousine', monospace !important; }
+        `}</style>
+      </head>
       <body suppressHydrationWarning>
         <CleanBodyAttributes />
         <Header />

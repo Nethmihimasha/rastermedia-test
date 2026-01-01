@@ -483,23 +483,29 @@
 .modalOverlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.85);
+  background: radial-gradient(ellipse at center, rgba(5,8,12,0.6) 0%, rgba(3,6,9,0.75) 60%);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
   padding: 24px;
+  backdrop-filter: blur(6px) saturate(110%);
 }
 
 .modalContainer {
   position: relative;
   width: 768px;
   max-width: 100%;
-  background: #0F0F10;
-  border: 0.8px solid rgba(93, 205, 219, 0.12);
-  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border-radius: 14px;
   box-sizing: border-box;
-  padding: 48.8px;
+  padding: 36px;
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  box-shadow: 0 20px 50px rgba(3,6,9,0.6), inset 0 1px 0 rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.04);
+  backdrop-filter: blur(8px) saturate(120%);
 }
 
 .modalInner {
@@ -512,27 +518,37 @@
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 
 .modalTitle {
   font-family: 'Inter', sans-serif;
   font-weight: 700;
-  font-size: 46.688px;
-  line-height: 54px;
+  font-size: 28px;
+  line-height: 34px;
   margin: 0;
+  color: #FFFFFF;
 }
 
 .modalClose {
-  background: rgba(255,255,255,0.06);
+  background: rgba(255,255,255,0.04);
   border: none;
   color: #FFFFFF;
   width: 40px;
   height: 40px;
-  border-radius: 9999px;
+  border-radius: 10px;
   cursor: pointer;
   font-size: 20px;
   line-height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.12s ease, background 0.12s ease;
+}
+
+.modalClose:hover {
+  transform: scale(1.06);
+  background: rgba(255,255,255,0.08);
 }
 
 .modalBodyGrid {
@@ -744,11 +760,105 @@
   }
 
   .modalContainer { 
-    padding: 24px; 
+    padding: 24px;
+    max-height: 94vh;
+    overflow-y: auto;
   }
   
+
+/* One-tone modal: remove inner backgrounds, borders and gradients to keep popup a single color */
+.modalContainer,
+.modalContainer .modalInner,
+.modalContainer .modalHeader,
+.modalContainer .modalBodyGrid,
+.modalContainer .modalDetails,
+.modalContainer .modalApply,
+.modalContainer .formContainer,
+.modalContainer .modelContainer,
+.modalContainer .compactContainer {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.modalContainer .modalClose {
+  background: rgba(255,255,255,0.04);
+}
+
+.modalContainer .modalTitle {
+  color: #FFFFFF;
+}
+
+/* Ensure inputs remain visible on single-tone background */
+.modalContainer .textInput,
+.modalContainer .selectInput,
+.modalContainer .textArea,
+.modalContainer .compactInput {
+  background: rgba(255,255,255,0.02) !important;
+  border: 0.8px solid rgba(255,255,255,0.06) !important;
+}
+
+/* Tone down accent buttons inside modal to match one-tone aesthetic */
+.modalContainer .submitButton,
+.modalContainer .compactSubmitButton,
+.modalContainer .applyButton,
+.modalContainer .modelButton {
+  background: #5DCDDB !important;
+  color: #0F0F10 !important;
+  box-shadow: none !important;
+}
+
+.modalContainer .uploadBox { border: 0.8px dashed rgba(255,255,255,0.06) !important; }
+
+/* Push the first form section (Personal Information) slightly down inside the modal */
+.modalContainer .formContainer:first-of-type {
+  margin-top: 32px;
+}
+
+/* Use a solid, dark background for form sections inside the modal so they sit on black */
+.modalContainer .formContainer {
+  background: transparent !important;
+  border-radius: 12px !important;
+  padding: 24px !important;
+  margin-top: 18px;
+  border: none !important;
+}
+
+/* Slightly increase spacing between internal sections for clarity */
+.modalContainer .formContainer + .formContainer {
+  margin-top: 18px;
+}
+
+/* Shift the entire embedded model registration page down inside the modal */
+.modalContainer .modelApplicationPage {
+  margin-top: 28px;
+}
+
+@media (max-width: 768px) {
+  .modalContainer .modelApplicationPage {
+    margin-top: 16px;
+  }
+}
   .modalTitle { 
     font-size: 32px; 
     line-height: 38px; 
   }
+}
+
+/* Iframe wrapper for Model Registration modal */
+.modelIframeWrapper {
+  width: 100%;
+  height: 60vh;
+  max-height: 720px;
+  overflow: hidden;
+  border-radius: 10px;
+  border: 0.8px solid rgba(255,255,255,0.04);
+}
+
+.modelIframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+  background: #0F0F10;
 }

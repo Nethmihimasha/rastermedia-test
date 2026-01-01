@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import styles from './modelregistry.module.css';
 
-export default function ModelRegistrationPage() {
+export default function ModelRegistrationPage({ onSuccess, compact = false, embedded = false }) {
   const [formData, setFormData] = useState({
     fullName: '',
     age: '',
@@ -24,6 +24,8 @@ export default function ModelRegistrationPage() {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedLanguages, setSelectedLanguages] = useState([]);
   const [uploadedFiles, setUploadedFiles] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState('');
 
   const categories = ['Fashion', 'Commercial', 'Editorial', 'Fitness', 'Runway', 'Print'];
   const languages = ['English', 'Spanish', 'French', 'German', 'Italian', 'Portuguese', 'Mandarin', 'Japanese', 'Korean', 'Arabic'];
@@ -56,34 +58,128 @@ export default function ModelRegistrationPage() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    // TODO: Implement actual form submission
-    console.log('Form Data:', formData);
-    console.log('Categories:', selectedCategories);
-    console.log('Languages:', selectedLanguages);
-    console.log('Files:', uploadedFiles);
-    alert('Application submitted successfully!');
+    const form = e.target;
+    const payload = {
+      fullName: form.fullName?.value || formData.fullName,
+      email: form.email?.value || formData.email,
+      phone: form.phone?.value || formData.phone,
+      age: form.age?.value || formData.age,
+      instagram: form.instagram?.value || formData.instagram,
+      portfolioLink: form.portfolioLink?.value || formData.portfolioLink,
+      otherLinks: form.otherLinks?.value || formData.otherLinks,
+      experience: form.experience?.value || formData.experience,
+    };
+
+    setLoading(true);
+    setMessage('');
+    fetch('/api/model/apply', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    }).then(async (res) => {
+      const data = await res.json().catch(() => ({}));
+      setLoading(false);
+      if (res.ok || data?.ok) {
+        setMessage('Model registration submitted successfully!');
+        if (typeof onSuccess === 'function') setTimeout(onSuccess, 1200);
+      } else {
+        setMessage(data?.error || 'Submission failed. Please try again later.');
+      }
+    }).catch(err => {
+      console.error(err);
+      setLoading(false);
+      setMessage('An error occurred. Please try again later.');
+    });
+  }
+
+  function handleCompactSubmit(e) {
+    e.preventDefault();
+    const form = e.target;
+    const payload = {
+      fullName: formData.fullName || '',
+      email: formData.email || '',
+      instagram: form.instagram?.value || formData.instagram,
+      otherLinks: form.otherLinks?.value || formData.otherLinks,
+    };
+
+    setLoading(true);
+    setMessage('');
+    fetch('/api/model/apply', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    }).then(async (res) => {
+      const data = await res.json().catch(() => ({}));
+      setLoading(false);
+      if (res.ok || data?.ok) {
+        setMessage('Model registration submitted successfully!');
+        if (typeof onSuccess === 'function') setTimeout(onSuccess, 1200);
+      } else {
+        setMessage(data?.error || 'Submission failed. Please try again later.');
+      }
+    }).catch(err => {
+      console.error(err);
+      setLoading(false);
+      setMessage('An error occurred. Please try again later.');
+    });
   }
 
   return (
     <div className={styles.app}>
       <div className={styles.modelApplicationPage}>
-        {/* Hero Section */}
-        <section className={styles.heroSection}>
-          <div className={styles.heading1}>
-            <span className={styles.becomeA}>Become a</span>
-            <div className={styles.textWrapper}>
-              <span className={styles.rasterModel}>Raster Model</span>
-            </div>
-          </div>
-          <p className={styles.heroParagraph}>
-            Join our exclusive roster of professional models and work with leading brands worldwide
-          </p>
-        </section>
+        {compact ? (
+          <form className={styles.compactForm} onSubmit={handleCompactSubmit}>
+            <div className={styles.compactContainer}>
+              <label className={styles.label}>Instagram Handle *</label>
+              <input
+                type="text"
+                name="instagram"
+                value={formData.instagram}
+                onChange={handleInputChange}
+                placeholder="@yourusername"
+                className={styles.compactInput}
+                required
+              />
 
-        {/* Form */}
-        <form className={styles.form} onSubmit={handleSubmit}>
+              <label className={styles.label}>Other Links (Optional)</label>
+              <input
+                type="url"
+                name="otherLinks"
+                value={formData.otherLinks}
+                onChange={handleInputChange}
+                placeholder="https://yourportfolio.com"
+                className={styles.compactInput}
+              />
+
+              <div style={{ display: 'flex', justifyContent: 'center', marginTop: 16 }}>
+                <button type="submit" className={styles.compactSubmitButton} disabled={loading}>
+                  {loading ? 'Submitting...' : 'Submit'}
+                </button>
+              </div>
+              {message && (
+                <div
+                  style={{
+                    padding: '12px',
+                    marginTop: '12px',
+                    borderRadius: '6px',
+                    background: message.toLowerCase().includes('success')
+                      ? 'rgba(93, 205, 219, 0.08)'
+                      : 'rgba(255, 0, 0, 0.06)',
+                    border: `1px solid ${message.toLowerCase().includes('success') ? '#5DCDDB' : '#ff6b6b'}`,
+                    color: message.toLowerCase().includes('success') ? '#5DCDDB' : '#ff6b6b',
+                    fontFamily: "'Cousine', monospace",
+                    fontSize: '14px',
+                  }}
+                >
+                  {message}
+                </div>
+              )}
+            </div>
+          </form>
+        ) : (
+          <form className={styles.form} onSubmit={handleSubmit}>
           {/* Personal Information */}
-          <div className={styles.formContainer}>
+          <div className={`${styles.formContainer} ${embedded ? styles.formContainerEmbedded : ''}`}>
             <div className={styles.sectionHeader}>
               <svg className={styles.icon} viewBox="0 0 24 24" fill="none">
                 <circle cx="12" cy="8" r="4" stroke="#5DCDDB" strokeWidth="2"/>
@@ -208,7 +304,7 @@ export default function ModelRegistrationPage() {
           </div>
 
           {/* Social Media */}
-          <div className={styles.formContainer}>
+          <div className={`${styles.formContainer} ${embedded ? styles.formContainerEmbedded : ''}`}>
             <div className={styles.sectionHeader}>
               <svg className={styles.icon} viewBox="0 0 24 24" fill="none">
                 <circle cx="12" cy="12" r="10" stroke="#5DCDDB" strokeWidth="2"/>
@@ -233,42 +329,6 @@ export default function ModelRegistrationPage() {
               </div>
 
               <div className={styles.inputGroup}>
-                <label className={styles.label}>LinkedIn Profile (Optional)</label>
-                <input
-                  type="url"
-                  name="linkedin"
-                  value={formData.linkedin}
-                  onChange={handleInputChange}
-                  placeholder="linkedin.com/in/yourprofile"
-                  className={styles.textInput}
-                />
-              </div>
-
-              <div className={styles.inputGroup}>
-                <label className={styles.label}>Twitter Handle (Optional)</label>
-                <input
-                  type="text"
-                  name="twitter"
-                  value={formData.twitter}
-                  onChange={handleInputChange}
-                  placeholder="@yourusername"
-                  className={styles.textInput}
-                />
-              </div>
-
-              <div className={styles.inputGroup}>
-                <label className={styles.label}>TikTok Handle (Optional)</label>
-                <input
-                  type="text"
-                  name="tiktok"
-                  value={formData.tiktok}
-                  onChange={handleInputChange}
-                  placeholder="@yourusername"
-                  className={styles.textInput}
-                />
-              </div>
-
-              <div className={styles.inputGroup}>
                 <label className={styles.label}>Other Links (Optional)</label>
                 <input
                   type="url"
@@ -283,7 +343,7 @@ export default function ModelRegistrationPage() {
           </div>
 
           {/* Modeling Categories */}
-          <div className={styles.formContainer}>
+          <div className={`${styles.formContainer} ${embedded ? styles.formContainerEmbedded : ''}`}>
             <h3 className={styles.heading3}>Modeling Categories *</h3>
             <div className={styles.buttonGrid}>
               {categories.map((category) => (
@@ -302,7 +362,7 @@ export default function ModelRegistrationPage() {
           </div>
 
           {/* Experience & Background */}
-          <div className={styles.formContainer}>
+          <div className={`${styles.formContainer} ${embedded ? styles.formContainerEmbedded : ''}`}>
             <h3 className={styles.heading3}>Experience & Background</h3>
             <textarea
               name="experience"
@@ -341,6 +401,26 @@ export default function ModelRegistrationPage() {
             </label>
           </div>
 
+          {/* Success/Error Message (embedded) */}
+          {message && (
+            <div
+              style={{
+                padding: '12px',
+                marginTop: '12px',
+                borderRadius: '6px',
+                background: message.toLowerCase().includes('success')
+                  ? 'rgba(93, 205, 219, 0.08)'
+                  : 'rgba(255, 0, 0, 0.06)',
+                border: `1px solid ${message.toLowerCase().includes('success') ? '#5DCDDB' : '#ff6b6b'}`,
+                color: message.toLowerCase().includes('success') ? '#5DCDDB' : '#ff6b6b',
+                fontFamily: "'Cousine', monospace",
+                fontSize: '14px',
+              }}
+            >
+              {message}
+            </div>
+          )}
+
           {/* Languages Spoken */}
           <div className={styles.formContainer}>
             <h3 className={styles.heading3}>Languages Spoken *</h3>
@@ -367,6 +447,7 @@ export default function ModelRegistrationPage() {
             </button>
           </div>
         </form>
+        )}
       </div>
     </div>
   );

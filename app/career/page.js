@@ -4,11 +4,15 @@ import { useState } from 'react';
 import { motion } from 'motion/react';
 import Image from 'next/image';
 import styles from './career.module.css';
+import ModelRegistrationPage from '../modelregistry/page';
 
 
 export default function CareersPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedJob, setSelectedJob] = useState('');
+  const [isModelModalOpen, setIsModelModalOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [message, setMessage] = useState('');
 
   function openModal(title) {
     setSelectedJob(title);
@@ -20,10 +24,57 @@ export default function CareersPage() {
     setSelectedJob('');
   }
 
+  function openModelModal() {
+    setIsModelModalOpen(true);
+  }
+
+  function closeModelModal() {
+    setIsModelModalOpen(false);
+  }
+
   function handleSubmit(e) {
     e.preventDefault();
-    // TODO: wire up real submission
-    closeModal();
+    const form = e.target;
+    const payload = {
+      fullName: form.name?.value || '',
+      email: form.email?.value || '',
+      phone: form.resume ? '' : (form.phone?.value || ''),
+      cover: form.cover?.value || '',
+      jobTitle: selectedJob || 'Studio Assistant',
+      location: form.location?.value || 'New York, NY',
+      employmentType: form.employmentType?.value || 'Full-time',
+      salaryRange: form.salaryRange?.value || '$35k - $45k',
+    };
+
+    setIsSubmitting(true);
+    setMessage('');
+
+    fetch('/api/career/apply', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    })
+      .then(async (res) => {
+        const data = await res.json().catch(() => ({}));
+        setIsSubmitting(false);
+        if (res.ok || data?.ok) {
+          setMessage("Application submitted successfully! We'll contact you soon.");
+          form.name.value = '';
+          form.email.value = '';
+          form.cover.value = '';
+          setTimeout(() => {
+            closeModal();
+            setMessage('');
+          }, 1800);
+        } else {
+          setMessage(data?.error || 'Submission failed. Please try again later.');
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        setIsSubmitting(false);
+        setMessage('An error occurred. Please try again later.');
+      });
   }
 
   return (
@@ -117,11 +168,48 @@ export default function CareersPage() {
                         <input className={styles.hiddenFileInput} type="file" name="resume" accept=".pdf,.doc,.docx" />
                       </label>
                       <textarea name="cover" placeholder="Cover letter (optional)" className={styles.modalTextarea}></textarea>
-                      <button type="submit" className={styles.modalSubmit}>Submit Application</button>
+                      <button type="submit" className={styles.modalSubmit} disabled={isSubmitting}>
+                        {isSubmitting ? 'Submitting...' : 'Submit Application'}
+                      </button>
+
+                      {message && (
+                        <div
+                          style={{
+                            padding: '12px',
+                            marginTop: '12px',
+                            borderRadius: '6px',
+                            background: message.toLowerCase().includes('success')
+                              ? 'rgba(93, 205, 219, 0.08)'
+                              : 'rgba(255, 0, 0, 0.06)',
+                            border: `1px solid ${message.toLowerCase().includes('success') ? '#5DCDDB' : '#ff6b6b'}`,
+                            color: message.toLowerCase().includes('success') ? '#5DCDDB' : '#ff6b6b',
+                            fontFamily: "'Cousine', monospace",
+                            fontSize: '14px',
+                          }}
+                        >
+                          {message}
+                        </div>
+                      )}
                     </form>
                   </div>
                 </div>
 
+              </div>
+            </div>
+          </div>
+        )}
+
+        {isModelModalOpen && (
+          <div className={styles.modalOverlay} onClick={closeModelModal}>
+            <div className={styles.modalContainer} onClick={(e) => e.stopPropagation()}>
+              <div className={styles.modalInner}>
+                <div className={styles.modalHeader}>
+                  <h3 className={styles.modalTitle}>Model Registration</h3>
+                  <button className={styles.modalClose} onClick={closeModelModal} aria-label="Close">×</button>
+                </div>
+                <div style={{ width: '100%' }}>
+                  <ModelRegistrationPage embedded onSuccess={closeModelModal} />
+                </div>
               </div>
             </div>
           </div>
@@ -200,7 +288,7 @@ export default function CareersPage() {
               </ul>
               <button 
                 className={styles.modelButton}
-                onClick={() => window.open('/modelregistry', '_blank')}
+                onClick={openModelModal}
               >
                 Apply as a Model
               </button>

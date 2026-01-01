@@ -93,6 +93,16 @@ h1, h2, h3, h4, h5, h6 {
   font-family: 'Erbaum', 'Cousine', monospace;
 }
 
+/* Temporary: force Erbaum globally (useful for debugging font loading) */
+body, .hero-heading, .heroHeading, .heroHeading * {
+  font-family: 'Erbaum', 'Cousine', monospace !important;
+}
+
+/* ensure hero heading class used in JSX has Erbaum */
+.hero-heading {
+  font-family: 'Erbaum', 'Cousine', monospace;
+}
+
 /* Utility Classes */
 .container {
   max-width: 1800px;
@@ -303,7 +313,7 @@ h1, h2, h3, h4, h5, h6 {
   outline: none;
   text-decoration: none;
   padding: 14px 36px;
-  font-family: inherit;
+  font-family: 'Erbaum', 'Cousine', monospace;
   font-size: 16px;
   font-weight: 700;
   letter-spacing: 1.6px;
