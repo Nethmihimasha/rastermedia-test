@@ -59,6 +59,7 @@
 }
 
 .storyImage {
+  position: relative;
   height: 560px;
   border-radius: 12px;
   overflow: hidden;

@@ -42,6 +42,9 @@ export async function POST(request) {
       },
     });
 
+    // Fail fast if SMTP creds are wrong instead of silently missing emails
+    await transporter.verify();
+
     // Customer confirmation email
     await transporter.sendMail({
       from: process.env.EMAIL_USER,

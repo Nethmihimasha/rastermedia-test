@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   Camera, 
@@ -183,10 +184,13 @@ export default function StudioBookingPage() {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8 }}
         >
-          <img 
-            src="https://images.unsplash.com/photo-1615458509633-f15b61bdacb8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwaG90b2dyYXBoeSUyMHN0dWRpbyUyMGxpZ2h0aW5nfGVufDF8fHx8MTc2Njc0ODY1Mnww&ixlib=rb-4.1.0&q=80&w=1080" 
-            alt="Professional Studio" 
+          <Image
+            src="https://images.unsplash.com/photo-1615458509633-f15b61bdacb8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwaG90b2dyYXBoeSUyMHN0dWRpbyUyMGxpZ2h0aW5nfGVufDF8fHx8MTc2Njc0ODY1Mnww&ixlib=rb-4.1.0&q=80&w=1080"
+            alt="Professional Studio"
             className={styles.heroImage}
+            fill
+            sizes="100vw"
+            priority
           />
           <div className={styles.heroImageOverlay} />
         </motion.div>
@@ -306,7 +310,7 @@ export default function StudioBookingPage() {
             >
               <div className={styles.packageVisual}>
                 <div className={styles.packageImageWrapper}>
-                  <img src={currentPackage.image} alt="Studio Package" className={styles.packageImage} />
+                  <Image src={currentPackage.image} alt="Studio Package" className={styles.packageImage} fill sizes="(max-width: 1024px) 100vw, 50vw" />
                   <div className={styles.imageOverlay} />
                 </div>
 
@@ -411,17 +415,61 @@ export default function StudioBookingPage() {
       additionalHours: '0',
       notes: ''
     });
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [submitStatus, setSubmitStatus] = useState(null); // 'success' | 'error' | null
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
       e.preventDefault();
-      console.log('Booking submitted:', {
-        ...formData,
-        packageType,
-        duration: selectedDuration,
-        basePrice: currentPackage.price
-      });
-      alert('Booking request submitted! We will contact you shortly.');
-      setIsModalOpen(false);
+      setIsSubmitting(true);
+      setSubmitStatus(null);
+
+      try {
+        const response = await fetch('/api/booking', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            fullName: formData.name,
+            email: formData.email,
+            phone: formData.phone,
+            packageType: packageType === 'backdrop'
+              ? 'Seamless Backdrop Package'
+              : 'Podcast / Interior Package',
+            preferredDate: formData.date,
+            preferredTime: formData.time,
+            additionalHours: parseInt(formData.additionalHours),
+            additionalNotes: formData.notes,
+          }),
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+          setSubmitStatus('success');
+          setTimeout(() => {
+            setFormData({
+              name: '',
+              email: '',
+              phone: '',
+              date: '',
+              time: '',
+              additionalHours: '0',
+              notes: ''
+            });
+            setSubmitStatus(null);
+            setIsModalOpen(false);
+          }, 2500);
+        } else {
+          setSubmitStatus('error');
+          console.error('Booking error:', data.error);
+        }
+      } catch (error) {
+        setSubmitStatus('error');
+        console.error('Network error:', error);
+      } finally {
+        setIsSubmitting(false);
+      }
     };
 
     const handleChange = (e) => {
@@ -464,6 +512,34 @@ export default function StudioBookingPage() {
                 </div>
               </div>
 
+              {submitStatus === 'success' && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className={styles.successMessage}
+                >
+                  <Check size={24} />
+                  <div>
+                    <strong>Booking request received!</strong>
+                    <p>We sent you a confirmation email and will confirm availability shortly.</p>
+                  </div>
+                </motion.div>
+              )}
+
+              {submitStatus === 'error' && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className={styles.errorMessage}
+                >
+                  <X size={24} />
+                  <div>
+                    <strong>Submission failed</strong>
+                    <p>Please try again or contact us directly.</p>
+                  </div>
+                </motion.div>
+              )}
+
               <form className={styles.bookingForm} onSubmit={handleSubmit}>
                 <div className={styles.formRow}>
                   <div className={styles.formGroup}>
@@ -479,6 +555,7 @@ export default function StudioBookingPage() {
                       className={styles.input}
                       placeholder="John Doe"
                       required
+                      disabled={isSubmitting}
                     />
                   </div>
 
@@ -495,6 +572,7 @@ export default function StudioBookingPage() {
                       className={styles.input}
                       placeholder="john@example.com"
                       required
+                      disabled={isSubmitting}
                     />
                   </div>
                 </div>
@@ -513,6 +591,7 @@ export default function StudioBookingPage() {
                       className={styles.input}
                       placeholder="+94 77 123 4567"
                       required
+                      disabled={isSubmitting}
                     />
                   </div>
 
@@ -527,7 +606,9 @@ export default function StudioBookingPage() {
                       value={formData.date}
                       onChange={handleChange}
                       className={styles.input}
+                      min={new Date().toISOString().split('T')[0]}
                       required
+                      disabled={isSubmitting}
                     />
                   </div>
                 </div>
@@ -544,6 +625,7 @@ export default function StudioBookingPage() {
                       onChange={handleChange}
                       className={styles.select}
                       required
+                      disabled={isSubmitting}
                     >
                       <option value="">Select time</option>
                       <option value="9:00 AM">9:00 AM</option>
@@ -568,6 +650,7 @@ export default function StudioBookingPage() {
                       value={formData.additionalHours}
                       onChange={handleChange}
                       className={styles.select}
+                      disabled={isSubmitting}
                     >
                       <option value="0">None</option>
                       <option value="1">+1 Hour (LKR {currentPackage.extraHourPrice.toLocaleString()})</option>
@@ -589,6 +672,7 @@ export default function StudioBookingPage() {
                     onChange={handleChange}
                     className={styles.textarea}
                     placeholder="Any special requirements or questions?"
+                    disabled={isSubmitting}
                   />
                 </div>
 
@@ -613,9 +697,17 @@ export default function StudioBookingPage() {
                   </div>
                 </div>
 
-                <button type="submit" className={styles.submitButton}>
-                  Confirm Booking
-                  <ArrowRight size={20} />
+                <button
+                  type="submit"
+                  className={styles.submitButton}
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? 'Submitting…' : (
+                    <>
+                      Confirm Booking
+                      <ArrowRight size={20} />
+                    </>
+                  )}
                 </button>
 
                 <p className={styles.formNote}>

@@ -3,6 +3,7 @@
 import { motion } from 'motion/react';
 import MagicBento from '../components/MagicBento';
 import styles from './services.module.css';
+import Image from 'next/image';
 import { 
   Palette, 
   PenTool, 
@@ -70,10 +71,13 @@ export default function ServicesPage() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8 }}
           >
-            <img 
+            <Image
               src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDJ8fGNyZWF0aXZlJTIwYWdlbmN5fGVufDB8fHx8MTY3ODk4NzY1Mg&ixlib=rb-4.0.3&q=80&w=1920"
-              alt="Creative Services" 
+              alt="Creative Services"
               className={styles.heroImage}
+              fill
+              sizes="100vw"
+              priority
             />
             <div className={styles.heroImageOverlay} />
           </motion.div>

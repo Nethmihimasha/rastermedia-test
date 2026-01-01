@@ -320,7 +320,6 @@
   position: absolute;
   inset: 0;
   background: linear-gradient(
-  font-family: 'Erbaum', 'Cousine', monospace;
     to right,
     rgba(15, 15, 15, 0.3) 0%,
     rgba(15, 15, 15, 0.7) 70%,

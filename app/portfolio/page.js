@@ -91,10 +91,13 @@ export default function Portfolio() {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8 }}
         >
-          <img 
+          <Image
             src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDN8fGNyZWF0aXZlJTIwd29ya3xlbnwwfHx8fDE2Nzg5ODc3MzE&ixlib=rb-4.0.3&q=80&w=1920"
-            alt="Our Work" 
+            alt="Our Work"
             className={styles.heroImage}
+            fill
+            sizes="100vw"
+            priority
           />
           <div className={styles.heroImageOverlay} />
         </motion.div>

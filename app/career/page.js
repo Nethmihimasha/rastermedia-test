@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { motion } from 'motion/react';
+import Image from 'next/image';
 import styles from './career.module.css';
 
 
@@ -36,10 +37,13 @@ export default function CareersPage() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8 }}
           >
-            <img 
+            <Image
               src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDR8fHRlYW0lMjBjcmVhdGl2ZXxlbnwwfHx8fDE2Nzg5ODc3ODA&ixlib=rb-4.0.3&q=80&w=1920"
-              alt="Join Our Team" 
+              alt="Join Our Team"
               className={styles.heroImage}
+              fill
+              sizes="100vw"
+              priority
             />
             <div className={styles.heroImageOverlay} />
           </motion.div>

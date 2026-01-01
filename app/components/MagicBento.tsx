@@ -4,6 +4,46 @@ import React, { useRef, useEffect, useState, useCallback } from 'react';
 import { gsap } from 'gsap';
 import { ArrowRight } from 'lucide-react'; 
 
+type ParticleCardProps = {
+  children: React.ReactNode;
+  className?: string;
+  disableAnimations?: boolean;
+  style?: React.CSSProperties;
+  particleCount?: number;
+  glowColor?: string;
+  enableTilt?: boolean;
+  enableMagnetism?: boolean;
+};
+
+type GlobalSpotlightProps = {
+  gridRef: React.RefObject<HTMLDivElement | null>;
+  disableAnimations?: boolean;
+  enabled?: boolean;
+  spotlightRadius?: number;
+  glowColor?: string;
+};
+
+type MagicBentoItem = {
+  icon: React.ReactNode;
+  number: string;
+  title: string;
+  description: string;
+  features?: string[];
+};
+
+type MagicBentoProps = {
+  items: MagicBentoItem[];
+  enableStars?: boolean;
+  enableSpotlight?: boolean;
+  enableBorderGlow?: boolean;
+  disableAnimations?: boolean;
+  spotlightRadius?: number;
+  particleCount?: number;
+  enableTilt?: boolean;
+  glowColor?: string;
+  enableMagnetism?: boolean;
+};
+
 const DEFAULT_PARTICLE_COUNT = 15; // Increased for more visible effect
 const DEFAULT_SPOTLIGHT_RADIUS = 400; // Larger radius for smoother glow
 const DEFAULT_GLOW_COLOR = '93, 205, 219'; // Cyan
@@ -35,7 +75,7 @@ const updateCardGlowProperties = (card: HTMLElement, mouseX: number, mouseY: num
   card.style.setProperty('--glow-radius', `${radius}px`);
 };
 
-const ParticleCard = ({ children, className = '', disableAnimations = false, style, particleCount = DEFAULT_PARTICLE_COUNT, glowColor = DEFAULT_GLOW_COLOR, enableTilt = true, clickEffect = false, enableMagnetism = false }: any) => {
+const ParticleCard = ({ children, className = '', disableAnimations = false, style, particleCount = DEFAULT_PARTICLE_COUNT, glowColor = DEFAULT_GLOW_COLOR, enableTilt = true, enableMagnetism = false }: ParticleCardProps) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const particlesRef = useRef<HTMLDivElement[]>([]);
   const timeoutsRef = useRef<number[]>([]);
@@ -107,7 +147,7 @@ const ParticleCard = ({ children, className = '', disableAnimations = false, sty
   return <div ref={cardRef} className={`${className} relative overflow-hidden`} style={{ ...style, position: 'relative', overflow: 'hidden' }}>{children}</div>;
 };
 
-const GlobalSpotlight = ({ gridRef, disableAnimations = false, enabled = true, spotlightRadius = DEFAULT_SPOTLIGHT_RADIUS, glowColor = DEFAULT_GLOW_COLOR }: any) => {
+const GlobalSpotlight = ({ gridRef, disableAnimations = false, enabled = true, spotlightRadius = DEFAULT_SPOTLIGHT_RADIUS, glowColor = DEFAULT_GLOW_COLOR }: GlobalSpotlightProps) => {
   const spotlightRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
     if (disableAnimations || !gridRef?.current || !enabled) return;
@@ -141,7 +181,7 @@ const GlobalSpotlight = ({ gridRef, disableAnimations = false, enabled = true, s
   return null;
 };
 
-const MagicBento = ({ items, enableStars = false, enableSpotlight = true, enableBorderGlow = true, disableAnimations = false, spotlightRadius = DEFAULT_SPOTLIGHT_RADIUS, particleCount = DEFAULT_PARTICLE_COUNT, enableTilt = false, glowColor = "93, 205, 219", enableMagnetism = true }: any) => {
+const MagicBento = ({ items, enableStars = false, enableSpotlight = true, enableBorderGlow = true, disableAnimations = false, spotlightRadius = DEFAULT_SPOTLIGHT_RADIUS, particleCount = DEFAULT_PARTICLE_COUNT, enableTilt = false, glowColor = "93, 205, 219", enableMagnetism = true }: MagicBentoProps) => {
   const gridRef = useRef<HTMLDivElement>(null);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -297,7 +337,7 @@ const MagicBento = ({ items, enableStars = false, enableSpotlight = true, enable
 
       <div className="bento-section" ref={gridRef}>
         <div className="card-responsive">
-          {items.map((service: any, index: number) => {
+          {items.map((service: MagicBentoItem, index: number) => {
             const baseClassName = `card ${enableBorderGlow ? 'card--border-glow' : ''}`;
             
             const CardContent = () => (

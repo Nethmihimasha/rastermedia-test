@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import styles from './about.module.css';
 import { useEffect, useRef, useState } from 'react';
 
@@ -40,8 +41,14 @@ function StorySection() {
       <div className="container">
         <div className={styles.storyGrid}>
           <div className={styles.storyImage}>
-            {/* Add an image at public/images/about-story.jpg or change the src to your image path */}
-            <img src="/images/about.jpg" alt="Our Story" className={styles.storyImg} />
+            <Image
+              src="/images/about.jpg"
+              alt="Our Story"
+              fill
+              className={styles.storyImg}
+              sizes="(max-width: 768px) 100vw, 50vw"
+              priority
+            />
           </div>
           <div className={styles.storyContent}>
             <h2 className={styles.storyTitle}>Our Story</h2>

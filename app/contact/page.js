@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { motion } from 'motion/react';
+import Image from 'next/image';
 import styles from './contact.module.css';
 import { Mail, Phone, MapPin, Send, MessageCircle } from 'lucide-react';
 
@@ -76,10 +77,13 @@ export default function ContactPage() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8 }}
           >
-            <img 
+            <Image
               src="https://images.unsplash.com/photo-1423666639041-f56000c27a9a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDE3fHxjb250YWN0JTIwdXN8ZW58MHx8fHwxNjc4OTg3ODMx&ixlib=rb-4.0.3&q=80&w=1920"
-              alt="Contact Us" 
+              alt="Contact Us"
               className={styles.heroImage}
+              fill
+              sizes="100vw"
+              priority
             />
             <div className={styles.heroImageOverlay} />
           </motion.div>
