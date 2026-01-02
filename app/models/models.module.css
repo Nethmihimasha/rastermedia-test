@@ -51,6 +51,7 @@
 }
 
 .premium {
+  font-family: 'Erbaum', 'Cousine', monospace;
   font-weight: 700;
   font-size: 70.032px;
   line-height: 77px;
@@ -59,6 +60,7 @@
 }
 
 .talentDirectory {
+  font-family: 'Erbaum', 'Cousine', monospace;
   font-weight: 700;
   font-size: 70.032px;
   line-height: 77px;
@@ -144,6 +146,7 @@
 }
 
 .filterHeading {
+  font-family: 'Erbaum', 'Cousine', monospace;
   font-weight: 600;
   font-size: 23.344px;
   line-height: 30px;

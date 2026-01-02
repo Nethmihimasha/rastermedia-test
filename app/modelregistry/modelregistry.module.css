@@ -37,6 +37,7 @@
 }
 
 .becomeA {
+  font-family: 'Erbaum', 'Cousine', monospace;
   font-weight: 700;
   font-size: 77.712px;
   line-height: 85px;
@@ -49,6 +50,7 @@
 }
 
 .rasterModel {
+  font-family: 'Erbaum', 'Cousine', monospace;
   font-weight: 700;
   font-size: 77.712px;
   line-height: 85px;
@@ -109,6 +111,7 @@
 }
 
 .heading3 {
+  font-family: 'Erbaum', 'Cousine', monospace;
   font-weight: 600;
   font-size: 18px;
   line-height: 24px;

@@ -69,7 +69,7 @@
 }
 
 .mainTitle {
-  font-family: 'Cousine', monospace;
+  font-family: 'Erbaum', 'Cousine', monospace;
   font-weight: 700;
   font-size: 80px;
   line-height: 88px;
@@ -84,7 +84,7 @@
 }
 
 .gradientText span {
-  font-family: 'Cousine', monospace;
+  font-family: 'Erbaum', 'Cousine', monospace;
   font-weight: 700;
   font-size: 80px;
   line-height: 88px;
@@ -135,7 +135,7 @@
 }
 
 .cardTitle {
-  font-family: 'Cousine', monospace;
+  font-family: 'Erbaum', 'Cousine', monospace;
   font-weight: 600;
   font-size: 36px;
   line-height: 43px;
@@ -217,7 +217,7 @@
 }
 
 .socialTitle {
-  font-family: 'Cousine', monospace;
+  font-family: 'Erbaum', 'Cousine', monospace;
   font-weight: 600;
   font-size: 28px;
   line-height: 36px;
@@ -306,7 +306,7 @@
 }
 
 .formTitle {
-  font-family: 'Cousine', monospace;
+  font-family: 'Erbaum', 'Cousine', monospace;
   font-weight: 600;
   font-size: 36px;
   line-height: 43px;

@@ -72,6 +72,7 @@
 }
 
 .joinOur {
+  font-family: 'Erbaum', 'Cousine', monospace;
   font-weight: 700;
   font-size: 77.712px;
   line-height: 85px;
@@ -84,6 +85,7 @@
 }
 
 .creativeTeam {
+  font-family: 'Erbaum', 'Cousine', monospace;
   font-weight: 700;
   font-size: 77.712px;
   line-height: 85px;
@@ -116,6 +118,7 @@
 }
 
 .heading2 {
+  font-family: 'Erbaum', 'Cousine', monospace;
   font-weight: 700;
   font-size: 51.808px;
   line-height: 60px;

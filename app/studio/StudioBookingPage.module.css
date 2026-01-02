@@ -141,6 +141,7 @@
 }
 
 .toggleTitle {
+  font-family: 'Erbaum', 'Cousine', monospace;
   font-size: 22px;
   color: #FFFFFF;
   transition: color 0.3s ease;
@@ -344,6 +345,7 @@
 }
 
 .packageTitle {
+  font-family: 'Erbaum', 'Cousine', monospace;
   font-size: 42px;
   color: #FFFFFF;
   margin: 0 0 8px;
@@ -398,6 +400,7 @@
 }
 
 .equipmentHeading {
+  font-family: 'Erbaum', 'Cousine', monospace;
   display: flex;
   align-items: center;
   gap: 10px;
