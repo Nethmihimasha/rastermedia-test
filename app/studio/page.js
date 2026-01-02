@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
@@ -173,6 +173,7 @@ export default function StudioBookingPage() {
   };
 
   const currentPackage = packages[packageType][selectedDuration];
+  const featuredRef = useRef(null);
 
   function HeroSection() {
     return (
@@ -272,7 +273,15 @@ export default function StudioBookingPage() {
                   <motion.div
                     key={duration}
                     className={`${styles.durationOption} ${selectedDuration === duration ? styles.active : ''}`}
-                    onClick={() => setSelectedDuration(duration)}
+                    onClick={() => {
+                      setSelectedDuration(duration);
+                      // scroll the featured package into view after selection
+                      setTimeout(() => {
+                        try {
+                          featuredRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        } catch (e) {}
+                      }, 80);
+                    }}
                     whileHover={{ y: -4 }}
                     whileTap={{ scale: 0.98 }}
                   >
@@ -303,6 +312,7 @@ export default function StudioBookingPage() {
             <motion.div
               key={`${packageType}-${selectedDuration}`}
               className={styles.featuredPackage}
+              ref={featuredRef}
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -30 }}
