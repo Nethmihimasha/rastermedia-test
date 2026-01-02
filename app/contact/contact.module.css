@@ -7,7 +7,7 @@
   gap: 0;
   width: 100%;
   min-height: 100vh;
-  background: #0A0A0A;
+  background: #000000; /* make page background pure black to remove visible band */
 }
 
 /* Contact Page */

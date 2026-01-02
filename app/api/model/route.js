@@ -22,11 +22,13 @@ export async function POST(request) {
       );
     }
 
+    const photos = body.photos || [];
+
     const model = await Model.create({
       fullName, age, email, phone, height, country, gender,
       portfolioLink, instagramHandle, linkedinProfile, twitterHandle,
       tiktokHandle, otherLinks, categories, languages,
-      photos: [],
+      photos,
     });
 
     const transporter = nodemailer.createTransport({
@@ -52,6 +54,11 @@ export async function POST(request) {
       `,
     });
 
+    // Admin notification includes photo thumbnails/links if provided
+    const photosHtml = photos && photos.length > 0
+      ? `<h4>Photos</h4>` + photos.map(url => `<div style="margin-bottom:8px;"><a href="${url}">${url}</a><br/><img src="${url}" style="max-width:240px;display:block;margin-top:6px;border-radius:6px;"/></div>`).join('')
+      : '';
+
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
       to: process.env.EMAIL_USER,
@@ -69,6 +76,7 @@ export async function POST(request) {
         <p><strong>Categories:</strong> ${categories.join(', ')}</p>
         <p><strong>Languages:</strong> ${languages.join(', ')}</p>
         ${portfolioLink ? `<p><strong>Portfolio:</strong> <a href="${portfolioLink}">${portfolioLink}</a></p>` : ''}
+        ${photosHtml}
       `,
     });
 

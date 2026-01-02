@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { motion } from 'motion/react';
 import Image from 'next/image';
 import styles from './portfolio.module.css';
@@ -21,27 +22,73 @@ const portfolioItems = [
   { id: 12, category: 'Photos', album: 'Fashion', title: 'Runway Series', client: 'Vogue Magazine', image: '/portfolio5.jpg' },
 ];
 
-const categories = ['All', 'Photos', 'Videos', 'Design', 'Projects', 'Digital'];
+const categories = ['Photos', 'Videos', 'Design', 'Projects', 'Digital'];
 
 export default function Portfolio() {
-  const [activeCategory, setActiveCategory] = useState('All');
+  const [activeCategory, setActiveCategory] = useState(categories[0]);
 
   const [isAlbumOpen, setIsAlbumOpen] = useState(false);
   const [activeAlbum, setActiveAlbum] = useState(null);
   const [isWorkOpen, setIsWorkOpen] = useState(false);
   const [activeWork, setActiveWork] = useState(null);
 
-  const filteredItems = activeCategory === 'All' ? portfolioItems : portfolioItems.filter((item) => item.category === activeCategory);
+  const filteredItems = portfolioItems.filter((item) => item.category === activeCategory);
 
-  // Group filtered items into albums
-  const albumsMap = filteredItems.reduce((acc, item) => {
-    const key = item.album || item.title;
-    if (!acc[key]) acc[key] = { name: key, items: [] };
-    acc[key].items.push(item);
-    return acc;
-  }, {});
+  // For Photos category, use explicit album list with provided counts and company names
+  let albums = []; 
+  if (activeCategory === 'Photos') {
+    const photoAlbums = [
+      { num: 1, name: 'Basilur Autumn Tea', company: 'Basilur', slug: 'basilur-autumn-tea', count: 2 },
+      { num: 2, name: 'Basilur Corporate Gift Shoot', company: 'Basilur', slug: 'basilur-corporate-gift', count: 4 },
+      { num: 3, name: 'Basilur Christmas Shoot', company: 'Basilur', slug: 'basilur-christmas', count: 2 },
+      { num: 4, name: 'Basilur Island of Tea Shoot', company: 'Basilur', slug: 'basilur-island-of-tea', count: 2 },
+      { num: 5, name: 'Basilur Spring Shoot', company: 'Basilur', slug: 'basilur-spring', count: 4 },
+      { num: 6, name: 'Martex Corporate Shoot', company: 'Martex', slug: 'martex-corporate', count: 7 },
+      { num: 7, name: 'Tripson Product Shoot', company: 'Tripson', slug: 'tripson-product', count: 2 },
+      { num: 8, name: 'Winter Christmas Shoot', company: 'Winter Collection', slug: 'winter-christmas', count: 7 },
+      { num: 9, name: 'Winter Classic Shoot', company: 'Winter Collection', slug: 'winter-classic', count: 10 },
+      { num: 10, name: 'Winter Studio Shoots', company: 'Winter Collection', slug: 'winter-studio', count: 5 },
+    ];
 
-  const albums = Object.values(albumsMap);
+    albums = photoAlbums.map((a) => {
+      const name = a.name;
+      const slugSource = a.slug || name;
+      const slug = String(slugSource).toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'');
+      const items = Array.from({ length: a.count }).map((_, ci) => ({
+        id: `photos-${a.num}-${ci + 1}`,
+        category: 'Photos',
+        album: name,
+        title: `${name} ${ci + 1}`, 
+        client: a.company || '',
+        // Use public images placed under /public/images following naming convention
+        image: `/images/album${String(a.num).padStart(2, '0')}-${slug}-${String(ci + 1).padStart(2,'0')}.jpg`,
+      }));
+      return { name, items, number: a.num, company: a.company, slug };
+    });
+  } else {
+    // Group filtered items into albums
+    const albumsMap = filteredItems.reduce((acc, item) => {
+      const key = item.album || item.title; 
+      if (!acc[key]) acc[key] = { name: key, items: [] };
+      acc[key].items.push(item);
+      return acc;
+    }, {});
+    albums = Object.values(albumsMap);
+  }
+
+  // If `album` query param is present, open that album on load
+  const searchParams = useSearchParams();
+  useEffect(() => {
+    const albumParam = searchParams?.get?.('album');
+    if (!albumParam) return;
+    const found = albums.find((al) => al.slug === albumParam || al.name.toLowerCase().replace(/[^a-z0-9]+/g,'-') === albumParam);
+    if (found) {
+      setActiveAlbum(found);
+      setIsAlbumOpen(true);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams]);
 
   return (
     <div className={styles.portfolioPage}>
@@ -76,7 +123,7 @@ export default function Portfolio() {
               className={`${styles.filterBtn} ${
                 activeCategory === category ? styles.active : ''
               }`}
-              onClick={() => setActiveCategory(category)}
+              onClick={() => { setActiveCategory(category); setIsAlbumOpen(false); setActiveAlbum(null); }}
             >
               {category}
             </button>
@@ -106,7 +153,7 @@ export default function Portfolio() {
           </div>
           <div className={styles.gridContainer} style={{marginTop:20}}>
             {activeAlbum.items.map((item) => (
-              <WorkCard key={item.id} {...item} onOpen={() => { setActiveWork(item); setIsWorkOpen(true); }} />
+              <WorkCard key={item.id} {...item} showText={false} onOpen={() => { setActiveWork(item); setIsWorkOpen(true); }} />
             ))}
           </div>
         </section>
@@ -122,6 +169,7 @@ export default function Portfolio() {
 function AlbumCard({ album, onOpen }) {
   const rep = album.items[0];
   const [isHovered, setIsHovered] = useState(false);
+  console.log('AlbumCard render:', album.name, rep?.image);
 
   return (
     <div
@@ -138,18 +186,28 @@ function AlbumCard({ album, onOpen }) {
         borderColor: isHovered ? 'rgba(93,205,219,0.5)' : 'rgba(93,205,219,0.06)'
       }}
     >
-      <div className={styles.albumThumb} style={{ position: 'relative', overflow: 'hidden' }}>
-        {rep.image ? <Image src={rep.image} alt={album.name} fill style={{ objectFit: 'cover', transform: isHovered ? 'scale(1.05)' : 'scale(1)', transition: 'transform 0.5s ease' }} /> : null}
+      <div className={styles.albumThumb} data-src={rep?.image} style={{ position: 'relative', overflow: 'hidden' }}>
+        {rep.image ? (
+          <img
+            src={rep.image}
+            alt={album.name}
+            onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = '/images/portfoliopic1.jpg'; }}
+            style={{ width: '100%', height: '100%', objectFit: 'cover', transform: isHovered ? 'scale(1.05)' : 'scale(1)', transition: 'transform 0.5s ease', display: 'block' }}
+          />
+        ) : null}
       </div>
       <div className={styles.albumInfo}>
         <div className={styles.albumName}>{album.name}</div>
-        <div className={styles.albumCount}>{album.items.length} items</div>
+        <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', gap:12}}>
+          <div className={styles.albumCompany} style={{ fontFamily: "'Cousine', monospace" }}>{album.company || ''}</div>
+          <div className={styles.albumCount}>{album.items.length} items</div>
+        </div>
       </div>
     </div>
   );
 }
 
-function WorkCard({ id, title, client, image, videoUrl, onOpen }) {
+function WorkCard({ id, title, client, image, videoUrl, onOpen, showText = true }) {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
@@ -164,14 +222,18 @@ function WorkCard({ id, title, client, image, videoUrl, onOpen }) {
         className={styles.portfolioImage}
         style={{ transform: isHovered ? 'scale(1.05)' : 'scale(1)', transition: 'transform 0.5s ease' }}
       >
-        {image ? <Image src={image} alt={title} fill style={{ objectFit: 'cover' }} /> : null}
+        {image ? <img src={image} alt={title} onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = '/images/portfoliopic1.jpg'; }} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} /> : null}
       </div>
-      <div className={styles.portfolioGradient} style={{ opacity: isHovered ? 0.85 : 0.6, transition: 'opacity 0.3s ease' }}></div>
-      <div className={styles.portfolioContent} style={{ transform: isHovered ? 'translateY(-8px)' : 'translateY(0)', transition: 'transform 0.4s ease' }}>
-        <div className={styles.portfolioCategory} style={{ color: isHovered ? '#7DD8E5' : '#5DCDDB', transition: 'color 0.3s ease' }}>{videoUrl ? 'Video' : 'Photo'}</div>
-        <h3 className={styles.portfolioTitle}>{title}</h3>
-        <p className={styles.portfolioClient}>{client}</p>
-      </div>
+      {showText && (
+        <>
+          <div className={styles.portfolioGradient} style={{ opacity: isHovered ? 0.85 : 0.6, transition: 'opacity 0.3s ease' }}></div>
+          <div className={styles.portfolioContent} style={{ transform: isHovered ? 'translateY(-8px)' : 'translateY(0)', transition: 'transform 0.4s ease' }}>
+            <div className={styles.portfolioCategory} style={{ color: isHovered ? '#7DD8E5' : '#5DCDDB', transition: 'color 0.3s ease' }}>{videoUrl ? 'Video' : 'Photo'}</div>
+            <h3 className={styles.portfolioTitle}>{title}</h3>
+            <p className={styles.portfolioClient}>{client}</p>
+          </div>
+        </>
+      )}
     </div>
   );
 }
@@ -187,7 +249,7 @@ function WorkModal({ work, onClose }) {
           </div>
         ) : (
           <div style={{position:'relative', width:'100%', height:'80vh'}}>
-            {work.image ? <Image src={work.image} alt={work.title} fill style={{ objectFit: 'contain' }} /> : null}
+            {work.image ? <img src={work.image} alt={work.title} onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = '/images/portfoliopic1.jpg'; }} style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block' }} /> : null}
           </div>
         )}
       </div>
