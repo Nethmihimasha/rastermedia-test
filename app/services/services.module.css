@@ -26,9 +26,9 @@
   padding: 0;
   width: 100vw;
   margin-left: calc(50% - 50vw);
-  height: 70vh;
-  min-height: 500px;
-  margin-bottom: 80px;
+  height: 60vh;
+  min-height: 420px;
+  margin-bottom: 24px;
   overflow: hidden;
   display: flex;
   align-items: center;

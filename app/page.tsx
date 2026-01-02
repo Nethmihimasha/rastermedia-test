@@ -931,7 +931,7 @@ const styles: Record<string, CSSProperties> = {
   },
   portfolioTitle: {
     fontFamily: 'Erbaum, Cousine, monospace',
-    fontSize: '36px',
+    fontSize: 'var(--card-title-size)',
     fontWeight: 600,
     lineHeight: '43px',
     color: '#FFFFFF',
@@ -952,7 +952,7 @@ const styles: Record<string, CSSProperties> = {
   },
   brandsTitle: {
     fontFamily: 'Erbaum, Cousine, monospace',
-    fontSize: '36px',
+    fontSize: 'var(--section-title-size)',
     fontWeight: 600,
     lineHeight: '43px',
     textAlign: 'center',
@@ -1075,7 +1075,7 @@ const styles: Record<string, CSSProperties> = {
     color: '#5DCDDB',
   },
   testimonialQuote: {
-    fontSize: '14px',
+    fontSize: 'var(--body-size)',
     fontStyle: 'normal',
     lineHeight: '26px',
     color: '#A0A0A0',
@@ -1127,7 +1127,7 @@ const styles: Record<string, CSSProperties> = {
   },
   ctaHeading: {
     fontFamily: 'Erbaum, Cousine, monospace',
-    fontSize: '51.808px',
+    fontSize: 'var(--section-title-size)',
     fontWeight: 700,
     lineHeight: '60px',
     letterSpacing: '-0.51808px',
@@ -1135,7 +1135,7 @@ const styles: Record<string, CSSProperties> = {
     color: '#FFFFFF',
   },
   ctaDescription: {
-    fontSize: '20px',
+    fontSize: 'var(--body-size)',
     lineHeight: '28px',
     color: '#A0A0A0',
     marginBottom: '40px',

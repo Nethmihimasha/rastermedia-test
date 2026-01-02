@@ -1,9 +1,10 @@
 'use client';
 
 import { motion } from 'motion/react';
-import MagicBento from '../components/MagicBento';
+import ScrollStack, { ScrollStackItem } from '../components/ScrollStack.client';
 import styles from './services.module.css';
-import Image from 'next/image';
+// Image removed from hero; keeping import commented out in case of future use
+// import Image from 'next/image';
 import { 
   Palette, 
   PenTool, 
@@ -17,45 +18,45 @@ import {
 const services = [
   {
     number: '01',
-    icon: <Palette size={32} strokeWidth={1.5} />,
-    title: 'Creative & Branding',
-    description: 'Distinctive brand identities that capture your essence and resonate with your target audience.',
-    features: ['Brand Strategy', 'Logo Design', 'Visual Identity', 'Brand Guidelines']
+    icon: <Camera size={32} strokeWidth={1.5} />,
+    title: 'Photography & Video Production',
+    description: 'Cinematic photography and video for brands, fashion, products, and corporate projects from start to finish.',
+    features: ['Product Photography', 'Commercial Shoots', 'Fashion & Editorial']
   },
   {
     number: '02',
-    icon: <PenTool size={32} strokeWidth={1.5} />,
-    title: 'Graphic Design',
-    description: 'Strategic design solutions blending aesthetic excellence with commercial effectiveness.',
-    features: ['Print & Digital', 'Marketing Collateral', 'Data Visualization', 'UI/UX Design']
+    icon: <Palette size={32} strokeWidth={1.5} />,
+    title: 'Brand Strategy & Identity',
+    description: 'We provide clarity and direction for brands with well-crafted messaging and visual systems.',
+    features: ['Brand Strategy', 'Visual Identity', 'Messaging']
   },
   {
     number: '03',
-    icon: <Camera size={32} strokeWidth={1.5} />,
-    title: 'Photography',
-    description: "Studio-quality imagery capturing emotion, movement, and your brand's essence.",
-    features: ['Product Photography', 'Commercial Shoots', 'Fashion & Editorial', 'Event Coverage']
+    icon: <Target size={32} strokeWidth={1.5} />,
+    title: 'Studio Space',
+    description: 'A professional studio for photography, video, content production, and podcasts, ensuring high-quality results.',
+    features: ['Studio Hire', 'Equipment', 'Production Support']
   },
   {
     number: '04',
-    icon: <Video size={32} strokeWidth={1.5} />,
-    title: 'Videography',
-    description: 'Compelling video productions with cinematic quality and creative excellence.',
-    features: ['Commercial Production', 'Corporate Videos', 'Social Content', 'Motion Graphics']
+    icon: <PenTool size={32} strokeWidth={1.5} />,
+    title: 'Design',
+    description: 'From logos to complete brand systems, we create designs with care, precision, and purpose.',
+    features: ['Logo Design', 'Brand Systems', 'UI/UX']
   },
   {
     number: '05',
     icon: <TrendingUp size={32} strokeWidth={1.5} />,
-    title: 'Social Media Ads',
-    description: 'Data-driven campaigns that amplify reach and convert engagement into results.',
-    features: ['Campaign Strategy', 'Content Creation', 'Ad Management', 'Analytics']
+    title: 'Social Media Management',
+    description: 'Managing social media with creative content to engage, grow, and maintain brand presence.',
+    features: ['Content Creation', 'Community Management', 'Analytics']
   },
   {
     number: '06',
-    icon: <Target size={32} strokeWidth={1.5} />,
-    title: 'Campaign Strategy',
-    description: 'Comprehensive marketing strategies driving sustainable growth through insights.',
-    features: ['Market Research', 'Creative Concepting', 'Multi-Channel Planning', 'ROI Analysis']
+    icon: <Video size={32} strokeWidth={1.5} />,
+    title: 'Website Design & Development',
+    description: 'Premium websites built for seamless performance, usability, and a strong brand presence.',
+    features: ['Web Design', 'Development', 'Performance']
   }
 ];
 
@@ -63,25 +64,8 @@ export default function ServicesPage() {
   return (
     <div className={styles.app}>
       <div className={styles.servicesPage}>
-        {/* Hero Section with Image */}
+        {/* Hero Section (image removed; keep text) */}
         <section className={styles.heroSection}>
-          <motion.div 
-            className={styles.heroImageWrapper}
-            initial={{ opacity: 0, scale: 1.1 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8 }}
-          >
-            <Image
-              src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDJ8fGNyZWF0aXZlJTIwYWdlbmN5fGVufDB8fHx8MTY3ODk4NzY1Mg&ixlib=rb-4.0.3&q=80&w=1920"
-              alt="Creative Services"
-              className={styles.heroImage}
-              fill
-              sizes="100vw"
-              priority
-            />
-            <div className={styles.heroImageOverlay} />
-          </motion.div>
-
           <div className={styles.heroContent}>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -90,10 +74,10 @@ export default function ServicesPage() {
             >
               <div className={styles.heading1}>
                 <h1 className={styles.mainTitle}>
-                  Comprehensive Creative
+                  Comprehensive
                 </h1>
                 <div className={styles.gradientText}>
-                  <span>Solutions</span>
+                  <span>Creative Solutions</span>
                 </div>
               </div>
               <p className={styles.heroParagraph}>
@@ -105,14 +89,15 @@ export default function ServicesPage() {
 
         {/* Magic Bento Section */}
         <div style={{ padding: '0 24px 80px', maxWidth: '1400px', width: '100%', margin: '0 auto' }}>
-          <MagicBento 
-            items={services}
-            enableStars={true}
-            enableSpotlight={true}
-            enableBorderGlow={true}
-            glowColor="93, 205, 219" 
-          />
-        </div>
+            <ScrollStack useWindowScroll={true}>
+              {services.map((s, idx) => (
+                <ScrollStackItem key={idx}>
+                  <h2 style={{marginTop:0}}>{s.title}</h2>
+                  <p>{s.description}</p>
+                </ScrollStackItem>
+              ))}
+            </ScrollStack>
+          </div>
       </div>
     </div>
   );
