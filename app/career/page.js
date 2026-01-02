@@ -4,7 +4,7 @@
   import { motion } from 'motion/react';
   import Image from 'next/image';
   import styles from './career.module.css';
-  import ModelRegistrationPage from '../modelregistry/page';
+  import ModelRegistrationPage from './ModelRegistration.client';
 
 
   export default function CareersPage() {
@@ -13,6 +13,8 @@
     const [isModelModalOpen, setIsModelModalOpen] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [message, setMessage] = useState('');
+    const [resumeName, setResumeName] = useState('');
+    const [uploadInProgress, setUploadInProgress] = useState(false);
 
     function openModal(title) {
       setSelectedJob(title);
@@ -45,6 +47,7 @@
       const resumeFile = form.resume?.files[0];
       
       if (resumeFile) {
+        setUploadInProgress(true);
         const fileFormData = new FormData();
         fileFormData.append('file', resumeFile);
         fileFormData.append('folder', 'raster-media/careers');
@@ -60,6 +63,7 @@
 
         const uploadData = await uploadRes.json();
         cvUrl = uploadData.url;
+        setUploadInProgress(false);
       }
 
       // Step 2: Submit application with CV URL
@@ -81,10 +85,12 @@
 
       const data = await res.json();
       setIsSubmitting(false);
+      setUploadInProgress(false);
 
       if (res.ok) {
         setMessage("Application submitted successfully! We'll contact you soon.");
         form.reset();
+        setResumeName('');
         setTimeout(() => {
           closeModal();
           setMessage('');
@@ -96,6 +102,7 @@
       console.error(err);
       setIsSubmitting(false);
       setMessage('An error occurred. Please try again later.');
+      setUploadInProgress(false);
     }
   }
 
@@ -181,13 +188,56 @@
                           <input name="name" placeholder="Full Name" className={styles.modalInput} required />
                           <input name="email" type="email" placeholder="Email Address" className={styles.modalInput} required />
                         </div>
+                          <div className={styles.modalRow}>
+                            <input name="phone" placeholder="Phone Number *" className={styles.modalInput} required />
+                          </div>
                         <label className={styles.uploadBox}>
                           <div className={styles.uploadIconPlaceholder}></div>
                           <div className={styles.uploadTextBlock}>
-                            <span className={styles.uploadTitle}>Upload Resume & Portfolio</span>
+                              <span className={styles.uploadTitle}>Upload Resume & Portfolio *</span>
                             <span className={styles.uploadSubtitle}>PDF or DOCX (Max 10MB)</span>
                           </div>
-                          <input className={styles.hiddenFileInput} type="file" name="resume" accept=".pdf,.doc,.docx" />
+                          <input
+                            className={styles.hiddenFileInput}
+                            type="file"
+                            name="resume"
+                            accept=".pdf,.doc,.docx"
+                            required
+                            onChange={(ev) => {
+                              const f = ev.target.files?.[0];
+                              if (f) {
+                                if (f.size > 10 * 1024 * 1024) {
+                                  setMessage('File too large (max 10MB)');
+                                  ev.target.value = '';
+                                  setResumeName('');
+                                } else {
+                                  setMessage('');
+                                  // sanitize filename: remove unusual separators and truncate
+                                  const raw = f.name || '';
+                                  // replace middle-dot and similar with a space
+                                  const cleaned = raw.replace(/[·••·]/g, ' ').replace(/\s+/g, ' ').trim();
+                                  const maxLen = 36;
+                                  let display = cleaned;
+                                  if (cleaned.length > maxLen) {
+                                    const head = cleaned.slice(0, 20);
+                                    const tail = cleaned.slice(-12);
+                                    display = `${head}…${tail}`;
+                                  }
+                                  setResumeName(display);
+                                }
+                              } else {
+                                setResumeName('');
+                              }
+                            }}
+                          />
+                          <div style={{display: 'flex', alignItems: 'center', gap: 10}}>
+                            <div className={styles.uploadFilename} aria-live="polite">
+                              {resumeName ? resumeName : 'No file chosen'}
+                            </div>
+                            <div aria-live="polite" style={{fontSize: 13, color: uploadInProgress ? '#5DCDDB' : 'transparent'}}>
+                              {uploadInProgress ? 'Uploading…' : ''}
+                            </div>
+                          </div>
                         </label>
                         <textarea name="cover" placeholder="Cover letter (optional)" className={styles.modalTextarea}></textarea>
                         <button type="submit" className={styles.modalSubmit} disabled={isSubmitting}>
@@ -301,7 +351,7 @@
                   <span className={styles.modelRaster}>Model Raster</span>
                 </h2>
                 <p className={styles.modelParagraph}>
-                  Are you interested in modeling opportunities? Join our roster and work with premium brands
+                  Are you interested in modeling opportunities? Join our raster and work with premium brands
                 </p>
                 <ul className={styles.modelList}>
                   <li>Work with premium brands and top-tier clients</li>
@@ -316,8 +366,14 @@
                 </button>
               </div>
               <div className={styles.modelImage}>
-                {/* Replace with actual image */}
-                <div className={styles.modelImagePlaceholder}></div>
+                {/* Image file (place in project): public/images/cover-photo-default.jpg */}
+                <Image
+                  src="/images/cover-photo-default.jpg"
+                  alt="Model hero"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                  className={styles.modelImageActual}
+                />
               </div>
             </div>
           </section>
