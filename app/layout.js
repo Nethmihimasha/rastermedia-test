@@ -212,7 +212,7 @@ const styles = {
     display: 'inline-block'
   },
   footer: {
-    backgroundColor: '#1A1A1A',
+    backgroundColor: '#1A1A1A ',
     borderTop: '0.8px solid #000000',
     padding: '64px 0 0',
   },
