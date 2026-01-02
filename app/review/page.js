@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import styles from './review.module.css';
+import { reviews } from '../../src/data/reviews';
 
 export default function ReviewsPage() {
   const [rating, setRating] = useState(0);
@@ -11,20 +12,14 @@ export default function ReviewsPage() {
     email: '',
     review: ''
   });
+  
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log({ ...formData, rating });
     alert('Thank you for your review! We appreciate your feedback.');
   };
 
-  const recentReviews = [
-    { text: "Absolutely amazing experience! The team exceeded all our expectations.", author: "Sarah M.", rating: 5, time: "2 hours ago", avatar: "👩‍💼" },
-    { text: "Best decision we made for our brand! Professional and creative.", author: "John D.", rating: 5, time: "5 hours ago", avatar: "👨‍💻" },
-    { text: "Professional and creative team that truly understands vision.", author: "Emma R.", rating: 5, time: "1 day ago", avatar: "👩‍🎨" },
-    { text: "Exceeded all expectations! Would highly recommend to everyone.", author: "Mike T.", rating: 5, time: "2 days ago", avatar: "👨‍🔧" },
-    { text: "Outstanding quality and attention to detail in every aspect.", author: "Lisa K.", rating: 5, time: "3 days ago", avatar: "👩‍🏫" },
-    { text: "Game-changing results for our business. Truly impressed!", author: "David W.", rating: 5, time: "4 days ago", avatar: "👨‍💼" },
-  ];
+  const recentReviews = reviews;
 
   const ratingDistribution = [
     { stars: 5, count: 435, percentage: 87 },
@@ -39,11 +34,6 @@ export default function ReviewsPage() {
       {/* Hero Section */}
       <section className={styles.hero}>
         <div className={styles.heroContent}>
-          <div className={styles.badge}>
-            <span className={styles.badgeIcon}>⭐</span>
-            Your Voice Matters
-          </div>
-          
           <h1 className={styles.heroTitle}>
             SHARE YOUR
             <br />
@@ -53,21 +43,6 @@ export default function ReviewsPage() {
           <p className={styles.heroSubtitle}>
             Join 500+ happy clients who&apos;ve shared their success stories. Your feedback shapes our future.
           </p>
-
-          <div className={styles.statsGrid}>
-            <div className={styles.statCard}>
-              <div className={styles.statValue}>4.9★</div>
-              <div className={styles.statLabel}>Avg Rating</div>
-            </div>
-            <div className={styles.statCard}>
-              <div className={styles.statValue}>500+</div>
-              <div className={styles.statLabel}>Reviews</div>
-            </div>
-            <div className={styles.statCard}>
-              <div className={styles.statValue}>98%</div>
-              <div className={styles.statLabel}>Satisfied</div>
-            </div>
-          </div>
         </div>
       </section>
 
@@ -80,9 +55,6 @@ export default function ReviewsPage() {
             <div className={styles.formColumn}>
               <div className={styles.formCard}>
                 <div className={styles.formHeader}>
-                  <div className={styles.formIcon}>
-                    <span>✍️</span>
-                  </div>
                   <h2 className={styles.formTitle}>Leave Your Review</h2>
                   <p className={styles.formSubtitle}>Share your experience with us</p>
                 </div>
@@ -108,11 +80,11 @@ export default function ReviewsPage() {
                     </div>
                     {rating > 0 && (
                       <div className={styles.ratingText}>
-                        {rating === 5 && "🎉 Excellent!"}
-                        {rating === 4 && "😊 Great!"}
-                        {rating === 3 && "👍 Good"}
-                        {rating === 2 && "🤔 Fair"}
-                        {rating === 1 && "😕 Poor"}
+                        {rating === 5 && "Excellent!"}
+                        {rating === 4 && "Great!"}
+                        {rating === 3 && "Good"}
+                        {rating === 2 && "Fair"}
+                        {rating === 1 && "Poor"}
                       </div>
                     )}
                   </div>
@@ -164,7 +136,7 @@ export default function ReviewsPage() {
                   </button>
 
                   <p className={styles.formNote}>
-                    🔒 Your review will be visible on our website after approval
+                    Your review will be visible on our website after approval
                   </p>
                 </form>
               </div>
@@ -176,7 +148,6 @@ export default function ReviewsPage() {
               {/* Rating Distribution */}
               <div className={styles.infoCard}>
                 <h3 className={styles.infoCardTitle}>
-                  <span className={styles.iconBadge}>📊</span>
                   Rating Distribution
                 </h3>
                 <div className={styles.distributionList}>
@@ -198,50 +169,27 @@ export default function ReviewsPage() {
               {/* Why Your Review Matters */}
               <div className={styles.infoCard}>
                 <h3 className={styles.infoCardTitle}>
-                  <span className={styles.iconBadge}>💡</span>
                   Why Your Review Matters
                 </h3>
                 <div className={styles.benefitsList}>
                   <div className={styles.benefitItem}>
-                    <div className={styles.benefitIcon}>👥</div>
                     <div className={styles.benefitContent}>
                       <h4 className={styles.benefitTitle}>Help Others Decide</h4>
                       <p className={styles.benefitText}>Your honest feedback helps future clients make informed decisions</p>
                     </div>
                   </div>
                   <div className={styles.benefitItem}>
-                    <div className={styles.benefitIcon}>⭐</div>
                     <div className={styles.benefitContent}>
                       <h4 className={styles.benefitTitle}>Get Featured</h4>
                       <p className={styles.benefitText}>Outstanding reviews get featured on our homepage and social media</p>
                     </div>
                   </div>
                   <div className={styles.benefitItem}>
-                    <div className={styles.benefitIcon}>🎯</div>
                     <div className={styles.benefitContent}>
                       <h4 className={styles.benefitTitle}>Shape Our Future</h4>
                       <p className={styles.benefitText}>Your insights help us improve and deliver even better results</p>
                     </div>
                   </div>
-                </div>
-              </div>
-
-              {/* Trust Badges */}
-              <div className={styles.trustBadges}>
-                <div className={styles.trustBadge}>
-                  <div className={styles.trustIcon}>🏆</div>
-                  <div className={styles.trustLabel}>Google</div>
-                  <div className={styles.trustValue}>4.9/5</div>
-                </div>
-                <div className={styles.trustBadge}>
-                  <div className={styles.trustIcon}>💎</div>
-                  <div className={styles.trustLabel}>Trustpilot</div>
-                  <div className={styles.trustValue}>4.8/5</div>
-                </div>
-                <div className={styles.trustBadge}>
-                  <div className={styles.trustIcon}>🥇</div>
-                  <div className={styles.trustLabel}>Clutch</div>
-                  <div className={styles.trustValue}>5.0/5</div>
                 </div>
               </div>
             </div>
@@ -250,7 +198,7 @@ export default function ReviewsPage() {
         </div>
       </section>
 
-      {/* Recent Reviews with Masonry Layout */}
+      {/* Recent Reviews */}
       <section className={styles.recentSection}>
         <div className={styles.container}>
           <div className={styles.sectionHeader}>
@@ -263,9 +211,9 @@ export default function ReviewsPage() {
           </div>
           <div className={styles.reviewsGrid}>
             {recentReviews.map((review, index) => (
-              <div key={index} className={styles.reviewCard} style={{ animationDelay: `${index * 0.1}s` }}>
+              <div key={index} className={styles.reviewCard}>
                 <div className={styles.reviewHeader}>
-                  <div className={styles.reviewAvatar}>{review.avatar}</div>
+                  <div className={styles.reviewAvatar}>{(review.author || '').split(' ').map(n=>n[0]).slice(0,2).join('')}</div>
                   <div className={styles.reviewInfo}>
                     <div className={styles.reviewAuthor}>{review.author}</div>
                     <div className={styles.reviewTime}>{review.time}</div>
@@ -275,7 +223,6 @@ export default function ReviewsPage() {
                   {'★'.repeat(review.rating)}
                 </div>
                 <p className={styles.reviewText}>&ldquo;{review.text}&rdquo;</p>
-                <div className={styles.reviewBadge}>Verified Client</div>
               </div>
             ))}
           </div>

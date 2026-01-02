@@ -5,6 +5,7 @@ import type { CSSProperties } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { reviews } from '../src/data/reviews';
 
 export default function HomePage() {
   return (
@@ -41,8 +42,8 @@ function HeroSection() {
       
       <div style={styles.heroContent} className="hero-content">
         <h1 style={styles.heroHeading} className="hero-heading">
-          <div style={styles.heroLine1}>CREATIVITY.</div>
-          <div style={styles.heroLine2}>PIXEL PERFECT.</div>
+          <div style={styles.heroLine1}>Responsible <span style={styles.gradientText}>Creativity</span></div>
+          <div style={styles.heroLine1}>for Every <span style={styles.gradientText}>Pixel</span></div>
         </h1>
         <p style={styles.heroDescription}>
           We build modern, pixel-sharp campaigns for brands that want to stand out.
@@ -406,38 +407,7 @@ function BrandsSection() {
 
 function TestimonialsSection() {
   // Carousel showing 3 testimonials at a time, with cloned edges for seamless looping
-  const testimonials = [
-    {
-      quote: "Raster Media transformed our brand identity completely. Their attention to detail and creative vision exceeded all expectations.",
-      name: 'Sarah Johnson',
-      role: 'CEO, TechFlow Inc',
-      avatar: '/images/avatars/sarah.jpg',
-    },
-    {
-      quote: "Working with this team has been an absolute pleasure. They brought our vision to life with stunning precision.",
-      name: 'Michael Chen',
-      role: 'Marketing Director, Luxe Brands',
-      avatar: '/images/avatars/michael.jpg',
-    },
-    {
-      quote: "Their pixel-perfect approach and premium quality output has made them our go-to creative partner.",
-      name: 'Emma Rodriguez',
-      role: 'Founder, Studio Collective',
-      avatar: '/images/avatars/emma.jpg',
-    },
-    {
-      quote: "Professional, creative and results-driven—Raster Media delivered more than we imagined.",
-      name: 'David Lee',
-      role: 'Head of Marketing, Nova Retail',
-      avatar: '/images/avatars/david.jpg',
-    },
-    {
-      quote: "Exceptional team and flawless execution. Our campaign saw record engagement after launch.",
-      name: 'Priya Patel',
-      role: 'CMO, FreshLeaf',
-      avatar: '/images/avatars/priya.jpg',
-    },
-  ];
+  const testimonials = reviews.map(r => ({ quote: r.text, name: r.author, role: r.role || 'Client', rating: r.rating || 5, time: r.time || '', avatar: r.avatar || '' }));
 
   function getVisible() {
     if (typeof window === 'undefined') return 3;
@@ -593,22 +563,32 @@ function TestimonialsSection() {
   );
 }
 
-function TestimonialCard({ quote, name, role, avatar }: { quote: string; name: string; role: string; avatar?: string }) {
+function TestimonialCard({ quote, name, role, rating, time }: { quote: string; name: string; role?: string; rating?: number; time?: string }) {
+  const initials = (name || '').split(' ').map(n => n[0]).slice(0,2).join('');
+
   return (
     <div style={styles.testimonialCard}>
       <div style={styles.quoteIcon}>❝</div>
       <p style={styles.testimonialQuote}>{quote}</p>
-      <div style={styles.testimonialAuthor}>
-        <div style={styles.authorAvatar}>
-          {avatar ? (
-            <Image src={avatar} alt={name} fill style={{ objectFit: 'cover' }} />
-          ) : null} 
+
+      <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', gap:12}}>
+        <div style={styles.testimonialAuthor}>
+          <div style={{...styles.authorAvatar, display:'flex', alignItems:'center', justifyContent:'center', fontSize:16, fontWeight:600, color:'#000'}}>
+            {initials}
+          </div>
+          <div>
+            <div style={styles.authorName}>{name}</div>
+            <div style={styles.authorRole}>{role}</div>
+          </div>
         </div>
-        <div>
-          <div style={styles.authorName}>{name}</div>
-          <div style={styles.authorRole}>{role}</div>
+
+        <div style={{textAlign:'right'}}>
+          <div style={{color:'#5DCDDB', fontSize:16, marginBottom:6}}>{'★'.repeat(rating || 5)}</div>
+          {time ? <div style={{fontSize:12, color:'#6B6B6B'}}>{time}</div> : null}
         </div>
       </div>
+
+      
     </div>
   );
 }
@@ -1081,25 +1061,25 @@ const styles: Record<string, CSSProperties> = {
     right: '-56px',
   },
   testimonialCard: {
-    padding: '24px',
+    padding: '18px',
     background: 'rgba(37, 37, 37, 0.6)',
     border: '0.8px solid rgba(93, 205, 219, 0.1)',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
     gap: '16px',
-    minHeight: '240px',
+    minHeight: '200px',
   },
   quoteIcon: {
-    fontSize: '28px',
+    fontSize: '20px',
     color: '#5DCDDB',
   },
   testimonialQuote: {
-    fontSize: '17px',
-    fontStyle: 'italic',
+    fontSize: '14px',
+    fontStyle: 'normal',
     lineHeight: '26px',
     color: '#A0A0A0',
-    minHeight: '100px',
+    minHeight: '80px',
     marginBottom: '8px',
   },
   testimonialAuthor: {
@@ -1123,9 +1103,9 @@ const styles: Record<string, CSSProperties> = {
     display: 'block',
   },
   authorName: {
-    fontSize: '25.904px',
+    fontSize: '16px',
     fontWeight: 600,
-    lineHeight: '34px',
+    lineHeight: '22px',
     color: '#FFFFFF',
   },
   authorRole: {

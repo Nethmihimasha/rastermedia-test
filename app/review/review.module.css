@@ -7,11 +7,6 @@
   overflow-x: hidden;
 }
 
-/* Disable legacy floating effects */
-.orb1, .orb2, .orb3, .mouseFollower {
-  display: none;
-}
-
 /* Hero Section */
 .hero {
   position: relative;
@@ -19,7 +14,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 96px 24px 72px;
+  padding: 88px 24px 88px;
   background: linear-gradient(180deg, #0A0A0A 0%, #0E0E0E 100%);
 }
 
@@ -28,30 +23,6 @@
   z-index: 3;
   max-width: 900px;
   text-align: center;
-}
-
-.badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 20px;
-  background: rgba(93, 205, 219, 0.1);
-  border: 1px solid rgba(93, 205, 219, 0.2);
-  border-radius: 50px;
-  color: #5DCDDB;
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  margin-bottom: 24px;
-}
-
-.badgeIcon {
-  font-size: 16px;
-}
-
-@keyframes pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.2); }
 }
 
 .heroTitle {
@@ -75,41 +46,9 @@
   font-size: 18px;
   line-height: 28px;
   color: #A0A0A0;
-  margin-bottom: 48px;
   max-width: 600px;
   margin-left: auto;
   margin-right: auto;
-}
-
-.statsGrid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-  max-width: 700px;
-  margin: 0 auto;
-}
-
-.statCard {
-  padding: 24px;
-  background: rgba(37, 37, 37, 0.6);
-  border: 0.8px solid rgba(93, 205, 219, 0.15);
-}
-
-.statValue {
-  font-size: 36px;
-  font-weight: 700;
-  background: linear-gradient(135deg, #5DCDDB 0%, #7DD8E5 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  margin-bottom: 8px;
-}
-
-.statLabel {
-  font-size: 14px;
-  color: #6B6B6B;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
 }
 
 /* Main Section */
@@ -129,42 +68,29 @@
   display: grid;
   grid-template-columns: 1.2fr 1fr;
   gap: 48px;
-  align-items: start;
+  align-items: stretch;
 }
 
 /* Form Column */
 .formColumn {
   position: relative;
   top: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .formCard {
   padding: 48px;
   background: rgba(20, 20, 20, 0.9);
   border: 1px solid rgba(93, 205, 219, 0.15);
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
 }
 
 .formHeader {
   text-align: center;
   margin-bottom: 40px;
-}
-
-.formIcon {
-  width: 64px;
-  height: 64px;
-  margin: 0 auto 20px;
-  background: linear-gradient(135deg, rgba(93, 205, 219, 0.2) 0%, rgba(125, 216, 229, 0.2) 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 32px;
-  border: 1px solid rgba(93, 205, 219, 0.2);
-  animation: bounce 2s ease-in-out infinite;
-}
-
-@keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
 }
 
 .formTitle {
@@ -335,7 +261,7 @@
   font-size: 12px;
   color: #6B6B6B;
   text-align: center;
-  font-style: italic;
+  font-style: normal;
   margin-top: -8px;
 }
 
@@ -344,6 +270,24 @@
   display: flex;
   flex-direction: column;
   gap: 24px;
+  align-items: stretch;
+}
+
+/* Make the top two info cards expand to match the height of the form card */
+.infoColumn > .infoCard {
+  display: flex;
+  flex-direction: column;
+}
+.infoColumn > .infoCard:nth-child(-n+2) {
+  flex: 1 1 auto;
+}
+
+/* Ensure trust badges sit after the stretched cards */
+.trustBadges {
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .infoCard {
@@ -359,13 +303,6 @@
   margin-bottom: 24px;
   padding-bottom: 16px;
   border-bottom: 1px solid rgba(93, 205, 219, 0.1);
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.iconBadge {
-  font-size: 24px;
 }
 
 /* Rating Distribution */
@@ -417,23 +354,9 @@
 }
 
 .benefitItem {
-  display: flex;
-  gap: 16px;
   padding: 16px;
   background: rgba(20, 20, 20, 0.4);
   border: 1px solid rgba(93, 205, 219, 0.1);
-}
-
-.benefitIcon {
-  font-size: 28px;
-  width: 48px;
-  height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(93, 205, 219, 0.1);
-  border: 1px solid rgba(93, 205, 219, 0.2);
-  flex-shrink: 0;
 }
 
 .benefitContent {
@@ -451,44 +374,6 @@
   font-size: 13px;
   line-height: 19px;
   color: #A0A0A0;
-}
-
-/* Trust Badges */
-.trustBadges {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-}
-
-.trustBadge {
-  padding: 20px 16px;
-  background: rgba(20, 20, 20, 0.6);
-  border: 1px solid rgba(93, 205, 219, 0.15);
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-}
-
-.trustIcon {
-  font-size: 32px;
-  margin-bottom: 12px;
-  display: inline-block;
-}
-
-.trustLabel {
-  font-size: 12px;
-  color: #A0A0A0;
-  margin-bottom: 6px;
-  display: block;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.trustValue {
-  font-size: 18px;
-  font-weight: 700;
-  color: #5DCDDB;
 }
 
 /* Recent Reviews Section */
@@ -550,7 +435,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 24px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #FFFFFF;
   flex-shrink: 0;
 }
 
@@ -578,109 +465,10 @@
 
 .reviewText {
   font-size: 14px;
-  font-style: italic;
+  font-style: normal;
   line-height: 22px;
   color: #A0A0A0;
   flex: 1;
-}
-
-.reviewBadge {
-  display: inline-block;
-  padding: 6px 12px;
-  background: rgba(93, 205, 219, 0.1);
-  border: 1px solid rgba(93, 205, 219, 0.2);
-  color: #5DCDDB;
-  font-size: 11px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  align-self: flex-start;
-}
-
-/* Interactive Section (NEW) */
-.interactiveSection {
-  padding: 100px 0;
-  position: relative;
-  z-index: 2;
-}
-
-.interactiveGrid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 32px;
-}
-
-.interactiveCard {
-  padding: 48px 32px;
-  background: rgba(37, 37, 37, 0.8);
-  border: 0.8px solid rgba(93, 205, 219, 0.15);
-  text-align: center;
-  transition: all 0.4s ease;
-  position: relative;
-  overflow: hidden;
-}
-
-.interactiveCard::before {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle, rgba(93, 205, 219, 0.1) 0%, transparent 70%);
-  opacity: 0;
-  transition: opacity 0.4s ease;
-}
-
-.interactiveCard:hover::before {
-  opacity: 1;
-}
-
-.interactiveCard:hover {
-  transform: translateY(-12px);
-  border-color: rgba(93, 205, 219, 0.4);
-  box-shadow: 0 20px 50px rgba(93, 205, 219, 0.2);
-}
-
-.interactiveIcon {
-  font-size: 64px;
-  margin-bottom: 24px;
-  display: inline-block;
-  animation: float 3s ease-in-out infinite;
-}
-
-.interactiveTitle {
-  font-size: 24px;
-  font-weight: 600;
-  color: #FFFFFF;
-  margin-bottom: 12px;
-}
-
-.interactiveText {
-  font-size: 14px;
-  line-height: 22px;
-  color: #A0A0A0;
-  margin-bottom: 28px;
-}
-
-.interactiveButton {
-  padding: 14px 28px;
-  background: transparent;
-  border: 1.5px solid #5DCDDB;
-  color: #5DCDDB;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.interactiveButton:hover {
-  background: #5DCDDB;
-  color: #000000;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(93, 205, 219, 0.3);
 }
 
 /* Responsive Design */
@@ -690,17 +478,8 @@
     gap: 40px;
   }
 
-  .formColumn {
-    position: relative;
-    top: 0;
-  }
-
   .reviewsGrid {
     grid-template-columns: repeat(2, 1fr);
-  }
-
-  .interactiveGrid {
-    grid-template-columns: 1fr;
   }
 }
 
@@ -713,11 +492,6 @@
     padding: 100px 24px 60px;
   }
 
-  .statsGrid {
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
-
   .formCard {
     padding: 32px 24px;
   }
@@ -727,10 +501,6 @@
   }
 
   .reviewsGrid {
-    grid-template-columns: 1fr;
-  }
-
-  .trustBadges {
     grid-template-columns: 1fr;
   }
 }
@@ -746,9 +516,5 @@
 
   .heroTitle {
     font-size: 36px;
-  }
-
-  .interactiveCard {
-    padding: 32px 24px;
   }
 }
