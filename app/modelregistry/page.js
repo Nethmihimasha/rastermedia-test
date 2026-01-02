@@ -56,40 +56,100 @@ export default function ModelRegistrationPage({ onSuccess, compact = false, embe
     setUploadedFiles(prev => [...prev, ...files].slice(0, 10));
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
     const form = e.target;
-    const payload = {
-      fullName: form.fullName?.value || formData.fullName,
-      email: form.email?.value || formData.email,
-      phone: form.phone?.value || formData.phone,
-      age: form.age?.value || formData.age,
-      instagram: form.instagram?.value || formData.instagram,
-      portfolioLink: form.portfolioLink?.value || formData.portfolioLink,
-      otherLinks: form.otherLinks?.value || formData.otherLinks,
-      experience: form.experience?.value || formData.experience,
-    };
-
+    
     setLoading(true);
     setMessage('');
-    fetch('/api/model/apply', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-    }).then(async (res) => {
-      const data = await res.json().catch(() => ({}));
-      setLoading(false);
-      if (res.ok || data?.ok) {
-        setMessage('Model registration submitted successfully!');
-        if (typeof onSuccess === 'function') setTimeout(onSuccess, 1200);
-      } else {
-        setMessage(data?.error || 'Submission failed. Please try again later.');
+
+    try {
+      const payload = {
+        fullName: formData.fullName,
+        age: Number(formData.age),
+        email: formData.email,
+        phone: formData.phone,
+        height: formData.height,
+        country: formData.country,
+        gender: formData.gender,
+        portfolioLink: formData.portfolioLink,
+        instagramHandle: formData.instagram,
+        linkedinProfile: formData.linkedin,
+        twitterHandle: formData.twitter,
+        tiktokHandle: formData.tiktok,
+        otherLinks: formData.otherLinks,
+        categories: selectedCategories.map(c => c.toLowerCase()),
+        languages: selectedLanguages,
+      };
+
+      // Validation
+      if (!payload.fullName || !payload.email || !payload.instagramHandle || selectedCategories.length === 0 || selectedLanguages.length === 0) {
+        setMessage('Please fill in all required fields');
+        setLoading(false);
+        return;
       }
-    }).catch(err => {
+
+      // If there are uploaded files, upload each to /api/upload first
+      let photoUrls = [];
+      if (uploadedFiles && uploadedFiles.length > 0) {
+        const uploads = [];
+        for (const file of uploadedFiles) {
+          const fd = new FormData();
+          fd.append('file', file);
+          fd.append('folder', 'raster-media/models');
+          uploads.push(
+            fetch('/api/upload', { method: 'POST', body: fd }).then(r => r.json())
+          );
+        }
+        const results = await Promise.all(uploads);
+        photoUrls = results.filter(r => r && r.url).map(r => r.url);
+      }
+
+      if (photoUrls.length > 0) payload.photos = photoUrls;
+
+      const res = await fetch('/api/model', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await res.json();
+      setLoading(false);
+
+      if (res.ok) {
+        setMessage('Model registration submitted successfully!');
+        // Reset form
+        setFormData({
+          fullName: '',
+          age: '',
+          email: '',
+          phone: '',
+          height: '',
+          country: '',
+          gender: '',
+          portfolioLink: '',
+          instagram: '',
+          linkedin: '',
+          twitter: '',
+          tiktok: '',
+          otherLinks: '',
+          experience: '',
+        });
+        setSelectedCategories([]);
+        setSelectedLanguages([]);
+        setUploadedFiles([]);
+        
+        if (typeof onSuccess === 'function') {
+          setTimeout(onSuccess, 1200);
+        }
+      } else {
+        setMessage(data.error || 'Submission failed. Please try again later.');
+      }
+    } catch (err) {
       console.error(err);
       setLoading(false);
       setMessage('An error occurred. Please try again later.');
-    });
+    }
   }
 
   function handleCompactSubmit(e) {

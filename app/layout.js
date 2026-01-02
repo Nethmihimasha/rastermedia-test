@@ -2,6 +2,7 @@ import './globals.css';
 import Link from 'next/link';
 import Image from 'next/image';
 import NavLinkActive from './components/NavLinkActive.client';
+import Footer from './components/Footer';
 
 export const metadata = {
   title: 'Raster Media - Pixel Perfect Creative Solutions',
@@ -76,82 +77,6 @@ function Header() {
   );
 }
 
-function Footer() {
-  return (
-    <footer style={styles.footer}>
-      <div style={styles.footerContainer}>
-        <div style={styles.footerContent}>
-          <div style={styles.footerColumn}>
-            <Link href="/" style={styles.footerLogoLink}>
-              <Image
-                src="/images/logo.png"
-                alt="Raster Media Logo"
-                width={300}
-                height={120}
-                style={styles.footerLogoImage}
-              />
-            </Link>
-            <p style={styles.footerDesc}>
-              Responsible creativity for every pixel. Building brands that resonate.
-            </p>
-          </div>
-
-          <div style={styles.footerColumn}>
-            <h4 style={styles.footerHeading}>Quick Links</h4>
-            <ul style={styles.footerList}>
-              <li><Link href="/about_us" style={styles.footerLink} className="footer-link">About</Link></li>
-              <li><Link href="/services" style={styles.footerLink} className="footer-link">Services</Link></li>
-              <li><Link href="/portfolio" style={styles.footerLink} className="footer-link">Portfolio</Link></li>
-              <li><Link href="/careers" style={styles.footerLink} className="footer-link">Career</Link></li>
-              <li><Link href="/booking" style={styles.footerLink} className="footer-link">Studio Booking</Link></li>
-              <li><Link href="/contact" style={styles.footerLink} className="footer-link">Contact</Link></li>
-              <li><Link href="/review" style={styles.footerLink} className="footer-link">Review Us</Link></li>
-            </ul>
-          </div>
-
-          <div style={styles.footerColumn}>
-            <h4 style={styles.footerHeading}>Portfolio</h4>
-            <ul style={styles.footerList}>
-              <li><Link href="/portfolio/branding" style={styles.footerLink} className="footer-link">Branding Projects</Link></li>
-              <li><Link href="/portfolio/photography" style={styles.footerLink} className="footer-link">Photography</Link></li>
-              <li><Link href="/portfolio/video" style={styles.footerLink} className="footer-link">Video Production</Link></li>
-              <li><Link href="/portfolio/digital" style={styles.footerLink} className="footer-link">Digital Campaigns</Link></li>
-              <li><Link href="/portfolio/cases" style={styles.footerLink} className="footer-link">Case Studies</Link></li>
-            </ul>
-          </div>
-
-          <div style={styles.footerColumn}>
-            <h4 style={styles.footerHeading}>Contact</h4>
-            <ul style={styles.footerList}>
-              <li style={styles.contactItem}>
-                <span style={styles.icon} aria-hidden="true">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{display: 'block'}} focusable="false" aria-hidden="true"><path d="M3 6.5A2.5 2.5 0 015.5 4h13A2.5 2.5 0 0121 6.5v11A2.5 2.5 0 0118.5 20h-13A2.5 2.5 0 013 18.5v-12z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/><path d="M3 6.5l9 6 9-6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                </span>
-                <span style={styles.footerLink} className="footer-link footer-contact-link">hello@rastermedia.com</span>
-              </li>
-              <li style={styles.contactItem}>
-                <span style={styles.icon} aria-hidden="true">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{display: 'block'}} focusable="false" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2A19.86 19.86 0 013 5.18 2 2 0 015 3h3a2 2 0 012 1.72c.12 1.05.37 2.08.74 3.06a2 2 0 01-.45 2.11l-1.2 1.2a16 16 0 006 6l1.2-1.2a2 2 0 012.11-.45c.98.37 2.01.62 3.06.74A2 2 0 0122 16.92z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                </span>
-                <span style={styles.footerLink} className="footer-link footer-contact-link">+1 (555) 123-4567</span>
-              </li>
-              <li style={styles.contactItem}>
-                <span style={styles.icon} aria-hidden="true">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{display: 'block'}} focusable="false" aria-hidden="true"><path d="M21 10c0 6-9 12-9 12S3 16 3 10a9 9 0 1118 0z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/><circle cx="12" cy="10" r="2.5" fill="currentColor"/></svg>
-                </span>
-                <span style={styles.footerLink} className="footer-link footer-contact-link">123 Creative Street, NY 10001</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <div style={styles.footerBottom}>
-          <p style={styles.copyright}>© 2025 Raster Media. All rights reserved.</p>
-        </div>
-      </div>
-    </footer>
-  );
-}
 const styles = {
   header: {
     position: 'fixed',
@@ -212,7 +137,7 @@ const styles = {
     display: 'inline-block'
   },
   footer: {
-    backgroundColor: '#1A1A1A ',
+    backgroundColor: '#0F0F0F',
     borderTop: '0.8px solid #000000',
     padding: '64px 0 0',
   },

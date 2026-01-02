@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import type { CSSProperties } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 export default function HomePage() {
   return (
@@ -289,22 +290,22 @@ function FeaturedWorkSection() {
 
   const projects = [
     {
-      category: 'Photography & Video Production',
-      title: 'Winter Reverie',
+      title: 'Winter Christmas Shoot',
       client: 'Winter Collection',
       image: '/images/portfoliopic1.jpg',
+      albumSlug: 'winter-christmas',
     },
     {
-      category: 'Photography & Video Production',
-      title: 'Modern technology',
-      client: 'Martex Pvt Ltd',
+      title: 'Martex Corporate Shoot',
+      client: 'Martex',
       image: '/images/portfoliopic2.jpg',
+      albumSlug: 'martex-corporate',
     },
     {
-      category: 'Photography & Video Production',
-      title: 'Luxury Fashion Campaign',
+      title: 'Winter Classic Shoot',
       client: 'Winter Collection',
       image: '/images/portfoliopic3.jpg',
+      albumSlug: 'winter-classic',
     },
   ];
 
@@ -332,95 +333,55 @@ function FeaturedWorkSection() {
   );
 }
 
-function PortfolioCard({ category, title, client, image }: { category: string; title: string; client: string; image: string }) {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+function PortfolioCard({ category, title, client, image, albumSlug }: { category: string; title: string; client: string; image: string; albumSlug?: string }) {
+  const router = useRouter();
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <>
-      <div 
-        style={{
-          ...styles.portfolioCard,
-          transform: isHovered ? 'translateY(-8px)' : 'translateY(0)',
-          borderColor: isHovered ? 'rgba(93, 205, 219, 0.5)' : 'rgba(93, 205, 219, 0.1)',
-          boxShadow: isHovered ? '0 12px 40px rgba(93, 205, 219, 0.15)' : 'none',
-        }}
-        onClick={() => setIsModalOpen(true)}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-      >
-        <div style={{ 
-          ...styles.portfolioImage, 
-          position: 'relative',
-          transform: isHovered ? 'scale(1.05)' : 'scale(1)',
-          transition: 'transform 0.5s ease',
-        }}>
-          {image ? <Image src={image} alt={title} fill style={{ objectFit: 'cover' }} quality={75} /> : null}
-        </div>
-        <div style={{ 
-          ...styles.portfolioGradient,
-          opacity: isHovered ? 0.85 : 0.6,
-          transition: 'opacity 0.3s ease',
-        }}></div>
-        <div style={{
-          ...styles.portfolioContent,
-          transform: isHovered ? 'translateY(-8px)' : 'translateY(0)',
-          transition: 'transform 0.4s ease',
-        }}>
-          <div style={{
-            ...styles.portfolioCategory,
-            color: isHovered ? '#7DD8E5' : '#5DCDDB',
-            transition: 'color 0.3s ease',
-          }}>{category}</div>
-          <h3 style={styles.portfolioTitle}>{title}</h3>
-          <p style={styles.portfolioClient}>{client}</p>
-        </div>
+    <div
+      role="button"
+      tabIndex={0}
+      onClick={() => {
+        if (albumSlug) {
+          router.push(`/portfolio?album=${encodeURIComponent(albumSlug)}`);
+        } else {
+          router.push('/portfolio');
+        }
+      }}
+      onKeyDown={(e) => { if (e.key === 'Enter') { if (albumSlug) router.push(`/portfolio?album=${encodeURIComponent(albumSlug)}`); else router.push('/portfolio'); } }}
+      style={{
+        ...styles.portfolioCard,
+        transform: isHovered ? 'translateY(-8px)' : 'translateY(0)',
+        borderColor: isHovered ? 'rgba(93, 205, 219, 0.5)' : 'rgba(93, 205, 219, 0.1)',
+        boxShadow: isHovered ? '0 12px 40px rgba(93, 205, 219, 0.15)' : 'none',
+        cursor: 'pointer'
+      }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <div style={{
+        ...styles.portfolioImage,
+        position: 'relative',
+        transform: isHovered ? 'scale(1.05)' : 'scale(1)',
+        transition: 'transform 0.5s ease',
+      }}>
+        {image ? <Image src={image} alt={title} fill style={{ objectFit: 'cover' }} quality={75} /> : null}
       </div>
-
-      {isModalOpen && (
-        <div 
-          style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            background: 'rgba(0, 0, 0, 0.95)',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            zIndex: 9999,
-            cursor: 'pointer',
-          }}
-          onClick={() => setIsModalOpen(false)}
-        >
-          <div style={{ position: 'relative', width: '90%', height: '90vh', maxWidth: '1200px' }}>
-            {image ? <Image src={image} alt={title} fill style={{ objectFit: 'contain' }} quality={90} /> : null}
-            <button
-              onClick={() => setIsModalOpen(false)}
-              style={{
-                position: 'absolute',
-                top: '20px',
-                right: '20px',
-                background: '#5DCDDB',
-                color: '#000',
-                border: 'none',
-                width: '48px',
-                height: '48px',
-                borderRadius: '50%',
-                fontSize: '28px',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              ×
-            </button>
-          </div>
-        </div>
-      )}
-    </>
+      <div style={{
+        ...styles.portfolioGradient,
+        opacity: isHovered ? 0.85 : 0.6,
+        transition: 'opacity 0.3s ease',
+      }}></div>
+      <div style={{
+        ...styles.portfolioContent,
+        transform: isHovered ? 'translateY(-8px)' : 'translateY(0)',
+        transition: 'transform 0.4s ease',
+      }}>
+        {/* category label removed per request */}
+        <h3 style={styles.portfolioTitle}>{title}</h3>
+        <p style={styles.portfolioClient}>{client}</p>
+      </div>
+    </div>
   );
 }
 

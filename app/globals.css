@@ -350,3 +350,5 @@ body, .hero-heading, .heroHeading, .heroHeading * {
 .btn:active {
   transform: translateY(0) scale(0.995);
 }
+
+/* footer hide rules removed (no longer needed) */
